@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import { reviewList } from "../../../types/ApiDataTypes.ts";
 
 interface ReviewItemProps {
@@ -17,7 +17,10 @@ export default function ReviewItem({
 	const [isEditing, setIsEditing] = useState(false);
 	const [editedContent, setEditedContent] = useState(review.content);
 
-	const handleSave = () => {
+	const handleSave = (e: FormEvent) => {
+		e.preventDefault();
+		if (!editedContent.trim()) return;
+
 		onUpdate(review.id, editedContent);
 		setIsEditing(false);
 	};
@@ -33,20 +36,23 @@ export default function ReviewItem({
 				<p>{review.createdAt}</p>
 			</div>
 			{isEditing ? (
-				<>
+				<form onSubmit={handleSave}>
 					<textarea
 						value={editedContent}
 						onChange={(e) => setEditedContent(e.target.value)}
 					/>
 					<div>
-						<button type="button" onClick={handleSave}>
-							저장
-						</button>
-						<button type="button" onClick={() => setIsEditing(false)}>
+						<button type="submit">저장</button>
+						<button
+							type="button"
+							onClick={() => {
+								setEditedContent(review.content);
+								setIsEditing(false);
+							}}>
 							취소
 						</button>
 					</div>
-				</>
+				</form>
 			) : (
 				<>
 					<p>{review.content}</p>
