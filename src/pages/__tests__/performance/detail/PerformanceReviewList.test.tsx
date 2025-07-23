@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
-import PerformanceReviewList from "../PerformanceReviewList.tsx";
-import performanceReview from "../../__mocks__/performanceReviewData.ts";
+import PerformanceReviewList from "../../../performance/detail/PerformanceReviewList.tsx";
+import performanceReview from "../../../__mocks__/performanceReviewData.ts";
 import "@testing-library/jest-dom";
 
 describe("PerformanceReviewList 컴포넌트", () => {

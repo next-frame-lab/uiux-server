@@ -1,4 +1,4 @@
-import { PerformancePagination } from "../../types/ApiDataTypes.ts";
+import { PerformancePagination } from "../../../types/ApiDataTypes.ts";
 
 interface PaginationProps {
 	pagination: PerformancePagination;

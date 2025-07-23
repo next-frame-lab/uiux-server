@@ -1,5 +1,5 @@
 import { render, fireEvent, screen } from "@testing-library/react";
-import ReviewForm from "../PerformanceReviewForm.tsx";
+import ReviewForm from "../../../performance/detail/PerformanceReviewForm.tsx";
 import "@testing-library/jest-dom";
 
 describe("ReviewForm 컴포넌트(후기 작성 컴포넌트)", () => {

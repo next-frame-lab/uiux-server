@@ -51,7 +51,6 @@ export default function FilterBar({
 
 			<div>
 				<h3>장르</h3>
-				<h3>유형</h3>
 				{genres.map((genre) => (
 					<button
 						key={genre}

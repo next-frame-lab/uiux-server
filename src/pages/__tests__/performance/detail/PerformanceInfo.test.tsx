@@ -1,7 +1,7 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import performanceDetail from "../../__mocks__/performanceDetailData.ts";
-import PerformanceInfo from "../PerformanceInfo.tsx";
+import performanceDetail from "../../../__mocks__/performanceDetailData.ts";
+import PerformanceInfo from "../../../performance/detail/PerformanceInfo.tsx";
 
 describe("공연 목록 상세 페이지 - 정보 렌더링", () => {
 	it("공연 정보를 렌더링한다.", () => {

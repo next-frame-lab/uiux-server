@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import ReviewItem from "../PerformanceReviewItem.tsx";
-import performanceReview from "../../__mocks__/performanceReviewData.ts";
+import ReviewItem from "../../../performance/detail/PerformanceReviewItem.tsx";
+import performanceReview from "../../../__mocks__/performanceReviewData.ts";
 
 describe("ReviewItem 컴포넌트", () => {
 	const mockReview1 = performanceReview.reviewList[0];

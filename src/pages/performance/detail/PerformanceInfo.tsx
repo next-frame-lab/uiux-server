@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { PerformanceDetailData } from "../../types/ApiDataTypes.ts";
+import { PerformanceDetailData } from "../../../types/ApiDataTypes.ts";
 
 interface Props {
 	performance: PerformanceDetailData;

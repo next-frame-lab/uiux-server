@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { reviewList } from "../../types/ApiDataTypes.ts";
+import { reviewList } from "../../../types/ApiDataTypes.ts";
 
 interface ReviewItemProps {
 	review: reviewList;

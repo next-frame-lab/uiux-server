@@ -1,5 +1,5 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import PerformanceRating from "../PerformanceRating.tsx";
+import PerformanceRating from "../../../performance/detail/PerformanceRating.tsx";
 import "@testing-library/jest-dom";
 
 describe("공연 목록 상세 페이지 - 별점", () => {

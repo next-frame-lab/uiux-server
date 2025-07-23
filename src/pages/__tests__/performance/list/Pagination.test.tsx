@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import Pagination from "../Pagination.tsx";
-import performanceData from "../../__mocks__/performanceData.ts";
+import Pagination from "../../../performance/list/Pagination.tsx";
+import performanceData from "../../../__mocks__/performanceData.ts";
 import "@testing-library/jest-dom";
 
 describe("Pagination 컴포넌트 테스트", () => {

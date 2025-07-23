@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import performanceReview from "../../pages/__mocks__/performanceReviewData.ts";
-import ReviewLikeButton from "../ui/ReviewLikeButton.tsx";
+import performanceReview from "../../../pages/__mocks__/performanceReviewData.ts";
+import ReviewLikeButton from "../../ui/ReviewLikeButton.tsx";
 
 describe("공연 후기글 좋아요 버튼", () => {
 	const mockToggleLike = jest.fn();

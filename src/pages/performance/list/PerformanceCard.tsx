@@ -1,4 +1,4 @@
-import { PerformanceListItem } from "../../types/ApiDataTypes.ts";
+import { PerformanceListItem } from "../../../types/ApiDataTypes.ts";
 
 export interface PerformanceCardProps {
 	performance: PerformanceListItem;

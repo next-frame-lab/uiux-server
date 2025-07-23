@@ -1,7 +1,7 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import PerformanceCard from "../PerformanceCard.tsx";
-import performanceData from "../../__mocks__/performanceData.ts";
+import PerformanceCard from "../../../performance/list/PerformanceCard.tsx";
+import performanceData from "../../../__mocks__/performanceData.ts";
 
 /* 공연 카드 렌더링 & 클릭 시, 상세 페이지로 navigate */
 describe("공연 카드 목록 조회", () => {

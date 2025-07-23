@@ -1,4 +1,4 @@
-import { reviewList } from "../../types/ApiDataTypes.ts";
+import { reviewList } from "../../../types/ApiDataTypes.ts";
 import ReviewItem from "./PerformanceReviewItem.tsx";
 
 interface ReviewListProps {

@@ -1,8 +1,8 @@
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import performanceData from "../../pages/__mocks__/performanceData.ts";
-import InfiniteScroll from "../ui/InfiniteScroll.tsx";
-import performanceReview from "../../pages/__mocks__/performanceReviewData.ts";
+import performanceData from "../../../pages/__mocks__/performanceData.ts";
+import InfiniteScroll from "../../ui/InfiniteScroll.tsx";
+import performanceReview from "../../../pages/__mocks__/performanceReviewData.ts";
 
 beforeEach(() => {
 	window.IntersectionObserver = jest.fn(() => ({
