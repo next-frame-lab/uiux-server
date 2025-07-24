@@ -39,15 +39,15 @@ const performanceDetail: PerformanceDetailData = {
 	],
 	seatPrices: [
 		{
-			grade: "A",
+			section: "A",
 			price: 120000,
 		},
 		{
-			grade: "B",
+			section: "B",
 			price: 100000,
 		},
 		{
-			grade: "C",
+			section: "C",
 			price: 80000,
 		},
 	],

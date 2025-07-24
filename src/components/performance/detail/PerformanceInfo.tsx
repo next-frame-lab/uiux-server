@@ -32,8 +32,8 @@ export default function PerformanceInfo({ performance }: Props) {
 			</select>
 			<ul>
 				{performance.seatPrices.map((seat) => (
-					<li key={seat.grade}>
-						{seat.grade} / {seat.price}
+					<li key={seat.section}>
+						{seat.section} / {seat.price}
 					</li>
 				))}
 			</ul>

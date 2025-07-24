@@ -39,7 +39,7 @@ export type scheduleList = {
 };
 
 export type seatPrices = {
-	grade: string;
+	section: string;
 	price: number;
 };
 
@@ -81,4 +81,50 @@ export interface reviewPagination {
 export interface reviewData {
 	reviewList: reviewList[];
 	pagination: reviewPagination;
+}
+
+/** 예약 가능한 좌석을 선택할 때 사용하는 데이터 타입입니다. */
+export type seatData = {
+	id: string;
+	section: string;
+	row: number;
+	column: number;
+	isLocked: boolean;
+};
+
+export interface selectSeatsData {
+	seatList: seatData[];
+}
+
+/** 좌석 예매를 하기 위한 데이터 타입입니다. */
+export interface seatReservationData {
+	performanceId: string;
+	scheduleId: string;
+	seatIdList: string[];
+	elapsedTime: number;
+}
+
+/** 좌석을 예약한 공연의 정보들을 불러올 때 사용하는 데이터 타입입니다. */
+export type reservationPerformance = {
+	name: string;
+	scheduleDate: string;
+	scheduleTime: string;
+};
+
+export type reservationStadium = {
+	name: string;
+	address: string;
+};
+
+export type reservationSeats = {
+	section: string;
+	row: number;
+	column: number;
+};
+
+export interface reservationData {
+	id: string;
+	performance: reservationPerformance;
+	stadium: reservationStadium;
+	seatList: reservationSeats[];
 }

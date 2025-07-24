@@ -1,4 +1,4 @@
-import performanceData from "../../pages/__mocks__/performanceData.ts";
+import performanceData from "../../components/__mocks__/performanceData.ts";
 import isAdultOnly from "../isAdultOnly.ts";
 import "@testing-library/jest-dom";
 
