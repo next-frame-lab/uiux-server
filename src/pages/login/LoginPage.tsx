@@ -38,7 +38,11 @@ export default function LoginPage() {
 			<main className="flex flex-1 items-center justify-center bg-[#FBFBFB]">
 				<div className="text-center space-y-6">
 					<div>
+<<<<<<< HEAD
 						<h1 className="text-4xl font-semibold">Login</h1>
+=======
+						<h1 className="text-4xl font-semibold">LogIn</h1>
+>>>>>>> ec5912a (#4 feat(domain.login): 로그인 페이지 UI 구현)
 						<p className="text-gray-500 mt-5">Please Log in to continue</p>
 					</div>
 
