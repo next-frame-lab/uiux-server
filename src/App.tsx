@@ -1,9 +1,8 @@
-import { RouterProvider } from "react-router-dom";
 import "./App.css";
-import RoutesLink from "./pages/RoutesLink.tsx";
+import LoginPage from "./pages/login/LoginPage.tsx";
 
 function App() {
-	return <RouterProvider router={RoutesLink} />;
+	return <LoginPage />;
 }
 
 export default App;
