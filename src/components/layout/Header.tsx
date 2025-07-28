@@ -10,25 +10,39 @@ export default function Header() {
 				<p className="text-xl font-bold">NextFrame</p>
 			</div>
 			<nav className="flex items-center gap-3 space-x-3">
-				<a className="hover:bg-gray-200">Main</a>
-				<a className="hover:bg-gray-200">Shows</a>
-				<a className="hover:bg-gray-200">About Us</a>
-				<a className="hover:bg-gray-200">My Page</a>
-				<a className="bg-gray-100 px-5 py-2 rounded-full font-semibold hover:bg-gray-200">
+				<button type="button" className="hover:bg-gray-200">
+					Main
+				</button>
+				<button type="button" className="hover:bg-gray-200">
+					Shows
+				</button>
+				<button type="button" className="hover:bg-gray-200">
+					About Us
+				</button>
+				<button type="button" className="hover:bg-gray-200">
+					My Page
+				</button>
+				<button
+					type="button"
+					className="bg-gray-100 px-5 py-2 rounded-full font-semibold hover:bg-gray-200">
 					Login
-				</a>
-				<a className="bg-gray-100 px-3 py-2 rounded-full font-semibold hover:bg-gray-200">
+				</button>
+				<button
+					type="button"
+					className="bg-gray-100 px-3 py-2 rounded-full font-semibold hover:bg-gray-200">
 					<img
 						src="/public/icons/change_mode.png"
 						alt="라이트모드/다크모드 변경용 버튼입니다"
 					/>
-				</a>
-				<a className="bg-gray-100 px-3 py-2 rounded-full font-semibold hover:bg-gray-200">
+				</button>
+				<button
+					type="button"
+					className="bg-gray-100 px-3 py-2 rounded-full font-semibold hover:bg-gray-200">
 					<img
 						src="/public/icons/change_language.png"
 						alt="언어 변경용 버튼입니다"
 					/>
-				</a>
+				</button>
 			</nav>
 		</header>
 	);
