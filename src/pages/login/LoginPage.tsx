@@ -38,7 +38,7 @@ export default function LoginPage() {
 			<main className="flex flex-1 items-center justify-center bg-[#FBFBFB]">
 				<div className="text-center space-y-6">
 					<div>
-						<h1 className="text-4xl font-semibold">LogIn</h1>
+						<h1 className="text-4xl font-semibold">Login</h1>
 						<p className="text-gray-500 mt-5">Please Log in to continue</p>
 					</div>
 
