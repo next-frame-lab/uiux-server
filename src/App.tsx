@@ -1,8 +1,8 @@
 import "./App.css";
-import MainPage from "./pages/main/MainPage.tsx";
+import PerformancePage from "./pages/performance/PerformancePage.tsx";
 
 function App() {
-	return <MainPage />;
+	return <PerformancePage />;
 }
 
 export default App;
