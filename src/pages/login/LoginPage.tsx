@@ -39,10 +39,14 @@ export default function LoginPage() {
 				<div className="text-center space-y-6">
 					<div>
 <<<<<<< HEAD
+<<<<<<< HEAD
 						<h1 className="text-4xl font-semibold">Login</h1>
 =======
 						<h1 className="text-4xl font-semibold">LogIn</h1>
 >>>>>>> ec5912a (#4 feat(domain.login): 로그인 페이지 UI 구현)
+=======
+						<h1 className="text-4xl font-semibold">Login</h1>
+>>>>>>> a14620e (#8 feat(domain.performance): 메인 페이지 UI 구현)
 						<p className="text-gray-500 mt-5">Please Log in to continue</p>
 					</div>
 
