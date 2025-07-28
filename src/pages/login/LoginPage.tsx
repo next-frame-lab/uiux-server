@@ -3,10 +3,10 @@ import Header from "../../components/layout/Header.tsx";
 export default function LoginPage() {
 	return (
 		<div className="min-h-screen bg-gray-50 flex flex-col">
-			{/*상단 부분*/}
+			{/* 상단 부분 */}
 			<Header />
 
-			{/*하단 로그인 부분*/}
+			{/* 하단 로그인 부분 */}
 			<main className="flex flex-1 items-center justify-center bg-[#FBFBFB]">
 				<div className="text-center space-y-6">
 					<div>
@@ -15,21 +15,21 @@ export default function LoginPage() {
 					</div>
 
 					<div className="flex flex-col items-center space-y-3">
-						<button>
+						<button type="button">
 							<img
 								src="/public/icons/kakao_login.png"
 								alt="Kakao"
 								className="w-64 h-15"
 							/>
 						</button>
-						<button>
+						<button type="button">
 							<img
 								src="/public/icons/naver_login.png"
 								alt="naver"
 								className="w-64 h-14"
 							/>
 						</button>
-						<button>
+						<button type="button">
 							<img
 								src="/public/icons/google_login.png"
 								alt="google"
@@ -40,7 +40,9 @@ export default function LoginPage() {
 
 					<p className="text-sm text-gray-500">
 						Don’t have an account?{" "}
-						<a className="text-blue-500 hover:underline">Sign up</a>
+						<button type="button" className="text-blue-500 hover:underline">
+							Sign up
+						</button>
 					</p>
 				</div>
 			</main>
