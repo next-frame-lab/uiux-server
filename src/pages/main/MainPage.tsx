@@ -1,3 +1,5 @@
+import MainPageCarousel from "../../components/swiper/MainPageCarousel.tsx";
+
 export default function MainPage() {
 	return (
 		<div>
@@ -39,7 +41,8 @@ export default function MainPage() {
 				{/*공연 이미지들 정렬*/}
 				<div className="max-w-7xl mx-auto py-16 px-3">
 					{/*인기 공연 이미지 칸*/}
-					<div className="h-80 bg-gray-200 rounded-2xl shadow-md mb-12"></div>
+					{/*해당 캐러셀을 땡겨와 그대로 노출*/}
+					<MainPageCarousel />
 					<h2 className="text-2xl font-bold mb-8">Popular Shows</h2>
 
 					{/* 5가지 공연 라인 */}
@@ -54,8 +57,12 @@ export default function MainPage() {
 								<p className="font-bold text-lg text-gray-900 break-all">
 									와 이거 진짜 제목 길어도 줄 바꿈이 자동으로 가능하네 짱 신기
 								</p>
-								<p className="text-sm text-gray-800 break-all">서울예술의전당</p>
-								<p className="text-sm text-gray-500 break-all">2025-08-01 ~ 2025-08-31</p>
+								<p className="text-sm text-gray-800 break-all">
+									서울예술의전당
+								</p>
+								<p className="text-sm text-gray-500 break-all">
+									2025-08-01 ~ 2025-08-31
+								</p>
 							</div>
 						</div>
 
@@ -66,8 +73,12 @@ export default function MainPage() {
 								<p className="font-bold text-lg text-gray-900 break-all">
 									와 이거 진짜 제목 길어도 줄 바꿈이 자동으로 가능하네 짱 신기
 								</p>
-								<p className="text-sm text-gray-800 break-all">서울예술의전당</p>
-								<p className="text-sm text-gray-500 break-all">2025-08-01 ~ 2025-08-31</p>
+								<p className="text-sm text-gray-800 break-all">
+									서울예술의전당
+								</p>
+								<p className="text-sm text-gray-500 break-all">
+									2025-08-01 ~ 2025-08-31
+								</p>
 							</div>
 						</div>
 
@@ -78,8 +89,12 @@ export default function MainPage() {
 								<p className="font-bold text-lg text-gray-900 break-all">
 									와 이거 진짜 제목 길어도 줄 바꿈이 자동으로 가능하네 짱 신기
 								</p>
-								<p className="text-sm text-gray-800 break-all">서울예술의전당</p>
-								<p className="text-sm text-gray-500 break-all">2025-08-01 ~ 2025-08-31</p>
+								<p className="text-sm text-gray-800 break-all">
+									서울예술의전당
+								</p>
+								<p className="text-sm text-gray-500 break-all">
+									2025-08-01 ~ 2025-08-31
+								</p>
 							</div>
 						</div>
 
@@ -90,8 +105,12 @@ export default function MainPage() {
 								<p className="font-bold text-lg text-gray-900 break-all">
 									와 이거 진짜 제목 길어도 줄 바꿈이 자동으로 가능하네 짱 신기
 								</p>
-								<p className="text-sm text-gray-800 break-all">서울예술의전당</p>
-								<p className="text-sm text-gray-500 break-all">2025-08-01 ~ 2025-08-31</p>
+								<p className="text-sm text-gray-800 break-all">
+									서울예술의전당
+								</p>
+								<p className="text-sm text-gray-500 break-all">
+									2025-08-01 ~ 2025-08-31
+								</p>
 							</div>
 						</div>
 
@@ -102,8 +121,12 @@ export default function MainPage() {
 								<p className="font-bold text-lg text-gray-900 break-all">
 									와 이거 진짜 제목 길어도 줄 바꿈이 자동으로 가능하네 짱 신기
 								</p>
-								<p className="text-sm text-gray-800 break-all">서울예술의전당</p>
-								<p className="text-sm text-gray-500 break-all">2025-08-01 ~ 2025-08-31</p>
+								<p className="text-sm text-gray-800 break-all">
+									서울예술의전당
+								</p>
+								<p className="text-sm text-gray-500 break-all">
+									2025-08-01 ~ 2025-08-31
+								</p>
 							</div>
 						</div>
 					</div>
@@ -117,8 +140,12 @@ export default function MainPage() {
 								<p className="font-bold text-lg text-gray-900 break-all">
 									와 이거 진짜 제목 길어도 줄 바꿈이 자동으로 가능하네 짱 신기
 								</p>
-								<p className="text-sm text-gray-800 break-all">서울예술의전당</p>
-								<p className="text-sm text-gray-500 break-all">2025-08-01 ~ 2025-08-31</p>
+								<p className="text-sm text-gray-800 break-all">
+									서울예술의전당
+								</p>
+								<p className="text-sm text-gray-500 break-all">
+									2025-08-01 ~ 2025-08-31
+								</p>
 							</div>
 						</div>
 
@@ -129,8 +156,12 @@ export default function MainPage() {
 								<p className="font-bold text-lg text-gray-900 break-all">
 									와 이거 진짜 제목 길어도 줄 바꿈이 자동으로 가능하네 짱 신기
 								</p>
-								<p className="text-sm text-gray-800 break-all">서울예술의전당</p>
-								<p className="text-sm text-gray-500 break-all">2025-08-01 ~ 2025-08-31</p>
+								<p className="text-sm text-gray-800 break-all">
+									서울예술의전당
+								</p>
+								<p className="text-sm text-gray-500 break-all">
+									2025-08-01 ~ 2025-08-31
+								</p>
 							</div>
 						</div>
 
@@ -141,8 +172,12 @@ export default function MainPage() {
 								<p className="font-bold text-lg text-gray-900 break-all">
 									와 이거 진짜 제목 길어도 줄 바꿈이 자동으로 가능하네 짱 신기
 								</p>
-								<p className="text-sm text-gray-800 break-all">서울예술의전당</p>
-								<p className="text-sm text-gray-500 break-all">2025-08-01 ~ 2025-08-31</p>
+								<p className="text-sm text-gray-800 break-all">
+									서울예술의전당
+								</p>
+								<p className="text-sm text-gray-500 break-all">
+									2025-08-01 ~ 2025-08-31
+								</p>
 							</div>
 						</div>
 
@@ -153,8 +188,12 @@ export default function MainPage() {
 								<p className="font-bold text-lg text-gray-900 break-all">
 									와 이거 진짜 제목 길어도 줄 바꿈이 자동으로 가능하네 짱 신기
 								</p>
-								<p className="text-sm text-gray-800 break-all">서울예술의전당</p>
-								<p className="text-sm text-gray-500 break-all">2025-08-01 ~ 2025-08-31</p>
+								<p className="text-sm text-gray-800 break-all">
+									서울예술의전당
+								</p>
+								<p className="text-sm text-gray-500 break-all">
+									2025-08-01 ~ 2025-08-31
+								</p>
 							</div>
 						</div>
 
@@ -165,8 +204,12 @@ export default function MainPage() {
 								<p className="font-bold text-lg text-gray-900 break-all">
 									와 이거 진짜 제목 길어도 줄 바꿈이 자동으로 가능하네 짱 신기
 								</p>
-								<p className="text-sm text-gray-800 break-all">서울예술의전당</p>
-								<p className="text-sm text-gray-500 break-all">2025-08-01 ~ 2025-08-31</p>
+								<p className="text-sm text-gray-800 break-all">
+									서울예술의전당
+								</p>
+								<p className="text-sm text-gray-500 break-all">
+									2025-08-01 ~ 2025-08-31
+								</p>
 							</div>
 						</div>
 					</div>
