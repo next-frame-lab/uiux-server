@@ -1,6 +1,6 @@
 import Header from "../../components/layout/Header.tsx";
 import Footer from "../../components/layout/Footer.tsx";
-import PatInformation from "../../components/layout/PayInformation.tsx";
+import PayInformation from "../../components/layout/PayInformation.tsx";
 
 export default function SuccessPage() {
 	return (
@@ -16,7 +16,7 @@ export default function SuccessPage() {
 							수 있습니다.
 						</h2>
 
-						<PatInformation />
+						<PayInformation />
 
 						{/* 확인 버튼 */}
 						<div className="py-20">
