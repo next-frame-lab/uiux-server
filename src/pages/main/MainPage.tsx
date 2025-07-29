@@ -15,7 +15,7 @@ export default function MainPage() {
 					{/* 인기 공연 이미지 칸 */}
 					{/* 해당 캐러셀을 땡겨와 그대로 노출 */}
 					<MainPageCarousel />
-					<h2 className="text-2xl font-bold mb-8">Popular Shows</h2>
+					<h2 className="text-2xl font-bold mb-8">인기 공연</h2>
 
 					{/* 5가지 공연 라인 */}
 					<div className="flex gap-x-6 mb-16">
