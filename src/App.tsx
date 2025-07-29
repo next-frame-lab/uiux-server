@@ -1,8 +1,8 @@
 import "./App.css";
-import PerformancePage from "./pages/performance/PerformancePage.tsx";
+import SuccessPage from "./pages/payment/SuccessPage.tsx";
 
 function App() {
-	return <PerformancePage />;
+	return <SuccessPage />;
 }
 
 export default App;
