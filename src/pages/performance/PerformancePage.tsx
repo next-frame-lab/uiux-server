@@ -9,53 +9,54 @@ export default function PerformancePage() {
 
 			{/* 중간 부분 */}
 			<main className="bg-[#FBFBFB]">
-				{/* 공연 목록 제목 부분 */}
-				<div className="max-w-7xl mx-auto py-16">
-					<h1 className="text-3xl font-bold">공연 목록</h1>
-				</div>
 
 				{/* 카테고리 부분 */}
-				<div className="max-w-7xl mx-auto px-3 flex gap-27 space-x-3">
+				<div className="flex items-center justify-center divide-x divide-gray-300 border-b border-[#E8EDF5] bg-gray-100 py-4">
 					<button
 						type="button"
-						className="bg-gray-100 px-3 py-2 rounded-full font-semibold hover:bg-gray-200">
-						ALL
+						className="px-18 py-2 font-semibold hover:bg-gray-200">
+						전체
 					</button>
 					<button
 						type="button"
-						className="bg-gray-100 px-3 py-2 rounded-full font-semibold hover:bg-gray-200">
-						Romance
+						className="px-18 py-2 font-semibold hover:bg-gray-200">
+						로맨스
 					</button>
 					<button
 						type="button"
-						className="bg-gray-100 px-3 py-2 rounded-full font-semibold hover:bg-gray-200">
-						Horror
+						className="px-18 py-2 font-semibold hover:bg-gray-200">
+						호러
 					</button>
 					<button
 						type="button"
-						className="bg-gray-100 px-3 py-2 rounded-full font-semibold hover:bg-gray-200">
-						Thriller
+						className="px-18 py-2 font-semibold hover:bg-gray-200">
+						스릴러
 					</button>
 					<button
 						type="button"
-						className="bg-gray-100 px-3 py-2 rounded-full font-semibold hover:bg-gray-200">
-						Human
+						className="px-18 py-2 font-semibold hover:bg-gray-200">
+						다큐
 					</button>
 					<button
 						type="button"
-						className="bg-gray-100 px-3 py-2 rounded-full font-semibold hover:bg-gray-200">
-						Comedy
+						className="px-18 py-2 font-semibold hover:bg-gray-200">
+						코미디
 					</button>
 					<button
 						type="button"
-						className="bg-gray-100 px-3 py-2 rounded-full font-semibold hover:bg-gray-200">
-						Humor
+						className="px-18 py-2 font-semibold hover:bg-gray-200">
+						유머
 					</button>
+				</div>
+
+				{/* 공연 목록 제목 부분 */}
+				<div className="max-w-7xl mx-auto py-16 px-3">
+					<h1 className="text-3xl font-bold">공연 목록</h1>
 				</div>
 
 				{/* 공연 부분 */}
 				{/* 첫 번째 줄 공연 */}
-				<div className="max-w-7xl mx-auto py-16 px-3">
+				<div className="max-w-7xl mx-auto px-3">
 					<div className="flex gap-x-6 mb-16">
 						{/* 첫 번째 공연 */}
 						<div className="flex-1">
