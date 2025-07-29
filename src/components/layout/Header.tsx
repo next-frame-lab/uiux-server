@@ -10,7 +10,7 @@ export default function Header() {
 					/>
 					<p className="text-2xl font-bold">NextFrame</p>
 				</div>
-				<nav className="lex items-center gap-3 space-x-6">
+				<nav className="flex items-center gap-3 space-x-6">
 					<button type="button" className="hover:bg-gray-200">
 						메인
 					</button>

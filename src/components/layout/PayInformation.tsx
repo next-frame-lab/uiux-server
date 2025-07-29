@@ -1,4 +1,4 @@
-export default function PatInformation() {
+export default function PayInformation() {
 	return (
 		<div>
 			<div className="grid grid-cols-2 gap-x-8">
@@ -29,7 +29,7 @@ export default function PatInformation() {
 			<div className="grid grid-cols-2 border-b border-gray-300 gap-x-8">
 				<div>
 					{/* 공연 시간 */}
-					<div className=" py-3">
+					<div className="py-3">
 						<p className="text-gray-500 py-2">공연 시간</p>
 						<p className="font-semibold text-xl text-gray-900">19:30</p>
 					</div>
