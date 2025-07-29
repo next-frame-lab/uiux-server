@@ -27,8 +27,8 @@ describe("Debouncing", () => {
 
 		jest.advanceTimersByTime(1100);
 
-		debounced("forth call");
+		debounced("fourth call");
 		expect(mockFn).toHaveBeenCalledTimes(2);
-		expect(mockFn).toHaveBeenCalledWith("forth call");
+		expect(mockFn).toHaveBeenCalledWith("fourth call");
 	});
 });

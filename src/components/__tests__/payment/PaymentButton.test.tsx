@@ -45,7 +45,7 @@ describe("PaymentButton 컴포넌트", () => {
 		alertMock.mockRestore();
 	});
 
-	it("정상적으로 결제 시, /mypage/reservation으로 이동한다.", () => {
+	it("정상적으로 결제 시, /mypage/success로 이동한다.", () => {
 		const alertMock = jest.spyOn(window, "alert").mockImplementation(() => {});
 
 		render(<PaymentButton paymentMethod="naver" elapsedTime={100} />);

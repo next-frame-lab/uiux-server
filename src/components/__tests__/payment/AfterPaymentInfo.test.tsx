@@ -38,7 +38,7 @@ describe("AfterPaymentInfo", () => {
 		).toBeInTheDocument();
 	});
 
-	it("좌석 정보가 정확힌 렌더링되어야 한다.", () => {
+	it("좌석 정보가 정확히 렌더링되어야 한다.", () => {
 		render(<AfterPaymentInfo />);
 
 		afterPaymentInfoData.seats.forEach((seat) => {
@@ -48,7 +48,7 @@ describe("AfterPaymentInfo", () => {
 		});
 	});
 
-	it("확인하기 버튼을 클릭하면, /mypage/reservations 경로로 이동해야 한다.", () => {
+	it("확인하기 버튼을 클릭하면, /mypage/reservation 경로로 이동해야 한다.", () => {
 		render(<AfterPaymentInfo />);
 
 		const button = screen.getByRole("button", { name: "확인하기" });
