@@ -1,4 +1,4 @@
-import PatInformation from "../../components/layout/PayInformation.tsx";
+import PayInformation from "../../components/layout/PayInformation.tsx";
 
 export default function PaymentPage() {
 	return (
@@ -16,7 +16,7 @@ export default function PaymentPage() {
 							type="button"
 							className="rounded-lg border border-gray-300 bg-white px-10 py-3 hover:bg-gray-100">
 							<img
-								src="/public/icons/payment_kakao.png"
+								src="/icons/payment_kakao.png"
 								alt="kakao"
 								className="w-25 h-10"
 							/>
@@ -27,7 +27,7 @@ export default function PaymentPage() {
 							type="button"
 							className="rounded-lg border border-gray-300 bg-white px-10 py-3 hover:bg-gray-100">
 							<img
-								src="/public/icons/payment_naver.png"
+								src="/icons/payment_naver.png"
 								alt="naver"
 								className="w-25 h-9"
 							/>
@@ -38,14 +38,14 @@ export default function PaymentPage() {
 							type="button"
 							className="rounded-lg border border-gray-300 bg-white px-10 py-3 hover:bg-gray-100">
 							<img
-								src="/public/icons/payment_toss.png"
+								src="/icons/payment_toss.png"
 								alt="toss"
 								className="w-28 h-6"
 							/>
 						</button>
 					</div>
 
-					<PatInformation />
+					<PayInformation />
 
 					{/* 결제 버튼 */}
 					<div className="py-15">
