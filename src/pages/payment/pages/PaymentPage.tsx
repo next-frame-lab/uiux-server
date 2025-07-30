@@ -1,4 +1,4 @@
-import PayInformation from "../../components/layout/PayInformation.tsx";
+import PayInformation from "../../../components/layout/PayInformation.tsx";
 
 export default function PaymentPage() {
 	return (
