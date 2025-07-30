@@ -1,4 +1,4 @@
-import Header from "../../components/layout/Header.tsx";
+import Header from "../../../components/layout/Header.tsx";
 
 export default function LoginPage() {
 	return (
@@ -17,21 +17,21 @@ export default function LoginPage() {
 					<div className="flex flex-col items-center space-y-3">
 						<button type="button">
 							<img
-								src="/public/icons/kakao_login.png"
+								src="/icons/kakao_login.png"
 								alt="Kakao"
 								className="w-64 h-15"
 							/>
 						</button>
 						<button type="button">
 							<img
-								src="/public/icons/naver_login.png"
+								src="/icons/naver_login.png"
 								alt="naver"
 								className="w-64 h-14"
 							/>
 						</button>
 						<button type="button">
 							<img
-								src="/public/icons/google_login.png"
+								src="/icons/google_login.png"
 								alt="google"
 								className="w-64 h-14"
 							/>
