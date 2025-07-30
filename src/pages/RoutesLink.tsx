@@ -5,7 +5,7 @@ import {
 } from "react-router-dom";
 import RouterApp from "./RouterApp.tsx";
 import PaymentPage from "./payment/page.tsx";
-import SuccessPage from "./payment/successPage.tsx";
+import SuccessPage from "./payment/pages/SuccessPage.tsx";
 
 const rountesLink = createBrowserRouter(
 	createRoutesFromElements(
