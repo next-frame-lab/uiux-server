@@ -1,56 +1,63 @@
 import { PerformanceDetailData } from "../../types/ApiDataTypes.ts";
+import perfImage from "../../assets/images/Performance1.gif";
 
 const performanceDetail: PerformanceDetailData = {
-	id: "c8d1e2a7-4a5b-437b-9d90-7b1a2c3f1234",
-	image: "https://example.com/",
-	name: "오페라 유령",
-	type: "로맨스",
-	genre: "오페라",
-	averageStar: 4.6,
-	runningTime: 130,
-	description:
-		"전설적인 오페라의 유령이 다시 돌아옵니다. 아름다운 무대와 감동적인 음악을 함께 즐겨보세요.",
-	adultOnly: true,
-	stadium: {
-		name: "부산문화회관",
-		address: "부산광역시 남구 유엔로 123",
+	code: "SUCCESS",
+	data: {
+		id: "mock-1",
+		imageUrl: perfImage,
+		name: "오페라 유령",
+		type: "로맨스",
+		genre: "오페라",
+		averageStar: 4.1,
+		runningTime: 130,
+		description:
+			"전설적인 오페라의 유령이 다시 돌아옵니다. 아름다운 무대와 감동적인 음악을 함께 즐겨보세요.",
+		adultOnly: true,
+		ticketOpenTime: "2025-08-15T12:00",
+		ticketCloseTime: "2025-09-01T18:00",
+		stadium: {
+			id: "baea5498-7cee-41e7-aa8e-b13d89e884e7",
+			name: "부산문화회관",
+			address: "부산광역시 남구 유엔로 123",
+		},
+		performanceSchedules: [
+			{
+				id: "1a2b3c4d-5e6f-7890-abcd-1234567890ef",
+				date: "2025-09-10",
+				time: "10:00",
+			},
+			{
+				id: "1a2b3c4d-5e6f-7890-abcd-1234567890eg",
+				date: "2025-09-10",
+				time: "19:00",
+			},
+			{
+				id: "1a2b3c4d-5e6f-7890-abcd-1234567890eh",
+				date: "2025-09-11",
+				time: "10:00",
+			},
+			{
+				id: "1a2b3c4d-5e6f-7890-abcd-1234567890ei",
+				date: "2025-09-11",
+				time: "19:00",
+			},
+		],
+		seatSectionPrices: [
+			{
+				section: "A",
+				price: 120000,
+			},
+			{
+				section: "B",
+				price: 100000,
+			},
+			{
+				section: "C",
+				price: 80000,
+			},
+		],
 	},
-	scheduleList: [
-		{
-			id: "1a2b3c4d-5e6f-7890-abcd-1234567890ef",
-			date: "2025-09-10",
-			time: "10:00",
-		},
-		{
-			id: "1a2b3c4d-5e6f-7890-abcd-1234567890eg",
-			date: "2025-09-10",
-			time: "19:00",
-		},
-		{
-			id: "1a2b3c4d-5e6f-7890-abcd-1234567890eh",
-			date: "2025-09-11",
-			time: "10:00",
-		},
-		{
-			id: "1a2b3c4d-5e6f-7890-abcd-1234567890ei",
-			date: "2025-09-11",
-			time: "19:00",
-		},
-	],
-	seatPrices: [
-		{
-			section: "A",
-			price: 120000,
-		},
-		{
-			section: "B",
-			price: 100000,
-		},
-		{
-			section: "C",
-			price: 80000,
-		},
-	],
 };
 
 export default performanceDetail;

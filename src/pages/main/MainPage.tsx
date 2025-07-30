@@ -1,195 +1,115 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import fetchPerformances from "../../api/performance.ts";
 import MainPageCarousel from "../../components/swiper/MainPageCarousel.tsx";
 import Header from "../../components/layout/Header.tsx";
 import Footer from "../../components/layout/Footer.tsx";
+import Category from "../../components/layout/Category.tsx";
+import { PerformanceListItem } from "../../types/ApiDataTypes.ts";
 
 export default function MainPage() {
+	const navigate = useNavigate();
+	const [page, setPage] = useState(1);
+
+	const { data, isLoading, isError, error } = useQuery({
+		queryKey: ["popularPerformances", page],
+		queryFn: () => fetchPerformances(page, 10),
+		keepPreviousData: true,
+	});
+
+	const handleClick = (id: string, adultOnly: boolean) => {
+		sessionStorage.setItem("adultOnly", String(adultOnly));
+		navigate(`/performances/${id}`);
+	};
+
+	const performances: PerformanceListItem[] = data?.data.performances ?? [];
+	const pagination = data?.pagination;
+
 	return (
-		<div>
-			{/* 상단 부분 */}
+		<>
 			<Header />
-
-			{/* 중간 부분 */}
+			<Category />
 			<main className="bg-[#FBFBFB]">
-				{/* 공연 이미지들 정렬 */}
-				<div className="max-w-7xl mx-auto py-16 px-3">
-					{/* 인기 공연 이미지 칸 */}
-					{/* 해당 캐러셀을 땡겨와 그대로 노출 */}
-					<MainPageCarousel />
-					<h2 className="text-2xl font-bold mb-8">인기 공연</h2>
+				<MainPageCarousel />
+				<div className="max-w-7xl mx-auto mb-6 px-4 md:px-6">
+					<h2 className="text-2xl font-bold mt-12 mb-6 md:mt-16 md:mb-8">
+						인기 공연
+					</h2>
 
-					{/* 5가지 공연 라인 */}
-					<div className="flex gap-x-6 mb-16">
-						{/* 첫 번째 공연 */}
-						<div className="flex-1">
-							{/* 이미지 박스 */}
-							<div className="h-80 bg-gray-200 rounded-2xl mb-3" />
-							{/* 글 사이 간격 맞춤..?? P 태그끼리 */}
-							<div className="flex flex-col gap-y-2">
-								{/* brak-all 사용해서 제목이 늘어나도 이미지 고정 */}
-								<p className="font-bold text-lg text-gray-900 break-all">
-									와 이거 진짜 제목 길어도 줄 바꿈이 자동으로 가능하네 짱 신기
-								</p>
-								<p className="text-sm text-gray-800 break-all">
-									서울예술의전당
-								</p>
-								<p className="text-sm text-gray-500 break-all">
-									2025-08-01 ~ 2025-08-31
-								</p>
-							</div>
-						</div>
+					{isLoading && (
+						<p className="text-center py-10">
+							공연 목록을 불러오는 중입니다...
+						</p>
+					)}
 
-						{/* 두 번째 공연 */}
-						<div className="flex-1">
-							<div className="h-80 bg-gray-200 rounded-2xl mb-3" />
-							<div className="flex flex-col gap-y-2">
-								<p className="font-bold text-lg text-gray-900 break-all">
-									와 이거 진짜 제목 길어도 줄 바꿈이 자동으로 가능하네 짱 신기
-								</p>
-								<p className="text-sm text-gray-800 break-all">
-									서울예술의전당
-								</p>
-								<p className="text-sm text-gray-500 break-all">
-									2025-08-01 ~ 2025-08-31
-								</p>
-							</div>
+					{isError && (
+						<div className="text-center py-10">
+							<p className="text-red-500 font-semibold">오류가 발생했습니다.</p>
+							<p className="text-gray-600 mt-2">
+								{error instanceof Error ? error.message : "알 수 없는 에러"}
+							</p>
 						</div>
+					)}
 
-						{/* 세 번째 공연 */}
-						<div className="flex-1">
-							<div className="h-80 bg-gray-200 rounded-2xl mb-3" />
-							<div className="flex flex-col gap-y-2">
-								<p className="font-bold text-lg text-gray-900 break-all">
-									와 이거 진짜 제목 길어도 줄 바꿈이 자동으로 가능하네 짱 신기
-								</p>
-								<p className="text-sm text-gray-800 break-all">
-									서울예술의전당
-								</p>
-								<p className="text-sm text-gray-500 break-all">
-									2025-08-01 ~ 2025-08-31
-								</p>
+					{/* 공연 목록 */}
+					<div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-5 md:gap-6">
+						{performances.map((performance) => (
+							<div
+								role="button"
+								tabIndex={0}
+								onClick={() =>
+									handleClick(performance.id, performance.adultOnly)
+								}
+								onKeyDown={(e) => {
+									if (e.key === "Enter" || e.key === " ")
+										handleClick(performance.id, performance.adultOnly);
+								}}
+								key={performance.id}
+								className="bg-white rounded-2xl shadow-md overflow-hidden transition-transform transform hover:scale-105 hover:shadow-lg">
+								<img
+									src={performance.imageUrl}
+									alt={`${performance.name} 포스터`}
+									className="w-full h-64 sm:h-72 lg:h-80 rounded-2xl mb-1 object-cover bg-gray-200"
+								/>
+								<div className="flex flex-col gap-y-2 p-2">
+									<p className="font-bold text-base text-gray-900 break-all md:text-lg">
+										{performance.name}
+									</p>
+									<p className="text-sm text-gray-800 break-all">
+										{performance.stadiumName}
+									</p>
+									<p className="text-sm text-gray-500 break-all">
+										{performance.startDate} ~ {performance.endDate}
+									</p>
+								</div>
 							</div>
-						</div>
-
-						{/* 네 번째 공연 */}
-						<div className="flex-1">
-							<div className="h-80 bg-gray-200 rounded-2xl mb-3" />
-							<div className="flex flex-col gap-y-2">
-								<p className="font-bold text-lg text-gray-900 break-all">
-									와 이거 진짜 제목 길어도 줄 바꿈이 자동으로 가능하네 짱 신기
-								</p>
-								<p className="text-sm text-gray-800 break-all">
-									서울예술의전당
-								</p>
-								<p className="text-sm text-gray-500 break-all">
-									2025-08-01 ~ 2025-08-31
-								</p>
-							</div>
-						</div>
-
-						{/* 다섯 번째 공연 */}
-						<div className="flex-1">
-							<div className="h-80 bg-gray-200 rounded-2xl mb-3" />
-							<div className="flex flex-col gap-y-2">
-								<p className="font-bold text-lg text-gray-900 break-all">
-									와 이거 진짜 제목 길어도 줄 바꿈이 자동으로 가능하네 짱 신기
-								</p>
-								<p className="text-sm text-gray-800 break-all">
-									서울예술의전당
-								</p>
-								<p className="text-sm text-gray-500 break-all">
-									2025-08-01 ~ 2025-08-31
-								</p>
-							</div>
-						</div>
+						))}
 					</div>
 
-					{/* 5가지 공연 라인 */}
-					<div className="flex gap-x-6 mb-16">
-						{/* 첫 번째 공연 */}
-						<div className="flex-1">
-							<div className="h-80 bg-gray-200 rounded-2xl mb-3" />
-							<div className="flex flex-col gap-y-2">
-								<p className="font-bold text-lg text-gray-900 break-all">
-									와 이거 진짜 제목 길어도 줄 바꿈이 자동으로 가능하네 짱 신기
-								</p>
-								<p className="text-sm text-gray-800 break-all">
-									서울예술의전당
-								</p>
-								<p className="text-sm text-gray-500 break-all">
-									2025-08-01 ~ 2025-08-31
-								</p>
-							</div>
-						</div>
-
-						{/* 두 번째 공연 */}
-						<div className="flex-1">
-							<div className="h-80 bg-gray-200 rounded-2xl mb-3" />
-							<div className="flex flex-col gap-y-2">
-								<p className="font-bold text-lg text-gray-900 break-all">
-									와 이거 진짜 제목 길어도 줄 바꿈이 자동으로 가능하네 짱 신기
-								</p>
-								<p className="text-sm text-gray-800 break-all">
-									서울예술의전당
-								</p>
-								<p className="text-sm text-gray-500 break-all">
-									2025-08-01 ~ 2025-08-31
-								</p>
-							</div>
-						</div>
-
-						{/* 세 번째 공연 */}
-						<div className="flex-1">
-							<div className="h-80 bg-gray-200 rounded-2xl mb-3" />
-							<div className="flex flex-col gap-y-2">
-								<p className="font-bold text-lg text-gray-900 break-all">
-									와 이거 진짜 제목 길어도 줄 바꿈이 자동으로 가능하네 짱 신기
-								</p>
-								<p className="text-sm text-gray-800 break-all">
-									서울예술의전당
-								</p>
-								<p className="text-sm text-gray-500 break-all">
-									2025-08-01 ~ 2025-08-31
-								</p>
-							</div>
-						</div>
-
-						{/* 네 번째 공연 */}
-						<div className="flex-1">
-							<div className="h-80 bg-gray-200 rounded-2xl mb-3" />
-							<div className="flex flex-col gap-y-2">
-								<p className="font-bold text-lg text-gray-900 break-all">
-									와 이거 진짜 제목 길어도 줄 바꿈이 자동으로 가능하네 짱 신기
-								</p>
-								<p className="text-sm text-gray-800 break-all">
-									서울예술의전당
-								</p>
-								<p className="text-sm text-gray-500 break-all">
-									2025-08-01 ~ 2025-08-31
-								</p>
-							</div>
-						</div>
-
-						{/* 다섯 번째 공연 */}
-						<div className="flex-1">
-							<div className="h-80 bg-gray-200 rounded-2xl mb-3" />
-							<div className="flex flex-col gap-y-2">
-								<p className="font-bold text-lg text-gray-900 break-all">
-									와 이거 진짜 제목 길어도 줄 바꿈이 자동으로 가능하네 짱 신기
-								</p>
-								<p className="text-sm text-gray-800 break-all">
-									서울예술의전당
-								</p>
-								<p className="text-sm text-gray-500 break-all">
-									2025-08-01 ~ 2025-08-31
-								</p>
-							</div>
-						</div>
+					{/* 페이지네이션 */}
+					<div className="flex justify-center items-center gap-x-4 mt-12">
+						<button
+							type="button"
+							onClick={() => setPage((p) => p - 1)}
+							disabled={page === 1}
+							className="px-4 py-2 bg-gray-200 rounded-md disabled:opacity-50 disabled:cursor-not-allowed">
+							이전
+						</button>
+						<span>
+							{page} / {pagination?.totalPages ?? 1}
+						</span>
+						<button
+							type="button"
+							onClick={() => setPage((p) => p + 1)}
+							disabled={!pagination?.hasNext}
+							className="px-4 py-2 bg-gray-200 rounded-md disabled:opacity-50 disabled:cursor-not-allowed">
+							다음
+						</button>
 					</div>
 				</div>
 			</main>
-
-			{/* 하단 부분 */}
 			<Footer />
-		</div>
+		</>
 	);
 }

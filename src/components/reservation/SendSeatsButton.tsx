@@ -1,40 +1,54 @@
-import { seatData, seatReservationData } from "../../types/ApiDataTypes.ts";
+import { useNavigate } from "react-router-dom";
 import useElapsedTime from "../../hooks/useElapsedTime.ts";
+import {
+	ReservationRequest,
+	ReservationResponse,
+} from "../../types/ApiDataTypes.ts";
+import fetchPostReservation from "../../api/reservation.ts";
 
 interface SendSeatsButtonProps {
 	performanceId: string;
 	scheduleId: string;
-	seatIdList: seatData[];
+	seatIds: string[];
+	totalAmount: number;
 }
 
 export default function SendSeatsButton({
 	performanceId,
 	scheduleId,
-	seatIdList,
+	seatIds,
+	totalAmount,
 }: SendSeatsButtonProps) {
-	const selectedSeatIds = seatIdList.map((seat) => seat.id);
 	const elapsedTime = useElapsedTime();
+	const navigate = useNavigate();
 
-	const handleSubmit = () => {
+	const handleSubmit = async () => {
 		if (elapsedTime > 600) {
 			alert("예매 가능 시간 초과");
 			window.location.reload();
 			return;
 		}
-
-		const formData: seatReservationData = {
+		const formData: ReservationRequest = {
 			performanceId,
 			scheduleId,
-			seatIdList: selectedSeatIds,
+			seatIds,
+			totalAmount,
 			elapsedTime,
 		};
 
-		console.log("요청 폼 데이터", formData);
+		try {
+			const reservation: ReservationResponse =
+				await fetchPostReservation(formData);
+			navigate("/payments", { state: { reservation } });
+		} catch (error) {
+			console.error(error);
+		}
 	};
 
 	return (
 		<button
 			type="button"
+			className="w-full rounded-lg border border-blue-200 bg-blue-50 py-3 text-base font-bold text-gray-800 hover:bg-gray-300"
 			onClick={handleSubmit}
 			data-testid="send-seats-button"
 			/** 단위 테스트하기 위해, 임시로 생성 & 추후 코드 구성할 때, window 객체 활용 */

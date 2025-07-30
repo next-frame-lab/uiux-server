@@ -2,7 +2,7 @@ import { AfterPaymentInfoData } from "../../types/ApiDataTypes.ts";
 
 const afterPaymentInfoData: AfterPaymentInfoData = {
 	performance: {
-		name: "햄릿",
+		name: "오페라 유령",
 		scheduleDate: "2025-07-15",
 		scheduleTime: "19:30",
 	},

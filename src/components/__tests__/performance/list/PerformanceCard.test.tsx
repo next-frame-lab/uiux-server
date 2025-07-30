@@ -3,82 +3,63 @@ import "@testing-library/jest-dom";
 import PerformanceCard from "../../../performance/list/PerformanceCard.tsx";
 import performanceData from "../../../__mocks__/performanceData.ts";
 
+// useNavigate mocking
+const navigateMock = jest.fn();
+jest.mock("react-router-dom", () => ({
+	...jest.requireActual("react-router-dom"),
+	useNavigate: () => navigateMock,
+}));
+
 /* 공연 카드 렌더링 & 클릭 시, 상세 페이지로 navigate */
 describe("공연 카드 목록 조회", () => {
-	const mockPerformance = performanceData.performanceList[0];
+	const mockList = performanceData.data.performances;
 
-	it("공연 카드에 공연 이름, 공연 장소, 공연 시작/종료 날짜, 공연 평균 별점이 표시된다.", () => {
-		render(
-			<PerformanceCard performance={mockPerformance} onClick={() => {}} />
-		);
-
-		expect(
-			screen.getByAltText("j-hope Tour: HOPE ON THE STAGE [서울] 포스터 이미지")
-		).toBeInTheDocument();
-		expect(
-			screen.getByText("j-hope Tour: HOPE ON THE STAGE [서울]")
-		).toBeInTheDocument();
-		expect(screen.getByText("올림픽공원")).toBeInTheDocument();
-		expect(screen.getByText("4.1")).toBeInTheDocument();
-		expect(screen.getByText("20250228 ~ 20250302")).toBeInTheDocument();
+	beforeEach(() => {
+		navigateMock.mockClear();
 	});
 
-	it("PerformanceCard를 여러 개 렌더링한다면, 각 카드가 정확히 표시된다.", () => {
-		const performances = [
-			mockPerformance,
-			{
-				...mockPerformance,
-				id: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-				name: "2번째 공연",
-			},
-			{
-				...mockPerformance,
-				id: "3fa85f64-5717-4562-b3fc-2c963f66afa7",
-				name: "3번째 공연",
-			},
-		];
+	it("공연 카드에 공연 이름, 공연 장소, 공연 시작/종료 날짜가 표시된다.", () => {
+		render(<PerformanceCard performances={mockList.slice(0, 1)} />);
 
-		performances.forEach((p) => {
-			render(<PerformanceCard performance={p} onClick={() => {}} />);
-		});
+		const first = mockList[0];
+
+		const img = screen.getByAltText(`${first.name} 포스터 이미지`);
+		expect(img).toBeInTheDocument();
+		expect(img).toHaveAttribute("src", "test-file-stub");
+		expect(screen.getByText(first.name)).toBeInTheDocument();
+		expect(screen.getByText(first.stadiumName)).toBeInTheDocument();
 		expect(
-			screen.getByText("j-hope Tour: HOPE ON THE STAGE [서울]")
+			screen.getByText(`${first.startDate} ~ ${first.endDate}`)
 		).toBeInTheDocument();
-		expect(screen.getByText("2번째 공연")).toBeInTheDocument();
-		expect(screen.getByText("3번째 공연")).toBeInTheDocument();
 	});
 
-	it("카드 클릭 시, 상세 페이지 이동 콜백(onClick)이 호출된다.", () => {
-		const handleClick = jest.fn();
+	it("여러 개의 공연을 한 번에 렌더링한다면, 각 카드가 모두 표시된다.", () => {
+		const second = { ...mockList[0], id: "mock-2", name: "공연 이름-2" };
+		const third = { ...mockList[0], id: "mock-3", name: "공연 이름-3" };
+		const three = [mockList[0], second, third];
 
-		render(
-			<PerformanceCard performance={mockPerformance} onClick={handleClick} />
-		);
+		render(<PerformanceCard performances={three} />);
+		expect(screen.getByText(mockList[0].name)).toBeInTheDocument();
+		expect(screen.getByText("공연 이름-2")).toBeInTheDocument();
+		expect(screen.getByText("공연 이름-3")).toBeInTheDocument();
 
-		const card = screen.getByTestId("performanceId");
+		const cards = screen.getAllByTestId("performanceId");
+		expect(cards).toHaveLength(3);
+	});
+
+	it("카드 클릭 시, 공연 상세 페이지로 navigate가 호출된다.", () => {
+		render(<PerformanceCard performances={mockList} />);
+
+		const first = mockList[0];
+		const card = screen.getAllByTestId("performanceId")[0];
 		fireEvent.click(card);
 
-		expect(handleClick).toHaveBeenCalledTimes(1);
-		expect(handleClick).toHaveBeenCalledWith(
-			"c8d1e2a7-4a5b-437b-9d90-7b1a2c3f1231"
-		);
+		expect(navigateMock).toHaveBeenCalledTimes(1);
+		expect(navigateMock).toHaveBeenCalledWith(`/performances/${first.id}`);
 	});
 
-	it("performance prop이 undefined일 시, 렌더링하지 않는다.", () => {
-		render(
-			<PerformanceCard performance={undefined as any} onClick={() => {}} />
-		);
-		expect(screen.queryByTestId("performanceId")).not.toBeInTheDocument();
-	});
-
-	it("onClick이 전달되지 않아도, 클릭 시 에러 없이 작동한다.", () => {
-		const cardRender = () =>
-			render(
-				<PerformanceCard
-					performance={mockPerformance}
-					onClick={undefined as any}
-				/>
-			);
-		expect(cardRender).not.toThrow();
+	it("비어 있다면, '공연이 존재하지 않습니다.' 문구를 표시한다.", () => {
+		render(<PerformanceCard performances={[]} />);
+		expect(screen.getByText("공연이 존재하지 않습니다.")).toBeInTheDocument();
 	});
 });

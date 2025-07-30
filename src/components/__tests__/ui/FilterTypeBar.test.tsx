@@ -1,5 +1,5 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import FilterBar from "../../performance/detail/FilterBar.tsx";
+import FilterBar from "../../ui/FilterBar.tsx";
 
 describe("필터바에서 유형(Type) 선택", () => {
 	it("유형(type) 버튼 클릭 시, onTypeChange 콜백이 호출", () => {
@@ -10,10 +10,10 @@ describe("필터바에서 유형(Type) 선택", () => {
 			<FilterBar onTypeChange={onTypeChange} onGenreChange={onGenreChange} />
 		);
 
-		const typeButton = screen.getByRole("button", { name: "액션" });
+		const typeButton = screen.getByRole("button", { name: "CLASSIC" });
 		fireEvent.click(typeButton);
 
-		expect(onTypeChange).toHaveBeenCalledWith("액션");
+		expect(onTypeChange).toHaveBeenCalledWith("CLASSIC");
 		expect(onGenreChange).not.toHaveBeenCalled();
 
 		fireEvent.click(typeButton);
@@ -39,16 +39,16 @@ describe("필터바에서 유형(Type) 선택", () => {
 			<FilterBar onTypeChange={onTypeChange} onGenreChange={onGenreChange} />
 		);
 
-		const actionButton = screen.getByRole("button", { name: "액션" });
-		const romanceButton = screen.getByRole("button", { name: "로맨스" });
+		const classicButton = screen.getByRole("button", { name: "CLASSIC" });
+		const jazzButton = screen.getByRole("button", { name: "JAZZ" });
 
-		fireEvent.click(actionButton);
-		expect(onTypeChange).toHaveBeenCalledWith("액션");
+		fireEvent.click(classicButton);
+		expect(onTypeChange).toHaveBeenCalledWith("CLASSIC");
 
-		fireEvent.click(romanceButton);
-		expect(onTypeChange).toHaveBeenCalledWith("로맨스");
+		fireEvent.click(jazzButton);
+		expect(onTypeChange).toHaveBeenCalledWith("JAZZ");
 
-		fireEvent.click(romanceButton);
+		fireEvent.click(jazzButton);
 		expect(onTypeChange).toHaveBeenCalledWith(null);
 	});
 });
