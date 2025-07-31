@@ -1,8 +1,7 @@
-import "./App.css";
-import PerformanceDetailPage from "./pages/performance/pages/PerformanceDetailPage.tsx";
+import AppRouter from "./router/AppRouter.tsx";
 
 function App() {
-	return <PerformanceDetailPage />;
+	return <AppRouter />;
 }
 
 export default App;
