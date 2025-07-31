@@ -1,4 +1,4 @@
-import Header from "../../../components/layout/Header.tsx";
+import Header from "../../components/layout/Header.tsx";
 
 export default function LoginPage() {
 	return (

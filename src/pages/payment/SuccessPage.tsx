@@ -1,6 +1,6 @@
-import Header from "../../../components/layout/Header.tsx";
-import Footer from "../../../components/layout/Footer.tsx";
-import PayInformation from "../../../components/layout/PayInformation.tsx";
+import Header from "../../components/layout/Header.tsx";
+import Footer from "../../components/layout/Footer.tsx";
+import PayInformation from "../../components/layout/PayInformation.tsx";
 
 export default function SuccessPage() {
 	return (
