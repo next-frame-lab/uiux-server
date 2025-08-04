@@ -11,6 +11,7 @@
     "test": "NODE_OPTIONS=--experimental-vm-modules jest --watch --passWithNoTests"
   },
   "dependencies": {
+    "@headlessui/react": "^2.2.7",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "swiper": "^11.2.10"
