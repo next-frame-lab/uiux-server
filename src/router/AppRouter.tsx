@@ -8,6 +8,7 @@ import MainPage from "../pages/main/MainPage.tsx";
 import LoginPage from "../pages/login/LoginPage.tsx";
 import PerformancePage from "../pages/performance/PerformancePage.tsx";
 import PerformanceDetailPage from "../pages/performance/PerformanceDetailPage.tsx";
+import SeatSelectPage from "../pages/performance/SeatSelectPage.tsx";
 
 const router = createBrowserRouter(
 	createRoutesFromElements(
@@ -16,6 +17,7 @@ const router = createBrowserRouter(
 			<Route path="login" element={<LoginPage />} />
 			<Route path="performance" element={<PerformancePage />} />
 			<Route path="performance/detail" element={<PerformanceDetailPage />} />
+			<Route path="performance/detail/seat" element={<SeatSelectPage />} />
 		</Route>
 	)
 );
