@@ -1,5 +1,5 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import FilterBar from "../../performance/detail/FilterBar.tsx";
+import FilterBar from "../../performance/list/FilterBar.tsx";
 
 describe("필터바에서 유형(Type) 선택", () => {
 	it("유형(type) 버튼 클릭 시, onTypeChange 콜백이 호출", () => {

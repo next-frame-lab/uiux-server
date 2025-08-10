@@ -1,12 +1,13 @@
 import { PerformanceDetailData } from "../../types/ApiDataTypes.ts";
+import perfImage from "../../assets/images/Performance1.gif";
 
 const performanceDetail: PerformanceDetailData = {
-	id: "c8d1e2a7-4a5b-437b-9d90-7b1a2c3f1234",
-	image: "https://example.com/",
+	id: "mock-1",
+	image: perfImage,
 	name: "오페라 유령",
 	type: "로맨스",
 	genre: "오페라",
-	averageStar: 4.6,
+	averageStar: 4.1,
 	runningTime: 130,
 	description:
 		"전설적인 오페라의 유령이 다시 돌아옵니다. 아름다운 무대와 감동적인 음악을 함께 즐겨보세요.",
