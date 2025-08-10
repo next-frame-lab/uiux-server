@@ -83,6 +83,12 @@ export interface reviewData {
 	pagination: reviewPagination;
 }
 
+/**  공연 리뷰를 등록할 때 사용하는 데이터 타입입니다. */
+export interface createReviewData {
+	star: number;
+	content: string;
+}
+
 /** 예약 가능한 좌석을 선택할 때 사용하는 데이터 타입입니다. */
 export type seatData = {
 	id: string;
