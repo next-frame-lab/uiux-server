@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import ReviewItem from "../../../performance/detail/PerformanceReviewItem.tsx";
+import ReviewItem from "../../../performance/detail/ReviewItem.tsx";
 import performanceReview from "../../../__mocks__/performanceReviewData.ts";
 
 describe("ReviewItem 컴포넌트", () => {

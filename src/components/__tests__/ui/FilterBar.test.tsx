@@ -1,6 +1,6 @@
 /* 필터 UI (유형, 카테고리) */
 import { fireEvent, render, screen } from "@testing-library/react";
-import FilterBar from "../../performance/detail/FilterBar.tsx";
+import FilterBar from "../../performance/list/FilterBar.tsx";
 
 describe("필터바에서 유형(Type) 또는 장르(Genre) 선택", () => {
 	it("초기 렌더링 시, 어떤 유형/장르도 선택하지 않음", () => {

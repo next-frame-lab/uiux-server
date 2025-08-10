@@ -32,7 +32,7 @@ export default function Header() {
 						type="button"
 						className="bg-gray-100 px-3 py-2 rounded-full font-semibold hover:bg-gray-200">
 						<img
-							src="/public/icons/change_mode.png"
+							src="/icons/change_mode.png"
 							alt="라이트모드/다크모드 변경용 버튼입니다"
 						/>
 					</button>
@@ -40,7 +40,7 @@ export default function Header() {
 						type="button"
 						className="bg-gray-100 px-3 py-2 rounded-full font-semibold hover:bg-gray-200">
 						<img
-							src="/public/icons/change_language.png"
+							src="/icons/change_language.png"
 							alt="언어 변경용 버튼입니다"
 						/>
 					</button>

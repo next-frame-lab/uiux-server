@@ -28,8 +28,8 @@ export default function ReviewLikeButton({
 			type="button"
 			onClick={handleToggleLike}
 			data-testid={`${reviewId}`}
-			className={`${liked ? "text-red-500" : "text-gray-500"}`}>
-			❤️ {likeCount}
+			className={`${liked ? "text-yellow-500" : "text-gray-500"}`}>
+			👍 {likeCount}
 		</button>
 	);
 }
