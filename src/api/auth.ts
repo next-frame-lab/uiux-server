@@ -27,7 +27,7 @@ export const loginWithKakao = async (
 
 	// fetch 함수를 사용하여 백엔드 API에 POST 요청을 보냅니다.
 	// '/api' 경로는 아래 Vite 프록시 설정을 통해 백엔드 서버 주소로 변환됩니다.
-	const response = await fetch("/api/auth/login", {
+	const response = await fetch("/api/auth/kakao/login", {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",

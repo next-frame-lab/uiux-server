@@ -1,80 +1,20 @@
 import { http, HttpResponse } from "msw";
-import performanceData from "../components/__mocks__/performanceData.ts";
-import performanceDetailData from "../components/__mocks__/performanceDetailData.ts";
-import performanceReview from "../components/__mocks__/performanceReviewData.ts";
+import type { LoginResponse } from "../api/auth";
 
-const handlers = [
-	http.get(`/performances`, ({ request }) => {
-		const url = new URL(request.url);
-		const page = Number(url.searchParams.get("page") ?? 1);
-		const size = Number(url.searchParams.get("size") ?? 10);
+const mockLoginResponse: LoginResponse = {
+	code: "SUCCESS",
+	data: {
+		accessToken: "mock-accessToken-12345-abcdefg",
+		refreshToken: "mock-refreshToken-12345-abcdefg",
+		imageUrl: "https://cdn.example.com/profile/mock_user.jpg",
+		name: "테스트 유저",
+		age: 25,
+		email: "test.user@example.com",
+	},
+};
 
-		const startIndex = (page - 1) * size;
-		const endIndex = startIndex + size;
-
-		const slicedList = performanceData.performanceList.slice(
-			startIndex,
-			endIndex
-		);
-
-		return HttpResponse.json({
-			performanceList: slicedList,
-			pagination: {
-				page,
-				size,
-				totalItems: performanceData.performanceList.length,
-				totalPages: Math.ceil(performanceData.performanceList.length / size),
-				hasNext: endIndex < performanceData.performanceList.length,
-				hasPrevious: page > 1,
-			},
-		});
-	}),
-
-	http.get(`/performances/:id`, ({ params }) => {
-		const { id } = params;
-
-		if (id !== performanceDetailData.id) {
-			return HttpResponse.json(
-				{ message: "해당 공연 정보를 찾을 수 없습니다." },
-				{ status: 404 }
-			);
-		}
-
-		return HttpResponse.json(performanceDetailData);
-	}),
-
-	http.get(`/performance/:id/reviews`, () => {
-		return HttpResponse.json(performanceReview);
-	}),
-
-	http.post("/performance/:id/reviews", async () => {
-		return HttpResponse.json({
-			code: "SUCCESS",
-			data: {
-				id: "b8c9d3fa-2f1a-4a5d-9e2a-812f7a91cdef",
-				createdAt: "2025-07-11T12:45:00",
-			},
-		});
-	}),
-
-	http.patch("/reviews/:id", async ({ request }) => {
-		const { content } = (await request.json()) as { content: string };
-		return HttpResponse.json({
-			code: "SUCCESS",
-			content,
-		});
-	}),
-
-	http.delete("/reviews/:id", () => {
-		return HttpResponse.json({ success: true });
-	}),
-
-	http.post("/reviews/:id/likes", async ({ request }) => {
-		const { like } = (await request.json()) as { like: boolean };
-		return HttpResponse.json({
-			code: "SUCCESS",
-			data: { likeStatus: like },
-		});
+export const handlers = [
+	http.post("/api/auth/kakao/login", () => {
+		return HttpResponse.json(mockLoginResponse);
 	}),
 ];
-export default handlers;
