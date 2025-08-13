@@ -57,6 +57,14 @@ const handlers = [
 		});
 	}),
 
+	http.patch("/reviews/:id", async ({ request }) => {
+		const { content } = (await request.json()) as { content: string };
+		return HttpResponse.json({
+			code: "SUCCESS",
+			content,
+		});
+	}),
+
 	http.delete("/reviews/:id", () => {
 		return HttpResponse.json({ success: true });
 	}),
