@@ -60,7 +60,7 @@ export interface PerformanceDetailData {
 
 /** 공연 리뷰 목록을 조회할 때 사용하는 데이터 타입입니다. */
 export interface reviewList {
-	id: string;
+	writerId: string;
 	writerName: string;
 	writerProfileImage: string;
 	content: string;

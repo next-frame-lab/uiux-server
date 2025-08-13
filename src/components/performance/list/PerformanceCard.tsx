@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { PerformanceListItem } from "../../../types/ApiDataTypes.ts";
 
 interface Props {
@@ -5,8 +6,9 @@ interface Props {
 }
 
 export default function PerformanceCard({ performances }: Props) {
+	const navigate = useNavigate();
 	const handleClick = (id: string) => {
-		window.location.href = `/performances/${id}`;
+		navigate(`/performances/${id}`);
 	};
 
 	if (performances.length === 0) {
@@ -33,7 +35,7 @@ export default function PerformanceCard({ performances }: Props) {
 								{performance.name}
 							</h2>
 							<p className="text-yellow-500 font-bold">
-								⭐ {performance.averageStar}
+								{performance.averageStar}
 							</p>
 						</div>
 						<p className="text-sm text-gray-500">{performance.stadiumName}</p>

@@ -2,7 +2,7 @@ const clamp = (v: number, min: number, max: number) =>
 	Math.max(min, Math.min(max, v));
 const snap = (v: number, step: number) => Math.round(v / step) * step;
 
-/* 드래그 속도가 생각보다 느려, 추후 수정 예정 */
+// TODO: 드래그 속도가 생각보다 느려, 추후 수정 예정
 const getStarValueFromDrag = (
 	clientX: number,
 	container: HTMLDivElement | null,
