@@ -1,6 +1,16 @@
 import Header from "../../components/layout/Header.tsx";
 
 export default function LoginPage() {
+	// 카카오 로그인 버튼 클릭 시 실행될 핸들러 함수입니다.
+	const handleKakaoLogin = () => {
+		if (window.Kakao) {
+			window.Kakao.Auth.authorize({
+				// 1단계에서 설정한 Redirect URI를 정확히 입력합니다.
+				redirectUri: "http://localhost:5173/auth/kakao/callback",
+			});
+		}
+	};
+
 	return (
 		<div className="min-h-screen bg-gray-50 flex flex-col">
 			{/* 상단 부분 */}
@@ -15,7 +25,7 @@ export default function LoginPage() {
 					</div>
 
 					<div className="flex flex-col items-center space-y-3">
-						<button type="button">
+						<button type="button" onClick={handleKakaoLogin}>
 							<img
 								src="/icons/kakao_login.png"
 								alt="Kakao"
