@@ -14,14 +14,14 @@ describe("공연 후기글 좋아요 버튼", () => {
 
 		render(
 			<ReviewLikeButton
-				reviewId={review.id}
+				reviewId={review.writerId}
 				initialLiked={review.likeStatus}
 				initialLikeCount={review.likeCount}
 				onToggleLike={mockToggleLike}
 			/>
 		);
 
-		const button = screen.getByTestId(`${review.id}`);
+		const button = screen.getByTestId(`${review.writerId}`);
 		expect(button).toHaveTextContent("❤️ 21");
 		expect(button).toHaveClass("text-gray-500");
 	});
@@ -31,14 +31,14 @@ describe("공연 후기글 좋아요 버튼", () => {
 
 		render(
 			<ReviewLikeButton
-				reviewId={review.id}
+				reviewId={review.writerId}
 				initialLiked={review.likeStatus}
 				initialLikeCount={review.likeCount}
 				onToggleLike={mockToggleLike}
 			/>
 		);
 
-		const button = screen.getByTestId(`${review.id}`);
+		const button = screen.getByTestId(`${review.writerId}`);
 		expect(button).toHaveTextContent("❤️ 2");
 		expect(button).toHaveClass("text-red-500");
 
@@ -46,6 +46,6 @@ describe("공연 후기글 좋아요 버튼", () => {
 
 		expect(button).toHaveTextContent("❤️ 1");
 		expect(button).toHaveClass("text-gray-500");
-		expect(mockToggleLike).toHaveBeenCalledWith(review.id, false);
+		expect(mockToggleLike).toHaveBeenCalledWith(review.writerId, false);
 	});
 });

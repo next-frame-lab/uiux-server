@@ -39,7 +39,7 @@ describe("공연 카드 목록 조회", () => {
 		];
 
 		performances.forEach((p) => {
-			render(<PerformanceCard performance={p} onClick={() => {}} />);
+			render(<PerformanceCard performances={p} onClick={() => {}} />);
 		});
 		expect(
 			screen.getByText("j-hope Tour: HOPE ON THE STAGE [서울]")

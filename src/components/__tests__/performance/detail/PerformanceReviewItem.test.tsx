@@ -36,7 +36,7 @@ describe("ReviewItem 컴포넌트", () => {
 			/>
 		);
 
-		expect(screen.queryByTestId(mockReview2.id)).not.toBeInTheDocument();
+		expect(screen.queryByTestId(mockReview2.writerId)).not.toBeInTheDocument();
 	});
 
 	it("likeCount가 20 이상일 시, Best Review 뱃지가 표시된다.", () => {
@@ -49,7 +49,7 @@ describe("ReviewItem 컴포넌트", () => {
 			/>
 		);
 
-		expect(screen.queryByTestId(mockReview1.id)).toBeInTheDocument();
+		expect(screen.queryByTestId(mockReview1.writerId)).toBeInTheDocument();
 		expect(screen.getByText("Best Review")).toBeInTheDocument();
 	});
 
@@ -88,7 +88,10 @@ describe("ReviewItem 컴포넌트", () => {
 		fireEvent.change(textarea, { target: { value: "수정된 후기" } });
 		fireEvent.click(screen.getByText("저장"));
 
-		expect(handleUpdate).toHaveBeenCalledWith(mockReview1.id, "수정된 후기");
+		expect(handleUpdate).toHaveBeenCalledWith(
+			mockReview1.writerId,
+			"수정된 후기"
+		);
 		expect(screen.queryByRole("textbox")).not.toBeInTheDocument();
 	});
 
@@ -105,6 +108,6 @@ describe("ReviewItem 컴포넌트", () => {
 		);
 
 		fireEvent.click(screen.getByText("삭제"));
-		expect(handleDelete).toHaveBeenCalledWith(mockReview1.id);
+		expect(handleDelete).toHaveBeenCalledWith(mockReview1.writerId);
 	});
 });

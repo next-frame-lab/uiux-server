@@ -86,7 +86,7 @@ describe("인피니티 스크롤(후기글) 컴포넌트 호출", () => {
 		render(
 			<InfiniteScroll hasMore onFetchNext={() => {}}>
 				{performanceReview.reviewList.map((review) => (
-					<div key={review.id}>
+					<div key={review.writerId}>
 						<p>{review.writerName}</p>
 						<p>{review.content}</p>
 					</div>
@@ -104,7 +104,7 @@ describe("인피니티 스크롤(후기글) 컴포넌트 호출", () => {
 		render(
 			<InfiniteScroll hasMore={false} onFetchNext={() => {}}>
 				{performanceReview.reviewList.map((review) => (
-					<div key={review.id}>
+					<div key={review.writerId}>
 						<p>{review.writerName}</p>
 						<p>{review.content}</p>
 					</div>
@@ -121,7 +121,7 @@ describe("인피니티 스크롤(후기글) 컴포넌트 호출", () => {
 		render(
 			<InfiniteScroll hasMore onFetchNext={fetchNext}>
 				{performanceReview.reviewList.map((review) => (
-					<div key={review.id}>
+					<div key={review.writerId}>
 						<p>{review.writerName}</p>
 						<p>{review.content}</p>
 					</div>
@@ -142,7 +142,7 @@ describe("인피니티 스크롤(후기글) 컴포넌트 호출", () => {
 		render(
 			<InfiniteScroll hasMore onFetchNext={() => {}}>
 				{performanceReview.reviewList.map((review) => (
-					<div key={review.id}>
+					<div key={review.writerId}>
 						<p>{review.writerName}</p>
 						<p>{review.content}</p>
 					</div>

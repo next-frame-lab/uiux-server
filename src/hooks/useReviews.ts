@@ -25,8 +25,16 @@ export default function useReviews(id: string) {
 		}
 	};
 
-	const handleEditReview = () => {
-		// 수정 API
+	const handleEditReview = async (reviewId: string, content: string) => {
+		const res = await fetch(`/reviews/${reviewId}`, {
+			method: "PATCH",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({ content }),
+		});
+
+		return res.json();
 	};
 
 	const handleDeleteReview = async (reviewId: string) => {

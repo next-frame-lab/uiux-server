@@ -7,7 +7,7 @@ const fetchReviewLikes = async (id: string, like: boolean) => {
 		body: JSON.stringify({ like }),
 	});
 
-	if (!res.ok) throw new Error();
+	if (!res.ok) throw new Error("Failed Review Like Status");
 	return res.json();
 };
 
