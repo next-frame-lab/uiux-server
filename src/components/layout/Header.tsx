@@ -17,7 +17,10 @@ export default function Header() {
 					<p className="text-2xl font-bold">NextFrame</p>
 				</div>
 				<nav className="flex items-center gap-3 space-x-6">
-					<button type="button" className="hover:bg-gray-200">
+					<button
+						type="button"
+						onClick={() => navigate("/")}
+						className="hover:bg-gray-200">
 						메인
 					</button>
 
@@ -31,8 +34,14 @@ export default function Header() {
 
 					<button
 						type="button"
-						onClick={() => navigate("/mypage")}
-						disabled={!isLoggedIn}
+						onClick={() => {
+							if (isLoggedIn) {
+								navigate("/mypage");
+							} else {
+								alert("로그인이 필요한 서비스입니다.");
+								navigate("/login");
+							}
+						}}
 						className="hover:bg-gray-200">
 						마이페이지
 					</button>
