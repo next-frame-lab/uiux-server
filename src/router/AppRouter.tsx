@@ -9,12 +9,16 @@ import LoginPage from "../pages/login/LoginPage.tsx";
 import PerformancePage from "../pages/performance/PerformancePage.tsx";
 import PerformanceDetailPage from "../pages/performance/PerformanceDetailPage.tsx";
 import SeatSelectPage from "../pages/performance/SeatSelectPage.tsx";
+import MyPage from "../pages/mypage/MyPage.tsx";
+import KakaoRedirectPage from "../pages/auth/KakaoRedirectPage.tsx";
 
 const router = createBrowserRouter(
 	createRoutesFromElements(
 		<Route path="/">
 			<Route index element={<MainPage />} />
 			<Route path="login" element={<LoginPage />} />
+			<Route path="mypage" element={<MyPage />} />
+			<Route path="auth/kakao/callback" element={<KakaoRedirectPage />} />
 			<Route path="performances" element={<PerformancePage />} />
 			<Route path="performances/:id" element={<PerformanceDetailPage />} />
 			<Route path="performances/:id/seats" element={<SeatSelectPage />} />

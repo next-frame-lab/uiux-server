@@ -1,4 +1,24 @@
+import { useNavigate } from "react-router-dom";
+import useAuth from "../../hooks/useAuth.ts";
+
 export default function Header() {
+	const navigate = useNavigate();
+	const { isLoggedIn, logout } = useAuth();
+	const handleMainClick = () => {
+		navigate("/");
+	};
+	const handleMyPageClick = () => {
+		if (isLoggedIn) {
+			navigate("/mypage");
+		} else {
+			alert("로그인이 필요한 서비스입니다.");
+			navigate("/login");
+		}
+	};
+	const handleLoginClick = () => {
+		navigate("/login");
+	};
+
 	return (
 		<header className="bg-[#FBFBFB] border-b border-[#E8EDF5]">
 			<div className="max-w-screen-xl mx-auto flex items-center justify-between px-6 py-14">
@@ -11,23 +31,44 @@ export default function Header() {
 					<p className="text-2xl font-bold">NextFrame</p>
 				</div>
 				<nav className="flex items-center gap-3 space-x-6">
-					<button type="button" className="hover:bg-gray-200">
+					<button
+						type="button"
+						onClick={handleMainClick}
+						className="hover:bg-gray-200">
 						메인
 					</button>
+
 					<button type="button" className="hover:bg-gray-200">
 						공연
 					</button>
+
 					<button type="button" className="hover:bg-gray-200">
 						회사 소개
 					</button>
-					<button type="button" className="hover:bg-gray-200">
-						마이페이지
-					</button>
+
 					<button
 						type="button"
-						className="bg-gray-100 px-5 py-2 rounded-full font-semibold hover:bg-gray-200">
-						로그인
+						onClick={handleMyPageClick}
+						className="hover:bg-gray-200">
+						마이페이지
 					</button>
+
+					{isLoggedIn ? (
+						<button
+							type="button"
+							onClick={logout}
+							className="px-5 py-2 font-semibold transition-colors bg-gray-100 text-black rounded-full hover:bg-gray-200">
+							로그아웃
+						</button>
+					) : (
+						<button
+							type="button"
+							onClick={handleLoginClick}
+							className="px-5 py-2 font-semibold transition-colors bg-gray-100 rounded-full hover:bg-gray-200 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700">
+							로그인
+						</button>
+					)}
+
 					<button
 						type="button"
 						className="bg-gray-100 px-3 py-2 rounded-full font-semibold hover:bg-gray-200">
@@ -36,6 +77,7 @@ export default function Header() {
 							alt="라이트모드/다크모드 변경용 버튼입니다"
 						/>
 					</button>
+
 					<button
 						type="button"
 						className="bg-gray-100 px-3 py-2 rounded-full font-semibold hover:bg-gray-200">
