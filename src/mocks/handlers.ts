@@ -2,6 +2,10 @@ import { http, HttpResponse } from "msw";
 import performanceData from "../components/__mocks__/performanceData.ts";
 import performanceDetailData from "../components/__mocks__/performanceDetailData.ts";
 import performanceReview from "../components/__mocks__/performanceReviewData.ts";
+import {
+	mockLoginResponse,
+	mockUserData,
+} from "../components/__mocks__/authData.ts";
 
 const handlers = [
 	http.get(`/performances`, ({ request }) => {
@@ -76,5 +80,23 @@ const handlers = [
 			data: { likeStatus: like },
 		});
 	}),
+
+	// 로그인 요청 핸들러입니다.
+	http.post("/api/auth/kakao/login", () => {
+		return HttpResponse.json(mockLoginResponse);
+	}),
+
+	// 사용자 정보 조회 요청 핸들러입니다.
+	http.get("/api/me", ({ request }) => {
+		const authorizationHeader = request.headers.get("Authorization");
+		if (!authorizationHeader) {
+			return new HttpResponse(null, {
+				status: 401,
+				statusText: "Unauthorized",
+			});
+		}
+		return HttpResponse.json(mockUserData);
+	}),
 ];
+
 export default handlers;
