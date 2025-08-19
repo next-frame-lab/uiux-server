@@ -1,14 +1,12 @@
 // Authorization 헤더를 자동 추가하는 API 클라이언트
 interface FetchOptions extends RequestInit {
 	headers?: Record<string, string>;
-	// body?: unknown;
+	// body?: unkonwn;
 }
 
 const authFetch = async (endpoint: string, options: FetchOptions = {}) => {
 	const accessToken = localStorage.getItem("accessToken");
-	const baseHeaders: Record<string, string> = {
-		"Content-Type": "application/json",
-	};
+	const baseHeaders: Record<string, string> = {};
 
 	if (accessToken) {
 		baseHeaders.Authorization = `Bearer ${accessToken}`;
@@ -20,8 +18,22 @@ const authFetch = async (endpoint: string, options: FetchOptions = {}) => {
 			...baseHeaders,
 			...options.headers,
 		},
-		body: options.body ? JSON.stringify(options.body) : null,
 	};
+
+	const isPlainObject =
+		options.body !== null &&
+		typeof options.body === "object" &&
+		options.body.constructor === Object;
+
+	if (isPlainObject) {
+		finalOptions.headers = {
+			...finalOptions.headers,
+			"Content-Type": "application/json",
+		};
+		finalOptions.body = JSON.stringify(options.body);
+	} else {
+		finalOptions.body = options.body;
+	}
 
 	const response = await fetch(`/api${endpoint}`, finalOptions);
 

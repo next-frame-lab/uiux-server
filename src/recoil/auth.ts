@@ -4,10 +4,22 @@ import { recoilPersist } from "recoil-persist";
 
 const { persistAtom } = recoilPersist();
 
+export interface User {
+	imageUrl: string;
+	name: string;
+	age: number;
+	email: string;
+}
+
 export const userState = atom<User | null>({
 	key: "userState",
 	default: null,
 	effects_UNSTABLE: [persistAtom],
+});
+
+export const kakaoSdkReadyState = atom<boolean>({
+	key: "kakaoSdkReadyState",
+	default: false,
 });
 
 export const authState = selector({
@@ -29,22 +41,4 @@ export const authState = selector({
 			user: null,
 		};
 	},
-});
-
-export interface User {
-	imageUrl: string;
-	name: string;
-	age: number;
-	email: string;
-}
-
-export const isLoggedInState = atom<boolean>({
-	key: "isLoggedInState",
-	default: false,
-	effects_UNSTABLE: [persistAtom],
-});
-
-export const kakaoSdkReadyState = atom<boolean>({
-	key: "kakaoSdkReadyState",
-	default: false,
 });

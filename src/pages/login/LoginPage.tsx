@@ -4,7 +4,7 @@ export default function LoginPage() {
 	const handleKakaoLogin = () => {
 		if (window.Kakao) {
 			window.Kakao.Auth.authorize({
-				redirectUri: "http://localhost:5173/auth/kakao/callback",
+				redirectUri: import.meta.env.VITE_KAKAO_REDIRECT_URI,
 			});
 		}
 	};

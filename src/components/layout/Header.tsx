@@ -64,7 +64,7 @@ export default function Header() {
 						<button
 							type="button"
 							onClick={handleLoginClick}
-							className="px-5 py-2 font-semibold transition-colors bg-gray-100 rounded-full hover:bg-gray-200 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700">
+							className="px-5 py-2 font-semibold transition-colors bg-gray-100 rounded-full hover:bg-gray-200">
 							로그인
 						</button>
 					)}
