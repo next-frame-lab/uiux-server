@@ -17,10 +17,10 @@ export interface LoginResponse {
 const loginWithKakao = async (authCode: string): Promise<LoginResponse> => {
 	return authFetch("/auth/kakao/login", {
 		method: "POST",
-		body: {
+		body: JSON.stringify({
 			provider: "kakao",
 			authCode,
-		},
+		}),
 	});
 };
 
