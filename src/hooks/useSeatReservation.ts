@@ -16,7 +16,6 @@ export default function useSeatReservation() {
 				alert("최대 4개 좌석까지만 선택할 수 있습니다.");
 				return prev;
 			}
-			console.log(`섹션:${seat.section},열:${seat.row},행:${seat.column}`);
 			return [...prev, seat];
 		});
 	}, []);

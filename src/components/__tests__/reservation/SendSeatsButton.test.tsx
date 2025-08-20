@@ -22,7 +22,7 @@ describe("SendSeatsButton 컴포넌트", () => {
 		const data = sendSeatsData[0];
 		mockedUseElapsedTime.mockReturnValue(data.elapsedTime);
 
-		const selectedSeats = selectSeatsAllData.seatList.filter((seat) =>
+		const selectedSeats = selectSeatsAllData.seats.filter((seat) =>
 			data.seatIdList.includes(seat.id)
 		);
 
@@ -42,7 +42,7 @@ describe("SendSeatsButton 컴포넌트", () => {
 		const data = sendSeatsData[1];
 		mockedUseElapsedTime.mockReturnValue(data.elapsedTime);
 
-		const selectedSeats = selectSeatsAllData.seatList.filter((seat) =>
+		const selectedSeats = selectSeatsAllData.seats.filter((seat) =>
 			data.seatIdList.includes(seat.id)
 		);
 
