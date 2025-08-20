@@ -7,28 +7,32 @@ interface SeatProps {
 }
 
 export default function Seat({ seat, isSelected, onClick }: SeatProps) {
-	const { row, column, isLocked } = seat;
+	const { id, row, column, section } = seat;
 	const handleClick = () => {
-		if (!isLocked) {
-			onClick(seat.id);
-		}
+		onClick(seat.id);
 	};
 
-	let seatColor = "bg-gray-100";
-	if (isLocked) seatColor = "bg-gray-300";
-	else if (isSelected) seatColor = "bg-gray-600";
+	const seatColor = isSelected ? "bg-gray-600" : "bg-gray-100";
 
 	return (
-		<button
-			type="button"
-			disabled={isLocked}
-			onClick={handleClick}
-			className={` w-8 h-8 rounded ${seatColor}`}
-			style={{
-				left: `${column * 2.5}rem`,
-				top: `${row * 2.5}rem`,
+		<div
+			role="button"
+			tabIndex={0}
+			onKeyDown={(e) => {
+				if (e.key === "Enter" || e.key === " ") {
+					handleClick();
+				}
 			}}
-			aria-label="seat"
+			onClick={handleClick}
+			className={` w-8 h-8 rounded ${seatColor} `}
+			style={{
+				left: `${(column - 1) * 2.5}rem`,
+				top: `${(row - 1) * 2.5}rem`,
+			}}
+			aria-label={`seat ${section}`}
+			aria-pressed={isSelected}
+			title={section}
+			data-seat-id={id}
 		/>
 	);
 }
