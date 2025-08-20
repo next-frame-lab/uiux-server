@@ -95,11 +95,10 @@ export type seatData = {
 	section: string;
 	row: number;
 	column: number;
-	isLocked: boolean;
 };
 
 export interface selectSeatsData {
-	seatList: seatData[];
+	seats: seatData[];
 }
 
 /** 좌석 예매를 하기 위한 데이터 타입입니다. */
