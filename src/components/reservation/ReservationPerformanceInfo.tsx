@@ -1,6 +1,6 @@
 import { scheduleList } from "../../types/ApiDataTypes.ts";
 import performanceDetail from "../__mocks__/performanceDetailData.ts";
-import { getDaysInMonth, parseYMD } from "../../utils/SperateDateAndTime.ts";
+import { getDaysInMonth, parseYMD } from "../../utils/SeparateDateAndTime.ts";
 
 export default function ReservationPerformanceInfo() {
 	// TODO: 지금은 고정 값을 사용, 추후 PerformanceDetail의 예매하기 버튼을 통해 peformanceId, scheduleId 넘겨주기
