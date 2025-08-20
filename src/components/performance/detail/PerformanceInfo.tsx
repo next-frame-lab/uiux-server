@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { PerformanceDetailData } from "../../../types/ApiDataTypes.ts";
 import ReviewSection from "./ReviewSection.tsx";
 
@@ -8,6 +9,11 @@ interface Props {
 
 export default function PerformanceInfo({ performance }: Props) {
 	const [selectedSchedule, setSelectedSchedule] = useState<string>("");
+	const navigate = useNavigate();
+
+	const handleClick = () => {
+		navigate(`/performances/${performance.id}/seats`);
+	};
 
 	return (
 		<div>
@@ -81,6 +87,7 @@ export default function PerformanceInfo({ performance }: Props) {
 						<div className="mt-20 flex justify-end">
 							<button
 								type="button"
+								onClick={handleClick}
 								className="rounded-lg bg-gray-200 px-6 py-2 font-semibold text-gray-700 hover:bg-gray-300">
 								티켓 예매하기
 							</button>

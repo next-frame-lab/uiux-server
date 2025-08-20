@@ -6,6 +6,7 @@ import {
 	mockLoginResponse,
 	mockUserData,
 } from "../components/__mocks__/authData.ts";
+import selectSeatsAllData from "../components/__mocks__/selectSeatsAllData.ts";
 
 const handlers = [
 	http.get(`/performances`, ({ request }) => {
@@ -96,6 +97,10 @@ const handlers = [
 			});
 		}
 		return HttpResponse.json(mockUserData);
+	}),
+
+	http.get("/stadiums/:id/seat-definitions", () => {
+		return HttpResponse.json(selectSeatsAllData);
 	}),
 ];
 
