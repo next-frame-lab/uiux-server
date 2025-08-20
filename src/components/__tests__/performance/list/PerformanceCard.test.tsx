@@ -5,12 +5,10 @@ import performanceData from "../../../__mocks__/performanceData.ts";
 
 /* 공연 카드 렌더링 & 클릭 시, 상세 페이지로 navigate */
 describe("공연 카드 목록 조회", () => {
-	const mockPerformance = performanceData.performanceList[0];
+	const mockPerformance = performanceData.performanceList;
 
 	it("공연 카드에 공연 이름, 공연 장소, 공연 시작/종료 날짜, 공연 평균 별점이 표시된다.", () => {
-		render(
-			<PerformanceCard performance={mockPerformance} onClick={() => {}} />
-		);
+		render(<PerformanceCard performances={mockPerformance} />);
 
 		expect(
 			screen.getByAltText("j-hope Tour: HOPE ON THE STAGE [서울] 포스터 이미지")
@@ -39,7 +37,7 @@ describe("공연 카드 목록 조회", () => {
 		];
 
 		performances.forEach((p) => {
-			render(<PerformanceCard performances={p} onClick={() => {}} />);
+			render(<PerformanceCard performances={p} />);
 		});
 		expect(
 			screen.getByText("j-hope Tour: HOPE ON THE STAGE [서울]")
@@ -51,9 +49,7 @@ describe("공연 카드 목록 조회", () => {
 	it("카드 클릭 시, 상세 페이지 이동 콜백(onClick)이 호출된다.", () => {
 		const handleClick = jest.fn();
 
-		render(
-			<PerformanceCard performance={mockPerformance} onClick={handleClick} />
-		);
+		render(<PerformanceCard performances={mockPerformance} />);
 
 		const card = screen.getByTestId("performanceId");
 		fireEvent.click(card);
@@ -65,20 +61,13 @@ describe("공연 카드 목록 조회", () => {
 	});
 
 	it("performance prop이 undefined일 시, 렌더링하지 않는다.", () => {
-		render(
-			<PerformanceCard performance={undefined as any} onClick={() => {}} />
-		);
+		render(<PerformanceCard performances={undefined as any} />);
 		expect(screen.queryByTestId("performanceId")).not.toBeInTheDocument();
 	});
 
 	it("onClick이 전달되지 않아도, 클릭 시 에러 없이 작동한다.", () => {
 		const cardRender = () =>
-			render(
-				<PerformanceCard
-					performance={mockPerformance}
-					onClick={undefined as any}
-				/>
-			);
+			render(<PerformanceCard performances={mockPerformance} />);
 		expect(cardRender).not.toThrow();
 	});
 });

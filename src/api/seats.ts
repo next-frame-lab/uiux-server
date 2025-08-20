@@ -6,7 +6,7 @@ const fetchSeats = async (id: string) => {
 		},
 	});
 
-	if (!res.ok) throw new Error("공연 목록을 불러오지 못했습니다.");
+	if (!res.ok) throw new Error("좌석 정보를 불러오지 못했습니다.");
 	return res.json();
 };
 

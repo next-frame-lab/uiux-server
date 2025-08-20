@@ -9,20 +9,20 @@ describe("SeatSelector 컴포넌트", () => {
 	it("seatList만큼 Seat 컴포넌트를 렌더링한다.", () => {
 		render(
 			<SeatSelector
-				seatList={mockSeatList.seatList}
+				seatList={mockSeatList.seats}
 				selectedSeatIds={[]}
 				onSelect={() => {}}
 			/>
 		);
 
 		const buttons = screen.getAllByRole("button", { name: "seat" });
-		expect(buttons).toHaveLength(mockSeatList.seatList.length);
+		expect(buttons).toHaveLength(mockSeatList.seats.length);
 	});
 
 	it("selectedSeatIds에 포함된 좌석만 isSelected 상태로 렌더링된다.", () => {
 		render(
 			<SeatSelector
-				seatList={mockSeatList.seatList}
+				seatList={mockSeatList.seats}
 				selectedSeatIds={["3fa85f64-5717-4562-b3fc-2c963f66afa2"]}
 				onSelect={() => {}}
 			/>
@@ -39,7 +39,7 @@ describe("SeatSelector 컴포넌트", () => {
 
 		render(
 			<SeatSelector
-				seatList={mockSeatList.seatList}
+				seatList={mockSeatList.seats}
 				selectedSeatIds={[]}
 				onSelect={mockSelect}
 			/>
