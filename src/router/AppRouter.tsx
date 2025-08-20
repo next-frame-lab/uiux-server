@@ -8,9 +8,9 @@ import MainPage from "../pages/main/MainPage.tsx";
 import LoginPage from "../pages/login/LoginPage.tsx";
 import PerformancePage from "../pages/performance/PerformancePage.tsx";
 import PerformanceDetailPage from "../pages/performance/PerformanceDetailPage.tsx";
-import SeatSelectPage from "../pages/performance/SeatSelectPage.tsx";
 import MyPage from "../pages/mypage/MyPage.tsx";
 import KakaoRedirectPage from "../pages/auth/KakaoRedirectPage.tsx";
+import SeatSelectPage from "../pages/reservation/SeatSelectPage.tsx";
 
 const router = createBrowserRouter(
 	createRoutesFromElements(

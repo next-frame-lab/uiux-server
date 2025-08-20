@@ -13,8 +13,11 @@ export default function TotalDisplay({
 	const totalPrice = calculateTotalPrice(selectedSeats, seatPricesList);
 
 	return (
-		<>
-			<div>총 가격: {totalPrice.toLocaleString()}원</div>
-		</>
+		<div className="text-sm text-gray-600">
+			총 가격:{" "}
+			<span className="text-lg text-black font-semibold">
+				{totalPrice.toLocaleString()}원
+			</span>
+		</div>
 	);
 }
