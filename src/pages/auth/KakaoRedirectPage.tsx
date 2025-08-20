@@ -2,13 +2,12 @@ import { useEffect, useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 import authApi from "../../api/auth.ts";
-import { isLoggedInState, userState } from "../../recoil/auth.ts";
+import { userState } from "../../recoil/auth.ts";
 
 export default function KakaoRedirectPage() {
 	const [searchParams] = useSearchParams();
 	const navigate = useNavigate();
 
-	const setIsLoggedIn = useSetRecoilState(isLoggedInState);
 	const setUser = useSetRecoilState(userState);
 
 	const [isLoading, setIsLoading] = useState(true);
@@ -22,11 +21,9 @@ export default function KakaoRedirectPage() {
 				localStorage.setItem("accessToken", accessToken);
 				localStorage.setItem("refreshToken", refreshToken);
 
-				setIsLoggedIn(true);
 				setUser(userData);
 
 				console.log(`${userData.name}님, 환영합니다!`);
-
 				navigate("/");
 			} catch (error) {
 				console.error("로그인에 실패했습니다:", error);
@@ -45,7 +42,7 @@ export default function KakaoRedirectPage() {
 			alert("비정상적인 접근입니다.");
 			navigate("/login");
 		}
-	}, [navigate, searchParams, setIsLoggedIn, setUser]);
+	}, [navigate, searchParams, setUser]);
 
 	if (isLoading) {
 		return <div>로그인 처리 중입니다. 잠시만 기다려주세요...</div>;
