@@ -28,6 +28,7 @@ export interface PerformanceData {
 
 /** 공연 ID를 통해 공연의 상세 정보를 조회하는 데이터 타입입니다. */
 export type stadium = {
+	id: string;
 	name: string;
 	address: string;
 };
@@ -101,24 +102,19 @@ export interface selectSeatsData {
 	seats: seatData[];
 }
 
-/** 좌석 예매를 하기 위한 데이터 타입입니다. */
-export interface seatReservationData {
-	performanceId: string;
-	scheduleId: string;
-	seatIdList: string[];
-	elapsedTime: number;
-}
+/** 좌석 잠금 상태 여부를 판단할 때 사용하는 데이터 타입입니다. */
+export type seatStateData = {
+	id: string;
+	isLocked: boolean;
+};
+
+export type SeatWithState = seatData & { isLocked: boolean };
 
 /** 좌석을 예약한 공연의 정보들을 불러올 때 사용하는 데이터 타입입니다. */
 export type reservationPerformance = {
 	name: string;
 	scheduleDate: string;
 	scheduleTime: string;
-};
-
-export type reservationStadium = {
-	name: string;
-	address: string;
 };
 
 export type reservationSeats = {
@@ -128,10 +124,20 @@ export type reservationSeats = {
 };
 
 export interface reservationData {
-	id: string;
+	code: string;
+	reservationId: string;
 	performance: reservationPerformance;
-	stadium: reservationStadium;
-	seatList: reservationSeats[];
+	seats: reservationSeats[];
+	totalAmount: number;
+}
+
+/** 선택한 좌석 요청을 보낼 때, 사용하는 데이터 타입입니다. */
+export interface ReservationRequest {
+	performanceId: string;
+	scheduleId: string;
+	seatIds: string[];
+	elapsedTime: number;
+	totalAmount: number;
 }
 
 /** 예약한 좌석에 대한 결제 정보들을 불러올 때 사용하는 데이터 타입입니다.(결제 전) */

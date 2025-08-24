@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { PerformanceDetailData } from "../../../types/ApiDataTypes.ts";
 import ReviewSection from "./ReviewSection.tsx";
@@ -8,11 +8,25 @@ interface Props {
 }
 
 export default function PerformanceInfo({ performance }: Props) {
-	const [selectedSchedule, setSelectedSchedule] = useState<string>("");
+	const [selectedScheduleId, setSelectedScheduleId] = useState<string>("");
+
+	useEffect(() => {
+		if (!selectedScheduleId && performance.scheduleList.length > 0) {
+			setSelectedScheduleId(performance.scheduleList[0].id);
+		}
+	}, [performance.scheduleList, selectedScheduleId]);
+
 	const navigate = useNavigate();
 
 	const handleClick = () => {
-		navigate(`/performances/${performance.id}/seats`);
+		navigate(`/performances/${performance.id}/seats`, {
+			state: {
+				performanceId: performance.id,
+				scheduleId: selectedScheduleId,
+				seatPrices: performance.seatPrices,
+				stadiumId: performance.stadium.id,
+			},
+		});
 	};
 
 	return (
@@ -72,11 +86,11 @@ export default function PerformanceInfo({ performance }: Props) {
 						<div className="mt-16">
 							<h2 className="text-xl font-bold">관람 일정 & 시간 선택</h2>
 							<select
-								value={selectedSchedule}
-								onChange={(e) => setSelectedSchedule(e.target.value)}
+								value={selectedScheduleId}
+								onChange={(e) => setSelectedScheduleId(e.target.value)}
 								className="mt-2 w-full rounded-lg border border-gray-300 bg-white p-3">
 								{performance.scheduleList.map((s) => (
-									<option key={s.id} value={`${s.date} - ${s.time}`}>
+									<option key={s.id} value={s.id}>
 										{s.date} {s.time}
 									</option>
 								))}
@@ -88,6 +102,7 @@ export default function PerformanceInfo({ performance }: Props) {
 							<button
 								type="button"
 								onClick={handleClick}
+								disabled={!selectedScheduleId}
 								className="rounded-lg bg-gray-200 px-6 py-2 font-semibold text-gray-700 hover:bg-gray-300">
 								티켓 예매하기
 							</button>
