@@ -13,6 +13,7 @@ const performanceDetail: PerformanceDetailData = {
 		"전설적인 오페라의 유령이 다시 돌아옵니다. 아름다운 무대와 감동적인 음악을 함께 즐겨보세요.",
 	adultOnly: true,
 	stadium: {
+		id: "baea5498-7cee-41e7-aa8e-b13d89e884e7",
 		name: "부산문화회관",
 		address: "부산광역시 남구 유엔로 123",
 	},

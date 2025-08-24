@@ -1,10 +1,10 @@
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import { render, screen } from "@testing-library/react";
 import performanceDetail from "../../__mocks__/performanceDetailData.ts";
-import ReservationPerformanceInfo from "../../reservation/ReservationPerformanceInfo.tsx";
+import ReservationInfo from "../../reservation/ReservationInfo.tsx";
 import "@testing-library/jest-dom";
 
-describe("ReservationPerformanceInfo 컴포넌트", () => {
+describe("ReservationInfo 컴포넌트", () => {
 	const validPerformanceId = performanceDetail.id;
 	const validSchedule = performanceDetail.scheduleList[0];
 	const invalidPerformanceId = "invalid-performance-id";
@@ -17,7 +17,7 @@ describe("ReservationPerformanceInfo 컴포넌트", () => {
 				<Routes>
 					<Route
 						path="/reservation/:performanceId/:scheduleId"
-						element={<ReservationPerformanceInfo />}
+						element={<ReservationInfo />}
 					/>
 				</Routes>
 			</MemoryRouter>
