@@ -1,10 +1,10 @@
-import { useState } from "react";
-import { seatData } from "../../types/ApiDataTypes.ts";
+import { useMemo, useState } from "react";
+import { SeatWithState } from "../../types/ApiDataTypes.ts";
 import SeatSectionModal from "./SeatSectionModal.tsx";
 import SelectedSeatsInfo from "./SelectedSeatsInfo.tsx";
 
 interface SeatSelectorProps {
-	seatList: seatData[];
+	seatList: SeatWithState[];
 	selectedSeatIds: string[];
 	onSelect: (seatId: string) => void;
 }
@@ -18,6 +18,18 @@ export default function SeatSelector({
 	onSelect,
 }: SeatSelectorProps) {
 	const [openSection, setOpenSection] = useState<Section | null>(null);
+
+	const availableBySection = useMemo(() => {
+		return SECTIONS.reduce<Record<Section, number>>(
+			(acc, sec) => {
+				acc[sec] = seatList.filter(
+					(s) => s.section === sec && !s.isLocked
+				).length;
+				return acc;
+			},
+			{} as Record<Section, number>
+		);
+	}, [seatList]);
 
 	const currentSeats = openSection
 		? seatList.filter((s) => s.section === openSection)
@@ -47,7 +59,7 @@ export default function SeatSelector({
 							</div>
 						</div>
 						<div className="text-xs text-gray-500">
-							{seatList.filter((s) => s.section === sec).length} seats
+							{availableBySection[sec] ?? 0} seats
 						</div>
 					</div>
 				))}

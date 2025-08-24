@@ -7,6 +7,8 @@ import {
 	mockUserData,
 } from "../components/__mocks__/authData.ts";
 import selectSeatsAllData from "../components/__mocks__/selectSeatsAllData.ts";
+import seatsStateData from "../components/__mocks__/seatsStatesData.ts";
+import reservationData from "../components/__mocks__/reservationData.ts";
 
 const handlers = [
 	http.get(`/performances`, ({ request }) => {
@@ -101,6 +103,14 @@ const handlers = [
 
 	http.get("/stadiums/:id/seat-definitions", () => {
 		return HttpResponse.json(selectSeatsAllData);
+	}),
+
+	http.get("/schedules/:id/seat-states", () => {
+		return HttpResponse.json(seatsStateData);
+	}),
+
+	http.post("/reservation", () => {
+		return HttpResponse.json(reservationData);
 	}),
 ];
 

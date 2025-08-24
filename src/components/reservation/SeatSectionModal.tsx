@@ -1,10 +1,10 @@
-import { seatData } from "../../types/ApiDataTypes.ts";
+import { SeatWithState } from "../../types/ApiDataTypes.ts";
 import Seat from "./Seat.tsx";
 
 interface SeatSectionModalProps {
 	open: boolean;
 	section: "A" | "B" | "C" | "D" | "E" | "F" | null;
-	seats: seatData[];
+	seats: SeatWithState[];
 	selectedSeatIds: string[];
 	onSelect: (seatId: string) => void;
 	onClose: () => void;
@@ -19,6 +19,26 @@ export default function SeatSectionModal({
 	onClose,
 }: SeatSectionModalProps) {
 	if (!open || !section) return null;
+
+	const renderSeat = (seat: SeatWithState) => {
+		const locked = seat.isLocked;
+		const selected = selectedSeatIds.includes(seat.id);
+
+		const handleClick = () => {
+			if (locked) return;
+			onSelect(seat.id);
+		};
+
+		return (
+			<Seat
+				key={seat.id}
+				seat={seat}
+				isSelected={selected}
+				onClick={handleClick}
+				disabled={locked}
+			/>
+		);
+	};
 
 	return (
 		<div
@@ -43,14 +63,7 @@ export default function SeatSectionModal({
 				</div>
 
 				<div className="mt-4 justify-center inline-grid gap-1 [grid-template-columns:repeat(20,2rem)] [grid-auto-rows:2rem]">
-					{seats.map((seat) => (
-						<Seat
-							key={seat.id}
-							seat={seat}
-							isSelected={selectedSeatIds.includes(seat.id)}
-							onClick={onSelect}
-						/>
-					))}
+					{seats.map(renderSeat)}
 				</div>
 			</div>
 		</div>
