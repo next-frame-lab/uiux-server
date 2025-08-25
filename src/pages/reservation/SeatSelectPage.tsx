@@ -13,13 +13,15 @@ import CombineSeatsWithState from "../../utils/CombineSeatsWithState.ts";
 import calculateTotalPrice from "../../utils/CalculatePrice.ts";
 import SendSeatsButton from "../../components/reservation/SendSeatsButton.tsx";
 import useSeatsState from "../../hooks/useSeatsState.ts";
-import { TbRefresh } from "react-icons/tb";
+// import { TbRefresh } from "react-icons/tb";
+
+const TIMEOUT_MS = 10 * 60 * 10; //
 
 export default function SeatSelectPage() {
 	const { selectedSeats, selectedSeatIds, toggleSeat, resetSelection } =
 		useSeatReservation();
 	// 시간 조절
-	const startAt = useMemo(() => new Date(Date.now() + 10 * 60 * 10), []);
+	const startAt = useMemo(() => new Date(Date.now() + TIMEOUT_MS), []);
 	const [ready, setReady] = useState(() => Date.now() >= startAt.getTime());
 
 	const location = useLocation() as {
@@ -45,8 +47,7 @@ export default function SeatSelectPage() {
 		staleTime: 60 * 1000,
 	});
 
-	const { data: seatStateDataResponse, refetch: refetchSeatStates } =
-		useSeatsState(scheduleId, ready, selectedSeatIds.length > 0);
+	const { data: seatStateDataResponse } = useSeatsState(scheduleId, ready);
 
 	useEffect(() => {
 		resetSelection();
@@ -90,11 +91,11 @@ export default function SeatSelectPage() {
 									<h2 className="mt-2 font-semibold text-gray-700">
 										좌석 선택
 									</h2>
-									<button
-										type="button"
-										onClick={() => refetchSeatStates()}>
-										<TbRefresh />
-									</button>
+
+									{/* 새로고침 버튼 임시로 제거 */}
+									{/*<button type="button" onClick={() => refetchSeatStates()}>*/}
+									{/*	<TbRefresh />*/}
+									{/*</button>*/}
 								</div>
 								<div className="w-full bg-gray-600 text-center border-none rounded-sm p-2 mb-4 mt-4">
 									SCREEN
