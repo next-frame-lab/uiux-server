@@ -13,7 +13,6 @@ import CombineSeatsWithState from "../../utils/CombineSeatsWithState.ts";
 import calculateTotalPrice from "../../utils/CalculatePrice.ts";
 import SendSeatsButton from "../../components/reservation/SendSeatsButton.tsx";
 import useSeatsState from "../../hooks/useSeatsState.ts";
-// import { TbRefresh } from "react-icons/tb";
 
 const TIMEOUT_MS = 10 * 60 * 10; //
 

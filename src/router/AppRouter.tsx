@@ -11,6 +11,9 @@ import PerformanceDetailPage from "../pages/performance/PerformanceDetailPage.ts
 import MyPage from "../pages/mypage/MyPage.tsx";
 import KakaoRedirectPage from "../pages/auth/KakaoRedirectPage.tsx";
 import SeatSelectPage from "../pages/reservation/SeatSelectPage.tsx";
+import PaymentPage from "../pages/payment/PaymentPage.tsx";
+import SuccessPage from "../pages/payment/SuccessPage.tsx";
+import FailPage from "../pages/payment/FailPage.tsx";
 
 const router = createBrowserRouter(
 	createRoutesFromElements(
@@ -22,6 +25,9 @@ const router = createBrowserRouter(
 			<Route path="performances" element={<PerformancePage />} />
 			<Route path="performances/:id" element={<PerformanceDetailPage />} />
 			<Route path="performances/:id/seats" element={<SeatSelectPage />} />
+			<Route path="payments" element={<PaymentPage />} />
+			<Route path="payments/success" element={<SuccessPage />} />
+			<Route path="payments/fail" element={<FailPage />} />
 		</Route>
 	)
 );

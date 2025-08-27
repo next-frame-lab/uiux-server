@@ -1,6 +1,11 @@
-import { ReservationRequest } from "../types/ApiDataTypes.ts";
+import {
+	ReservationRequest,
+	ReservationResponse,
+} from "../types/ApiDataTypes.ts";
 
-const fetchPostReservation = async (body: ReservationRequest) => {
+const fetchPostReservation = async (
+	body: ReservationRequest
+): Promise<ReservationResponse> => {
 	const res = await fetch("/reservation", {
 		method: "POST",
 		headers: {

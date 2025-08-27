@@ -13,7 +13,10 @@ async function enableMocking() {
 
 	const { default: worker } = await import("./mocks/browser");
 
-	return worker.start();
+	// 결제 SDK 사용으로 인한 문제 해결을 위해, unhandledRequest를 bypass로 설정
+	return worker.start({
+		onUnhandledRequest: "bypass",
+	});
 }
 
 const queryClient = new QueryClient();

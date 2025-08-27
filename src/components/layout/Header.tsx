@@ -4,9 +4,7 @@ import useAuth from "../../hooks/useAuth.ts";
 export default function Header() {
 	const navigate = useNavigate();
 	const { isLoggedIn, logout } = useAuth();
-	const handleMainClick = () => {
-		navigate("/");
-	};
+
 	const handleMyPageClick = () => {
 		if (isLoggedIn) {
 			navigate("/mypage");
@@ -15,10 +13,6 @@ export default function Header() {
 			navigate("/login");
 		}
 	};
-	const handleLoginClick = () => {
-		navigate("/login");
-	};
-
 	return (
 		<header className="bg-[#FBFBFB] border-b border-[#E8EDF5]">
 			<div className="max-w-screen-xl mx-auto flex items-center justify-between px-6 py-14">
@@ -33,12 +27,15 @@ export default function Header() {
 				<nav className="flex items-center gap-3 space-x-6">
 					<button
 						type="button"
-						onClick={handleMainClick}
+						onClick={() => navigate("/")}
 						className="hover:bg-gray-200">
 						메인
 					</button>
 
-					<button type="button" className="hover:bg-gray-200">
+					<button
+						type="button"
+						onClick={() => navigate("/performances")}
+						className="hover:bg-gray-200">
 						공연
 					</button>
 
@@ -63,7 +60,7 @@ export default function Header() {
 					) : (
 						<button
 							type="button"
-							onClick={handleLoginClick}
+							onClick={() => navigate("/login")}
 							className="px-5 py-2 font-semibold transition-colors bg-gray-100 rounded-full hover:bg-gray-200">
 							로그인
 						</button>
