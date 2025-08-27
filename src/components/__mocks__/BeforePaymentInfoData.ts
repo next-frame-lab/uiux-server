@@ -2,7 +2,7 @@ import { BeforePaymentInfoData } from "../../types/ApiDataTypes.ts";
 
 const beforePaymentInfoData: BeforePaymentInfoData = {
 	performance: {
-		name: "j-hope Tour: HOPE ON THE STAGE [서울]",
+		name: "오페라 유령",
 		scheduleDate: "2025-02-28",
 		scheduleTime: "19:00",
 	},

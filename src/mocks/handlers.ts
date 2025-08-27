@@ -9,6 +9,7 @@ import {
 import selectSeatsAllData from "../components/__mocks__/selectSeatsAllData.ts";
 import seatsStateData from "../components/__mocks__/seatsStatesData.ts";
 import reservationData from "../components/__mocks__/reservationData.ts";
+import { ConfirmPaymentRequest } from "../types/ApiDataTypes.ts";
 
 const handlers = [
 	http.get(`/performances`, ({ request }) => {
@@ -112,6 +113,29 @@ const handlers = [
 	http.post("/reservation", () => {
 		return HttpResponse.json(reservationData);
 	}),
-];
 
+	// 결제 승인 요청 핸들러입니다.
+	http.post("/api/v1/payments/confirm", async ({ request }) => {
+		const { orderId, amount, paymentKey } =
+			(await request.json()) as ConfirmPaymentRequest;
+
+		// 간단한 유효성 검사
+		if (!orderId || !amount || !paymentKey) {
+			return HttpResponse.json(
+				{ code: "INVALID_REQUEST", message: "Invalid request parameters" },
+				{ status: 400 }
+			);
+		}
+
+		// 성공적인 결제 승인 응답 예시
+		return HttpResponse.json({
+			code: "SUCCESS",
+			data: {
+				reservationId: "resJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9",
+				totalAmount: 10000,
+			},
+			message: null,
+		});
+	}),
+];
 export default handlers;

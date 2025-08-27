@@ -57,6 +57,9 @@ importers:
       '@testing-library/user-event':
         specifier: ^14.6.1
         version: 14.6.1(@testing-library/dom@10.4.0)
+      '@tosspayments/tosspayments-sdk':
+        specifier: ^2.3.7
+        version: 2.3.7
       '@types/jest':
         specifier: ^30.0.0
         version: 30.0.0
@@ -1168,6 +1171,9 @@ packages:
     engines: {node: '>=12', npm: '>=6'}
     peerDependencies:
       '@testing-library/dom': '>=7.21.4'
+
+  '@tosspayments/tosspayments-sdk@2.3.7':
+    resolution: {integrity: sha512-FTN+KNf8ruF9ydHzNAq/PKf/GYdJJOAS1Mwj3voJfIQ8cJacrKuwsanRh1l8uIcIZhTISCMdGl5DOex43u+3ng==}
 
   '@tybys/wasm-util@0.10.0':
     resolution: {integrity: sha512-VyyPYFlOMNylG45GoAe0xDoLwWuowvf92F9kySqzYh8vmYm7D2u4iUJKa1tOUpS70Ku13ASrOkS4ScXFsTaCNQ==}
@@ -4752,6 +4758,8 @@ snapshots:
   '@testing-library/user-event@14.6.1(@testing-library/dom@10.4.0)':
     dependencies:
       '@testing-library/dom': 10.4.0
+
+  '@tosspayments/tosspayments-sdk@2.3.7': {}
 
   '@tybys/wasm-util@0.10.0':
     dependencies:
