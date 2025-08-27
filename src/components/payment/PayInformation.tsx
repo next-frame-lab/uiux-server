@@ -1,4 +1,16 @@
-export default function PayInformation() {
+import { ReservationResponse } from "../../types/ApiDataTypes.ts";
+
+export default function PayInformation({
+	reservation,
+}: {
+	reservation: ReservationResponse;
+}) {
+	const { performance, seats, totalAmount } = reservation.data;
+
+	const seatText = seats
+		.map((s) => `${s.section}-${s.row}-${s.column}`)
+		.join(", ");
+
 	return (
 		<div>
 			<div className="grid grid-cols-2 gap-x-8">
@@ -13,7 +25,9 @@ export default function PayInformation() {
 					{/* 공연명 */}
 					<div className="border-b border-gray-300 py-3">
 						<p className="text-gray-500 py-2">공연명</p>
-						<p className="font-semibold text-xl text-gray-900">햄릿</p>
+						<p className="font-semibold text-xl text-gray-900">
+							{performance.name}
+						</p>
 					</div>
 				</div>
 
@@ -21,7 +35,9 @@ export default function PayInformation() {
 					{/* 공연 날짜 */}
 					<div className="border-b border-gray-300 py-3">
 						<p className="text-gray-500 py-2">공연 날짜</p>
-						<p className="font-semibold text-xl text-gray-900">2025-07-15</p>
+						<p className="font-semibold text-xl text-gray-900">
+							{performance.scheduleDate}
+						</p>
 					</div>
 				</div>
 			</div>
@@ -31,7 +47,9 @@ export default function PayInformation() {
 					{/* 공연 시간 */}
 					<div className="py-3">
 						<p className="text-gray-500 py-2">공연 시간</p>
-						<p className="font-semibold text-xl text-gray-900">19:30</p>
+						<p className="font-semibold text-xl text-gray-900">
+							{performance.scheduleTime}
+						</p>
 					</div>
 				</div>
 
@@ -39,9 +57,7 @@ export default function PayInformation() {
 					{/* 공연 좌석 */}
 					<div className="py-3">
 						<p className="text-gray-500 py-2">공연 좌석</p>
-						<p className="font-semibold text-xl text-gray-900">
-							A구역 1열 13좌석
-						</p>
+						<p className="font-semibold text-xl text-gray-900">{seatText}</p>
 					</div>
 				</div>
 			</div>
@@ -50,7 +66,9 @@ export default function PayInformation() {
 				{/* 공연 가격 */}
 				<div className="gap-x-8 py-3">
 					<p className="text-gray-500 py-2">공연 가격</p>
-					<p className="font-semibold text-xl text-gray-900">13000원</p>
+					<p className="font-semibold text-xl text-gray-900">
+						{totalAmount.toLocaleString()}원
+					</p>
 				</div>
 			</div>
 		</div>

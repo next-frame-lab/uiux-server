@@ -1,5 +1,9 @@
+import { useNavigate } from "react-router-dom";
 import useElapsedTime from "../../hooks/useElapsedTime.ts";
-import { ReservationRequest } from "../../types/ApiDataTypes.ts";
+import {
+	ReservationRequest,
+	ReservationResponse,
+} from "../../types/ApiDataTypes.ts";
 import fetchPostReservation from "../../api/reservation.ts";
 
 interface SendSeatsButtonProps {
@@ -16,6 +20,7 @@ export default function SendSeatsButton({
 	totalAmount,
 }: SendSeatsButtonProps) {
 	const elapsedTime = useElapsedTime();
+	const navigate = useNavigate();
 
 	const handleSubmit = async () => {
 		if (elapsedTime > 600) {
@@ -32,7 +37,10 @@ export default function SendSeatsButton({
 		};
 
 		try {
-			await fetchPostReservation(formData);
+			const reservation: ReservationResponse =
+				await fetchPostReservation(formData);
+			console.log("/reservation 응답:", reservation);
+			navigate("/payments", { state: { reservation } });
 		} catch (error) {
 			console.error(error);
 		}

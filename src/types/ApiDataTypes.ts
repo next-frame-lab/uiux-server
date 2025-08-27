@@ -125,10 +125,12 @@ export type reservationSeats = {
 
 export interface reservationData {
 	code: string;
-	reservationId: string;
-	performance: reservationPerformance;
-	seats: reservationSeats[];
-	totalAmount: number;
+	data: {
+		reservationId: string;
+		performance: reservationPerformance;
+		seats: reservationSeats[];
+		totalAmount: number;
+	};
 }
 
 /** 선택한 좌석 요청을 보낼 때, 사용하는 데이터 타입입니다. */
@@ -138,6 +140,17 @@ export interface ReservationRequest {
 	seatIds: string[];
 	elapsedTime: number;
 	totalAmount: number;
+}
+
+/** 선택한 좌석 요청을 받을 때, 사용하는 데이터 타입입니다. */
+export interface ReservationResponse {
+	code: string;
+	data: {
+		reservationId: string;
+		performance: reservationPerformance;
+		seats: reservationSeats[];
+		totalAmount: number;
+	};
 }
 
 /** 예약한 좌석에 대한 결제 정보들을 불러올 때 사용하는 데이터 타입입니다.(결제 전) */
@@ -159,13 +172,15 @@ export interface BeforePaymentInfoData {
 	totalAmount: number;
 }
 
-/** 예약한 좌석에 대한 결제 방식을 보낼 때 사용하는 데이터 타입입니다. */
-export type PaymentMethodData = {
-	paymentMethod: string;
-};
-
 /** 예약한 좌석에 대한 결제 정보들을 불러올 때 사용하는 데이터 타입입니다.(결제 후) */
 export interface AfterPaymentInfoData {
 	performance: paymentPerformance;
 	seats: paymentSeats[];
+}
+
+/** 결제 서버에 결제 승인 요청할 때 사용되는 데이터 타입입니다. */
+export interface ConfirmPaymentRequest {
+	orderId: string;
+	amount: number;
+	paymentKey: string;
 }
