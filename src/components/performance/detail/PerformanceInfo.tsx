@@ -11,20 +11,18 @@ export default function PerformanceInfo({ performance }: Props) {
 	const [selectedScheduleId, setSelectedScheduleId] = useState<string>("");
 
 	useEffect(() => {
-		if (!selectedScheduleId && performance.scheduleList.length > 0) {
-			setSelectedScheduleId(performance.scheduleList[0].id);
-		}
-	}, [performance.scheduleList, selectedScheduleId]);
+		setSelectedScheduleId(performance.data.performanceSchedules[0].id ?? "");
+	}, [performance.data.id]);
 
 	const navigate = useNavigate();
 
 	const handleClick = () => {
-		navigate(`/performances/${performance.id}/seats`, {
+		navigate(`/performances/${performance.data.id}/seats`, {
 			state: {
-				performanceId: performance.id,
+				performanceId: performance.data.id,
 				scheduleId: selectedScheduleId,
-				seatPrices: performance.seatPrices,
-				stadiumId: performance.stadium.id,
+				seatPrices: performance.data.seatSectionPrices,
+				stadiumId: performance.data.stadium.id,
 			},
 		});
 	};
@@ -36,8 +34,8 @@ export default function PerformanceInfo({ performance }: Props) {
 					{/* 공연 포스터 + 기본 정보 */}
 					<div className="sticky top-8 self-start">
 						<img
-							src={performance.image}
-							alt={`${performance.name} 포스터`}
+							src={performance.data.imageUrl}
+							alt={`${performance.data.name} 포스터`}
 							className="aspect-[3/4] h-[700px] bg-gray-200 rounded-2xl object-cover cursor-pointer"
 						/>
 					</div>
@@ -45,36 +43,37 @@ export default function PerformanceInfo({ performance }: Props) {
 					{/* 공연 상세 정보 */}
 					<div className="mt-2 col-span-2">
 						<p className="text-4xl font-bold text-gray-900">
-							{performance.name}
+							{performance.data.name}
 						</p>
 						<p className="font-bold mt-4 gap-y-2 text-sm text-gray-600">
-							평점 : {performance.averageStar}점
+							평점 : {performance.data.averageStar}점
 						</p>
 						<p className="mt-4 text-sm text-gray-600">
-							타입 : {performance.type}
+							타입 : {performance.data.type}
 						</p>
 						<p className="mt-4 text-sm text-gray-600">
-							장르 : {performance.genre}
+							장르 : {performance.data.genre}
 						</p>
 						<p className="mt-4 text-sm text-gray-600">
-							공연 시간 : {performance.runningTime}분
+							공연 시간 : {performance.data.runningTime}분
 						</p>
 						<p className="mt-4 text-sm text-gray-600">
-							장소 : {performance.stadium.name} {performance.stadium.address}
+							장소 : {performance.data.stadium.name}{" "}
+							{performance.data.stadium.address}
 						</p>
 						<p className="mt-4 text-sm text-gray-600">
 							공연 날짜 :{" "}
-							{performance.scheduleList
+							{performance.data.performanceSchedules
 								.map((s) => s.date)
-								.filter((v, i, arr) => arr.indexOf(v) === i) // 중복 제거
-								.join("~")}
+								.filter((v, i, arr) => arr.indexOf(v) === i)
+								.join(" ~ ")}
 						</p>
 
 						{/* 좌석 가격 */}
 						<div className="mt-16">
 							<h2 className="text-xl font-bold">좌석 가격</h2>
 							<div className="mt-2 flex flex-col text-gray-800 gap-1">
-								{performance.seatPrices.map((seat) => (
+								{performance.data.seatSectionPrices.map((seat) => (
 									<p key={seat.section}>
 										{seat.section}석 : {seat.price.toLocaleString()}원
 									</p>
@@ -89,7 +88,7 @@ export default function PerformanceInfo({ performance }: Props) {
 								value={selectedScheduleId}
 								onChange={(e) => setSelectedScheduleId(e.target.value)}
 								className="mt-2 w-full rounded-lg border border-gray-300 bg-white p-3">
-								{performance.scheduleList.map((s) => (
+								{performance.data.performanceSchedules.map((s) => (
 									<option key={s.id} value={s.id}>
 										{s.date} {s.time}
 									</option>
@@ -112,13 +111,15 @@ export default function PerformanceInfo({ performance }: Props) {
 						<div className="mt-16">
 							<div className="pt-10">
 								<p className="text-2xl font-bold">공연 소개</p>
-								<p className="mt-4 text-gray-700">{performance.description}</p>
+								<p className="mt-4 text-gray-700">
+									{performance.data.description}
+								</p>
 							</div>
 						</div>
 
 						{/* 리뷰 */}
 						<ReviewSection
-							performanceId={performance.id}
+							performanceId={performance.data.id}
 							currentUserId="c8d1e2a7-4a5b-437b-9d90-7b1a2c3f1235"
 						/>
 					</div>

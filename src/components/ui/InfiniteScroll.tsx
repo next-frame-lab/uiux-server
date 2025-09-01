@@ -4,7 +4,7 @@ interface InfiniteScrollProps {
 	children: React.ReactNode;
 	hasMore: boolean;
 	onFetchNext: () => void;
-	delay?: number;
+	delay: number;
 }
 
 export default function InfiniteScroll({

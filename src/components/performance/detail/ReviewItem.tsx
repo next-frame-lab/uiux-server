@@ -23,7 +23,7 @@ export default function ReviewItem({
 		e.preventDefault();
 		if (!editedContent.trim()) return;
 
-		onUpdate(review.writerId, editedContent);
+		onUpdate(review.id, editedContent);
 		setIsEditing(false);
 	};
 
@@ -40,7 +40,7 @@ export default function ReviewItem({
 			<div className="flex items-center gap-4 mb-4">
 				<img
 					className="h-10 w-10 rounded-full object-cover"
-					src={review.writerProfileImage}
+					src={review.writerProfileImageUrl}
 					alt={`${review.writerName} 프로필`}
 				/>
 				<div className="flex flex-col">
@@ -51,7 +51,7 @@ export default function ReviewItem({
 				</div>
 				{review.likeCount >= 20 && (
 					<span
-						data-testid={`${review.writerId}`}
+						data-testid={`${review.id}`}
 						className="inline-block text-xs font-medium text-yellow-600 bg-yellow-100 px-2 py-1 rounded-full ml-auto">
 						Best Review
 					</span>
@@ -87,7 +87,7 @@ export default function ReviewItem({
 					<p className="text-sm text-gray-800 mb-2">{review.content}</p>
 					{/* 좋아요 버튼 들어갈 위치 */}
 					<ReviewLikeButton
-						reviewId={review.writerId}
+						reviewId={review.id}
 						initialLiked={review.likeStatus}
 						initialLikeCount={review.likeCount}
 						onToggleLike={handleToggleLike}
@@ -103,7 +103,7 @@ export default function ReviewItem({
 							<button
 								type="button"
 								className="px-3 py-1 text-sm rounded-md bg-red-500 text-white hover:bg-red-600"
-								onClick={() => onDelete(review.writerId)}>
+								onClick={() => onDelete(review.id)}>
 								삭제
 							</button>
 						</div>

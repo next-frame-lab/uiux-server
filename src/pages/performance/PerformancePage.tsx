@@ -3,16 +3,30 @@ import Header from "../../components/layout/Header.tsx";
 import PerformanceCard from "../../components/performance/list/PerformanceCard.tsx";
 import usePerformances from "../../hooks/usePerformances.ts";
 import InfiniteScroll from "../../components/ui/InfiniteScroll.tsx";
+import { AppErrorCode, statusMessage } from "../../lib/apiClient.ts";
 
 export default function PerformancePage() {
-	const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } =
-		usePerformances();
+	const {
+		data,
+		fetchNextPage,
+		hasNextPage,
+		error,
+		isFetchingNextPage,
+		status,
+	} = usePerformances();
 
 	if (status === "loading") return <p>로딩 중</p>;
-	if (status === "error") return <p>공연 목록을 불러오는 데 실패했습니다.</p>;
+	if (status === "error") {
+		const code = error?.status as AppErrorCode | undefined;
+
+		if (code) {
+			return <p>에러 발생: {statusMessage[code]}</p>;
+		}
+		return <p> 알 수 없는 오류가 발생했습니다.</p>;
+	}
 
 	const performances =
-		data?.pages.flatMap((page) => page.performanceList) ?? [];
+		data?.pages.flatMap((page) => page.data.performances) ?? [];
 	return (
 		<div>
 			{/* 상단 부분 */}
@@ -46,11 +60,10 @@ export default function PerformancePage() {
 						onFetchNext={fetchNextPage}
 						delay={1000}>
 						<PerformanceCard performances={performances} />
-						{isFetchingNextPage && <p>로딩 ui 보여주기</p>}
+						{isFetchingNextPage}
 					</InfiniteScroll>
 				</div>
 			</main>
-
 			{/* 하단 부분 */}
 			<Footer />
 		</div>

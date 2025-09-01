@@ -12,7 +12,8 @@ import reservationData from "../components/__mocks__/reservationData.ts";
 import { ConfirmPaymentRequest } from "../types/ApiDataTypes.ts";
 
 const handlers = [
-	http.get(`/performances`, ({ request }) => {
+	// performance - 공연 관련 API
+	http.get(`/api/v1/performances`, ({ request }) => {
 		const url = new URL(request.url);
 		const page = Number(url.searchParams.get("page") ?? 1);
 		const size = Number(url.searchParams.get("size") ?? 10);
@@ -20,42 +21,40 @@ const handlers = [
 		const startIndex = (page - 1) * size;
 		const endIndex = startIndex + size;
 
-		const slicedList = performanceData.performanceList.slice(
+		const slicedList = performanceData.data.performances.slice(
 			startIndex,
 			endIndex
 		);
 
 		return HttpResponse.json({
-			performanceList: slicedList,
+			code: "SUCCESS",
+			data: {
+				performances: slicedList,
+			},
 			pagination: {
 				page,
 				size,
-				totalItems: performanceData.performanceList.length,
-				totalPages: Math.ceil(performanceData.performanceList.length / size),
-				hasNext: endIndex < performanceData.performanceList.length,
+				totalItems: performanceData.data.performances.length,
+				totalPages: Math.ceil(performanceData.data.performances.length / size),
+				hasNext: endIndex < performanceData.data.performances.length,
 				hasPrevious: page > 1,
 			},
 		});
 	}),
 
-	http.get(`/performances/:id`, ({ params }) => {
+	http.get(`/api/v1/performances/:id`, ({ params }) => {
 		const { id } = params;
 
-		if (id !== performanceDetailData.id) {
-			return HttpResponse.json(
-				{ message: "해당 공연 정보를 찾을 수 없습니다." },
-				{ status: 404 }
-			);
-		}
-
-		return HttpResponse.json(performanceDetailData);
+		if (id === performanceDetailData.data.id)
+			return HttpResponse.json(performanceDetailData);
 	}),
 
-	http.get(`/performance/:id/reviews`, () => {
+	// Review - 공연 리뷰 관련 API
+	http.get(`/api/v1/performances/:id/reviews`, () => {
 		return HttpResponse.json(performanceReview);
 	}),
 
-	http.post("/performance/:id/reviews", async () => {
+	http.post("/api/v1/performances/:id/reviews", async () => {
 		return HttpResponse.json({
 			code: "SUCCESS",
 			data: {
@@ -65,19 +64,21 @@ const handlers = [
 		});
 	}),
 
-	http.patch("/reviews/:id", async ({ request }) => {
-		const { content } = (await request.json()) as { content: string };
+	http.patch("/api/v1/reviews/:id", async () => {
 		return HttpResponse.json({
 			code: "SUCCESS",
-			content,
+			data: {
+				id: "b8c9d3fa-2f1a-4a5d-9e2a-812f7a91cdef",
+				updatedAt: "2025-07-11T12:45:00",
+			},
 		});
 	}),
 
-	http.delete("/reviews/:id", () => {
+	http.delete("/api/v1/reviews/:id", () => {
 		return HttpResponse.json({ success: true });
 	}),
 
-	http.post("/reviews/:id/likes", async ({ request }) => {
+	http.post("/api/v1/reviews/:id/likes", async ({ request }) => {
 		const { like } = (await request.json()) as { like: boolean };
 		return HttpResponse.json({
 			code: "SUCCESS",

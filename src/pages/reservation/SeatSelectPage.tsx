@@ -83,7 +83,7 @@ export default function SeatSelectPage() {
 					<div className="flex gap-x-16">
 						<div className="flex-1">
 							<h1 className="text-4xl font-bold text-gray-900">
-								{performanceDetail.name}
+								{performanceDetail.data.name}
 							</h1>
 							<div className="h-full flex flex-col">
 								<div className="flex flex-row justify-between text-center items-center text-2xl">
@@ -118,7 +118,9 @@ export default function SeatSelectPage() {
 							<section className="mt-8 border-t border-gray-200 pt-6">
 								<TotalDisplay
 									selectedSeats={selectedSeats}
-									seatPricesList={performanceDetail.seatPrices as seatPrices[]}
+									seatPricesList={
+										performanceDetail.data.seatSectionPrices as seatPrices[]
+									}
 								/>
 							</section>
 
