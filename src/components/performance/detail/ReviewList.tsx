@@ -18,11 +18,11 @@ export default function ReviewList({
 		<div className="mt-4">
 			{reviews.map((review) => (
 				<ReviewItem
-					key={review.writerId}
+					key={review.id}
 					review={review}
-					isMine={review.writerId === currentUserId}
+					isMine={review.id === currentUserId}
 					onUpdate={onEdit}
-					onDelete={() => onDelete(review.writerId)}
+					onDelete={() => onDelete(review.id)}
 				/>
 			))}
 		</div>

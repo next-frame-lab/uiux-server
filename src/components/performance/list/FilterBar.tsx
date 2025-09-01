@@ -6,15 +6,22 @@ export interface FilterBarProps {
 }
 
 const types = [
-	"스릴러",
-	"로맨스",
-	"코미디",
-	"드라마",
-	"호러",
-	"판타지",
-	"액션",
+	"CLASSIC",
+	"JAZZ",
+	"CHILDRENS_SONG",
+	"BALLET",
+	"ROCK",
+	"HIP_HOP",
 ];
-const genres = ["대중음악", "뮤지컬", "연극", "클래식", "오페라", "국악"];
+
+const genres = [
+	"CONCERT",
+	"MUSICAL",
+	"CHILDRENS_THEATER",
+	"DANCE",
+	"PLAY",
+	"OPERA",
+];
 
 export default function FilterBar({
 	onTypeChange,

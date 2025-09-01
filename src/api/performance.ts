@@ -1,13 +1,16 @@
-const fetchPerformances = async (page: number) => {
-	const res = await fetch(`/performances?page=${page}&size=10`, {
-		method: "GET",
-		headers: {
-			"Content-Type": "application/json",
-		},
-	});
+import requestJSON from "../lib/apiClient.ts";
+import { PerformanceData } from "../types/ApiDataTypes.ts";
 
-	if (!res.ok) throw new Error("공연 목록을 불러오지 못했습니다.");
-	return res.json();
+const fetchPerformances = async (
+	page: number,
+	size = 10
+): Promise<PerformanceData> => {
+	const url = `/api/v1/performances?${new URLSearchParams({
+		page: String(page),
+		size: String(size),
+	})}`;
+
+	return requestJSON(url, { method: "GET" });
 };
 
 export default fetchPerformances;
