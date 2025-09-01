@@ -1,14 +1,13 @@
 /** 공연 목록을 조회 및 검색하기 위한 데이터 타입입니다. */
 export interface PerformanceListItem {
 	id: string;
-	image: string;
 	name: string;
+	imageUrl: string;
 	type: string;
 	genre: string;
 	stadiumName: string;
 	startDate: string;
 	endDate: string;
-	averageStar: number;
 	adultOnly: boolean;
 }
 
@@ -22,7 +21,10 @@ export interface PerformancePagination {
 }
 
 export interface PerformanceData {
-	performanceList: PerformanceListItem[];
+	code: string;
+	data: {
+		performances: PerformanceListItem[];
+	};
 	pagination: PerformancePagination;
 }
 
@@ -45,29 +47,35 @@ export type seatPrices = {
 };
 
 export interface PerformanceDetailData {
-	id: string;
-	image: string;
-	name: string;
-	type: string;
-	genre: string;
-	averageStar: number;
-	runningTime: number;
-	description: string;
-	adultOnly: boolean;
-	stadium: stadium;
-	scheduleList: scheduleList[];
-	seatPrices: seatPrices[];
+	code: string;
+	data: {
+		id: string;
+		imageUrl: string;
+		name: string;
+		type: string;
+		genre: string;
+		averageStar: number;
+		runningTime: number;
+		description: string;
+		adultOnly: boolean;
+		ticketOpenTime: string;
+		ticketCloseTime: string;
+		stadium: stadium;
+		performanceSchedules: scheduleList[];
+		seatSectionPrices: seatPrices[];
+	};
 }
 
 /** 공연 리뷰 목록을 조회할 때 사용하는 데이터 타입입니다. */
 export interface reviewList {
-	writerId: string;
+	id: string;
 	writerName: string;
-	writerProfileImage: string;
+	writerProfileImageUrl: string;
 	content: string;
 	likeStatus: boolean;
 	likeCount: number;
 	createdAt: string;
+	updatedAt: string;
 }
 
 export interface reviewPagination {
@@ -80,8 +88,11 @@ export interface reviewPagination {
 }
 
 export interface reviewData {
-	reviewList: reviewList[];
-	pagination: reviewPagination;
+	code: string;
+	data: {
+		reviews: reviewList[];
+		pagination: reviewPagination;
+	};
 }
 
 /**  공연 리뷰를 등록할 때 사용하는 데이터 타입입니다. */

@@ -1,13 +1,30 @@
-const fetchPerformanceReview = async (id: string) => {
-	const res = await fetch(`/performance/${id}/reviews`, {
-		method: "GET",
-		headers: {
-			"Content-Type": "application/json",
-		},
-	});
+import requestJSON from "../lib/apiClient.ts";
+import { reviewData } from "../types/ApiDataTypes.ts";
 
-	if (!res.ok) throw new Error("리뷰 데이터를 불러올 수 없습니다.");
-	return res.json();
+const fetchGetReview = async (id: string) => {
+	return requestJSON<reviewData>(`/api/v1/performances/${id}/reviews`, {
+		method: "GET",
+	});
 };
 
-export default fetchPerformanceReview;
+const fetchPostReview = async (id: string, content: string, star: number) => {
+	return requestJSON(`/api/v1/performances/${id}/reviews`, {
+		method: "POST",
+		body: JSON.stringify({ content, star }),
+	});
+};
+
+const fetchPatchReview = async (reviewId: string, content: string) => {
+	return requestJSON(`/api/v1/reviews/${reviewId}`, {
+		method: "PATCH",
+		body: JSON.stringify({ content }),
+	});
+};
+
+const fetchDeleteReview = async (reviewId: string) => {
+	return requestJSON(`/api/v1/reviews/${reviewId}`, {
+		method: "DELETE",
+	});
+};
+
+export { fetchGetReview, fetchPostReview, fetchPatchReview, fetchDeleteReview };

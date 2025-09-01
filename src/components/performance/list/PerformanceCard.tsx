@@ -26,7 +26,7 @@ export default function PerformanceCard({ performances }: Props) {
 					onClick={() => handleClick(performance.id)}>
 					<img
 						className="w-full object-cover"
-						src={performance.image}
+						src={performance.imageUrl}
 						alt={`${performance.name} 포스터 이미지`}
 					/>
 					<div className="p-4 space-y-2">
@@ -34,9 +34,6 @@ export default function PerformanceCard({ performances }: Props) {
 							<h2 className="text-lg font-semibold truncate">
 								{performance.name}
 							</h2>
-							<p className="text-yellow-500 font-bold">
-								{performance.averageStar}
-							</p>
 						</div>
 						<p className="text-sm text-gray-500">{performance.stadiumName}</p>
 						<p className="text-xs text-gray-400">

@@ -13,12 +13,14 @@ export default function ReservationInfo() {
 	const location = useLocation();
 	const state = (location.state ?? {}) as Partial<StateProps>;
 
-	if (performanceDetail.id !== state.performanceId) {
+	if (performanceDetail.data.id !== state.performanceId) {
 		return <p>공연 ID가 일치하지 않습니다. 잘못된 접근입니다.</p>;
 	}
 
 	const schedule: scheduleList | undefined =
-		performanceDetail.scheduleList.find((s) => s.id === state.scheduleId);
+		performanceDetail.data.performanceSchedules.find(
+			(s) => s.id === state.scheduleId
+		);
 
 	if (!schedule) {
 		console.log(schedule);
@@ -26,8 +28,9 @@ export default function ReservationInfo() {
 	}
 
 	const selected =
-		performanceDetail.scheduleList.find((s) => s.id === state.scheduleId) ??
-		performanceDetail.scheduleList[0];
+		performanceDetail.data.performanceSchedules.find(
+			(s) => s.id === state.scheduleId
+		) ?? performanceDetail.data.performanceSchedules[0];
 
 	return (
 		<>
@@ -49,7 +52,7 @@ export default function ReservationInfo() {
 			<section className="mt-8 border-t border-gray-200 pt-6">
 				<h3 className="text-lg font-bold">좌석 가격 안내</h3>
 				<div className="mt-4 grid grid-cols-2 gap-4">
-					{performanceDetail.seatPrices.map((seat) => (
+					{performanceDetail.data.seatSectionPrices.map((seat) => (
 						<div key={seat.section}>
 							<p className="text-sm text-gray-500">{seat.section}석</p>
 							<p className="font-semibold">{seat.price.toLocaleString()}원</p>
