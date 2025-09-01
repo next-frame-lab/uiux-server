@@ -52,7 +52,7 @@ export default function TossPaymentCheckout({
 		}
 
 		fetchPayment();
-	}, [VITE_TOSS_CLIENT_KEY, customerKey]);
+	}, [elapsedTime, navigate]); // 추 후, OAuth와 연결 시, customerKey가 들어갈 예정
 
 	async function requestPayment() {
 		// 결제 요청하기 전, orderId, amount를 서버에 저장

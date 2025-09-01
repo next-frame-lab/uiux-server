@@ -15,7 +15,7 @@ export default function FailPage() {
 			<main className="bg-[#FBFBFB]">
 				<div className="mx-auto flex max-w-2xl flex-col items-center gap-y-6">
 					<div className="max-w-7xl mx-auto py-40">
-						<h1 className="text-center text-5xl font-bold pb-28">결제 성공!</h1>
+						<h1 className="text-center text-5xl font-bold pb-28">결제 실패</h1>
 
 						<h2 className="text-center text-xl pb-10">
 							결제 실패하였습니다. 다시 시도해주세요.
