@@ -11,7 +11,7 @@ export default function PerformanceInfo({ performance }: Props) {
 	const [selectedScheduleId, setSelectedScheduleId] = useState<string>("");
 
 	useEffect(() => {
-		setSelectedScheduleId(performance.data.performanceSchedules[0].id ?? "");
+		setSelectedScheduleId(performance.data.performanceSchedules[0]?.id ?? "");
 	}, [performance.data.id]);
 
 	const navigate = useNavigate();
