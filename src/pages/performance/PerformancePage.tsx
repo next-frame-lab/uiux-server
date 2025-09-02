@@ -60,7 +60,7 @@ export default function PerformancePage() {
 						onFetchNext={fetchNextPage}
 						delay={1000}>
 						<PerformanceCard performances={performances} />
-						{isFetchingNextPage}
+						{isFetchingNextPage && <p>로딩 중..</p>}
 					</InfiniteScroll>
 				</div>
 			</main>
