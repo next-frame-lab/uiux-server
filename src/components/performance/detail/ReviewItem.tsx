@@ -8,6 +8,8 @@ interface ReviewItemProps {
 	isMine: boolean;
 	onUpdate: (id: string, content: string) => void;
 	onDelete: (id: string) => void;
+	isAuthenticated: boolean;
+	onRequireLogin: () => void;
 }
 
 export default function ReviewItem({
@@ -15,6 +17,8 @@ export default function ReviewItem({
 	isMine,
 	onDelete,
 	onUpdate,
+	isAuthenticated,
+	onRequireLogin,
 }: ReviewItemProps) {
 	const [isEditing, setIsEditing] = useState(false);
 	const [editedContent, setEditedContent] = useState(review.content);
@@ -28,6 +32,10 @@ export default function ReviewItem({
 	};
 
 	const handleToggleLike = async (reviewId: string, newLiked: boolean) => {
+		if (!isAuthenticated) {
+			onRequireLogin();
+			return;
+		}
 		try {
 			await fetchReviewLikes(reviewId, newLiked);
 		} catch (err) {

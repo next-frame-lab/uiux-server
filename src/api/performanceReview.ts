@@ -1,29 +1,33 @@
-import requestJSON from "../lib/apiClient.ts";
+import { authedJSON } from "../lib/apiClient.ts";
 import { reviewData } from "../types/ApiDataTypes.ts";
 
 const fetchGetReview = async (id: string) => {
-	return requestJSON<reviewData>(`/api/v1/performances/${id}/reviews`, {
+	return authedJSON<reviewData>(`/api/v1/performances/${id}/reviews`, {
 		method: "GET",
+		headers: { "Content-Type": "application/json" },
 	});
 };
 
 const fetchPostReview = async (id: string, content: string, star: number) => {
-	return requestJSON(`/api/v1/performances/${id}/reviews`, {
+	return authedJSON(`/api/v1/performances/${id}/reviews`, {
 		method: "POST",
+		headers: { "Content-Type": "application/json" },
 		body: JSON.stringify({ content, star }),
 	});
 };
 
 const fetchPatchReview = async (reviewId: string, content: string) => {
-	return requestJSON(`/api/v1/reviews/${reviewId}`, {
+	return authedJSON(`/api/v1/reviews/${reviewId}`, {
 		method: "PATCH",
+		headers: { "Content-Type": "application/json" },
 		body: JSON.stringify({ content }),
 	});
 };
 
 const fetchDeleteReview = async (reviewId: string) => {
-	return requestJSON(`/api/v1/reviews/${reviewId}`, {
+	return authedJSON(`/api/v1/reviews/${reviewId}`, {
 		method: "DELETE",
+		headers: { "Content-Type": "application/json" },
 	});
 };
 

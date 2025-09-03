@@ -9,32 +9,41 @@ export const statusMessage: Record<AppErrorCode, string> = {
 	500: "서버 내부 오류",
 };
 
-const makeError = (code: number, msg: string) => {
-	const err = new Error(msg) as Error & { status?: number };
-	err.status = code;
+const makeError = (code: number, msg: string): ApiError => {
+	const err = new Error(msg) as ApiError;
+	err.status = code as AppErrorCode;
 	return err;
 };
 
-type Handle401 = () => void;
+export interface Options extends RequestInit {
+	withAuth?: boolean;
+	headers?: HeadersInit;
+	body?: BodyInit | null;
+}
 
 export default async function requestJSON<T>(
-	input: RequestInfo,
-	init?: RequestInit,
-	onAuthorized?: Handle401 // 401 시, 호출되는 콜백 함수 (로그아웃/리다이렉트)
+	url: string,
+	opts: Options = {}
 ): Promise<T> {
-	const res = await fetch(input, {
-		...init,
-		headers: {
-			"Content-Type": "application/json",
-		},
-	});
+	const { withAuth = true, headers: userHeaders, ...rest } = opts;
+
+	const headers = new Headers(userHeaders);
+
+	if (withAuth) {
+		const token = localStorage.getItem("accessToken");
+		if (token && !headers.has("Authorization")) {
+			headers.set("Authorization", `Bearer ${token}`);
+		}
+	}
+
+	const res = await fetch(url, { ...rest, headers });
 
 	const body = await res.json();
 
 	if (res.status !== 200) {
 		switch (res.status) {
 			case 401:
-				onAuthorized?.();
+				localStorage.removeItem("accessToken");
 				throw makeError(401, statusMessage[401]);
 			case 400:
 			case 404:
@@ -46,6 +55,18 @@ export default async function requestJSON<T>(
 				throw new Error(`Http Error: ${res.status}`);
 		}
 	}
-
 	return body as T;
+}
+
+// Headers - Authorization이 필요 없는 경우
+export function publicJSON<T>(url: string, opts: Omit<Options, "withAuth">) {
+	return requestJSON<T>(url, { ...opts, withAuth: false });
+}
+
+// Headers - Authorization이 필요한 경우
+export function authedJSON<T>(
+	url: string,
+	opts: Omit<Options, "withAuth"> = {}
+) {
+	return requestJSON<T>(url, { ...opts, withAuth: true });
 }

@@ -41,8 +41,8 @@ export default function SuccessPage() {
 
 				const d = json?.data ?? json ?? {};
 				const normalized: PaymentData = {
-					reservationId: d.reservationId ?? d.orderId ?? null,
-					totalAmount: d.totalAmount ?? d.amount ?? null,
+					reservationId: d.reservationId ?? null,
+					totalAmount: d.totalAmount ?? null,
 					raw: d,
 				};
 
