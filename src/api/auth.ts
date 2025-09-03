@@ -1,22 +1,12 @@
 // 로그인, 정보 조회를 위한 API 호출 함수 정의
-import authFetch from "../lib/authClient.ts";
 import type { User } from "../recoil/auth.ts";
-
-export interface LoginResponse {
-	code: string;
-	data: {
-		accessToken: string;
-		refreshToken: string;
-		imageUrl: string;
-		name: string;
-		age: number;
-		email: string;
-	};
-}
+import { authedJSON, publicJSON } from "../lib/apiClient.ts";
+import { LoginResponse } from "../types/ApiDataTypes.ts";
 
 const loginWithKakao = async (authCode: string): Promise<LoginResponse> => {
-	return authFetch("/auth/kakao/login", {
+	return publicJSON(`/api/v1/auth/kakao/login`, {
 		method: "POST",
+		headers: { "Content-Type": "application/json" },
 		body: JSON.stringify({
 			provider: "kakao",
 			authCode,
@@ -25,8 +15,9 @@ const loginWithKakao = async (authCode: string): Promise<LoginResponse> => {
 };
 
 const fetchMyInfo = async (): Promise<User> => {
-	return authFetch("/me", {
+	return authedJSON(`/api/v1/me`, {
 		method: "GET",
+		headers: { "Content-Type": "application/json" },
 	});
 };
 

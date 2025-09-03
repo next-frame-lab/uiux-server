@@ -9,6 +9,7 @@ import { ApiError, AppErrorCode, statusMessage } from "../../lib/apiClient.ts";
 
 export default function PerformanceDetailPage() {
 	const { id } = useParams();
+
 	const { data, status, error } = useQuery<PerformanceDetailData, ApiError>({
 		queryKey: ["performanceDetail", id],
 		queryFn: () => fetchPerformanceDetail(id as string),

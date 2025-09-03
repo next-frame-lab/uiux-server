@@ -6,7 +6,7 @@ const performanceReview: reviewData = {
 	data: {
 		reviews: [
 			{
-				id: "c8d1e2a7-4a5b-437b-9d90-7b1a2c3f1235",
+				id: "mock-accessToken-12345-abcdefg",
 				writerName: "뮤덕이",
 				writerProfileImageUrl: userImage,
 				content: "정말 감동적인 공연이었어요. 무대 연출도 최고!",

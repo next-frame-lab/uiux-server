@@ -1,7 +1,7 @@
 import performanceDetail from "../../components/__mocks__/performanceDetailData.ts";
 import { seatPrices, selectSeatsData } from "../../types/ApiDataTypes.ts";
 import TotalDisplay from "../../components/reservation/TotalDisplay.tsx";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import useSeatReservation from "../../hooks/useSeatReservation.ts";
 import { useEffect, useMemo, useState } from "react";
@@ -19,6 +19,16 @@ const TIMEOUT_MS = 10 * 60 * 10; //
 export default function SeatSelectPage() {
 	const { selectedSeats, selectedSeatIds, toggleSeat, resetSelection } =
 		useSeatReservation();
+
+	const navigate = useNavigate();
+
+	useEffect(() => {
+		const token = localStorage.getItem("accessToken");
+		if (!token) {
+			navigate("/login");
+		}
+	}, [navigate]);
+
 	// 시간 조절
 	const startAt = useMemo(() => new Date(Date.now() + TIMEOUT_MS), []);
 	const [ready, setReady] = useState(() => Date.now() >= startAt.getTime());

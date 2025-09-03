@@ -1,5 +1,5 @@
 // MOCK 사용자 데이터 정의
-import type { LoginResponse } from "../../api/auth";
+import { LoginResponse } from "../../types/ApiDataTypes.ts";
 
 export const mockUserData = {
 	imageUrl: "/mockimage/user_1.png",

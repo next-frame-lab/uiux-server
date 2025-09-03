@@ -1,4 +1,4 @@
-import requestJSON from "../lib/apiClient.ts";
+import { publicJSON } from "../lib/apiClient.ts";
 import { PerformanceData } from "../types/ApiDataTypes.ts";
 
 const fetchPerformances = async (
@@ -10,7 +10,10 @@ const fetchPerformances = async (
 		size: String(size),
 	})}`;
 
-	return requestJSON(url, { method: "GET" });
+	return publicJSON(url, {
+		method: "GET",
+		headers: { "Content-Type": "application/json" },
+	});
 };
 
 export default fetchPerformances;

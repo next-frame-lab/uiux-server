@@ -19,6 +19,10 @@ export default function PaymentPage() {
 		if (invalid) {
 			navigate(-1);
 		}
+		const token = localStorage.getItem("accessToken");
+		if (!token) {
+			navigate("/login");
+		}
 	}, [invalid, navigate]);
 
 	if (invalid) return null;
