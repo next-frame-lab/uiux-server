@@ -1,7 +1,7 @@
-import requestJSON from "../lib/apiClient.ts";
+import { authedJSON } from "../lib/apiClient.ts";
 
 const fetchReviewLikes = async (id: string, like: boolean) => {
-	return requestJSON(`/api/v1/reviews/${id}/likes`, {
+	return authedJSON(`/api/v1/reviews/${id}/likes`, {
 		method: "POST",
 		body: JSON.stringify({ like }),
 	});

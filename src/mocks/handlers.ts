@@ -45,8 +45,10 @@ const handlers = [
 	http.get(`/api/v1/performances/:id`, ({ params }) => {
 		const { id } = params;
 
-		if (id === performanceDetailData.data.id)
+		if (id === performanceDetailData.data.id) {
 			return HttpResponse.json(performanceDetailData);
+		}
+		return HttpResponse.json({ message: "unauthorized" }, { status: 401 });
 	}),
 
 	// Review - 공연 리뷰 관련 API
@@ -87,12 +89,12 @@ const handlers = [
 	}),
 
 	// 로그인 요청 핸들러입니다.
-	http.post("/api/auth/kakao/login", () => {
+	http.post("/api/v1/auth/kakao/login", () => {
 		return HttpResponse.json(mockLoginResponse);
 	}),
 
 	// 사용자 정보 조회 요청 핸들러입니다.
-	http.get("/api/me", ({ request }) => {
+	http.get("/api/v1/me", ({ request }) => {
 		const authorizationHeader = request.headers.get("Authorization");
 		if (!authorizationHeader) {
 			return new HttpResponse(null, {
@@ -103,15 +105,15 @@ const handlers = [
 		return HttpResponse.json(mockUserData);
 	}),
 
-	http.get("/stadiums/:id/seat-definitions", () => {
+	http.get("/api/v1/stadiums/:id/seat-definitions", () => {
 		return HttpResponse.json(selectSeatsAllData);
 	}),
 
-	http.get("/schedules/:id/seat-states", () => {
+	http.get("/api/v1/schedules/:id/seat-states", () => {
 		return HttpResponse.json(seatsStateData);
 	}),
 
-	http.post("/reservation", () => {
+	http.post("/api/v1/reservation", () => {
 		return HttpResponse.json(reservationData);
 	}),
 

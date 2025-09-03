@@ -6,6 +6,8 @@ interface ReviewListProps {
 	currentUserId: string;
 	onEdit: (id: string, newContent: string) => void;
 	onDelete: (id: string) => void;
+	isAuthenticated: boolean;
+	onRequireLogin: () => void;
 }
 
 export default function ReviewList({
@@ -13,6 +15,8 @@ export default function ReviewList({
 	currentUserId,
 	onEdit,
 	onDelete,
+	isAuthenticated,
+	onRequireLogin,
 }: ReviewListProps) {
 	return (
 		<div className="mt-4">
@@ -23,6 +27,8 @@ export default function ReviewList({
 					isMine={review.id === currentUserId}
 					onUpdate={onEdit}
 					onDelete={() => onDelete(review.id)}
+					isAuthenticated={isAuthenticated}
+					onRequireLogin={onRequireLogin}
 				/>
 			))}
 		</div>

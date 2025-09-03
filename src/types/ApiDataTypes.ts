@@ -1,3 +1,16 @@
+/** 로그인하고 나서, 받는 로그인 응답 데이터 타입입니다. */
+export interface LoginResponse {
+	code: string;
+	data: {
+		accessToken: string;
+		refreshToken: string;
+		imageUrl: string;
+		name: string;
+		age: number;
+		email: string;
+	};
+}
+
 /** 공연 목록을 조회 및 검색하기 위한 데이터 타입입니다. */
 export interface PerformanceListItem {
 	id: string;
@@ -194,4 +207,14 @@ export interface ConfirmPaymentRequest {
 	orderId: string;
 	amount: number;
 	paymentKey: string;
+}
+
+/** 결제 서버에 결제 승인 응답을 받을 때 사용되는 데이터 타입입니다. */
+export interface ConfirmPaymentResponse {
+	code: string;
+	data: {
+		reservationId: string;
+		totalAmount: number;
+	};
+	message: string;
 }

@@ -1,13 +1,13 @@
-const fetchSeats = async (id: string) => {
-	const res = await fetch(`/stadiums/${id}/seat-definitions`, {
+import { authedJSON } from "../lib/apiClient.ts";
+import { selectSeatsData } from "../types/ApiDataTypes.ts";
+
+const fetchSeats = async (id: string): Promise<selectSeatsData> => {
+	return authedJSON(`/api/v1/stadiums/${id}/seat-definitions`, {
 		method: "GET",
 		headers: {
 			"Content-Type": "application/json",
 		},
 	});
-
-	if (!res.ok) throw new Error("좌석 정보를 불러오지 못했습니다.");
-	return res.json();
 };
 
 export default fetchSeats;

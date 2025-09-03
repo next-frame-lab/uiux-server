@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { PerformanceDetailData } from "../../../types/ApiDataTypes.ts";
 import ReviewSection from "./ReviewSection.tsx";
 
@@ -8,13 +8,16 @@ interface Props {
 }
 
 export default function PerformanceInfo({ performance }: Props) {
+	const navigate = useNavigate();
+	const location = useLocation();
 	const [selectedScheduleId, setSelectedScheduleId] = useState<string>("");
+
+	const token = localStorage.getItem("accessToken");
+	const isAuthenticated = !!token;
 
 	useEffect(() => {
 		setSelectedScheduleId(performance.data.performanceSchedules[0]?.id ?? "");
 	}, [performance.data.id]);
-
-	const navigate = useNavigate();
 
 	const handleClick = () => {
 		navigate(`/performances/${performance.data.id}/seats`, {
@@ -24,6 +27,13 @@ export default function PerformanceInfo({ performance }: Props) {
 				seatPrices: performance.data.seatSectionPrices,
 				stadiumId: performance.data.stadium.id,
 			},
+		});
+	};
+
+	const onRequireLogin = () => {
+		navigate("/login", {
+			state: { redirectTo: location.pathname },
+			replace: false,
 		});
 	};
 
@@ -120,7 +130,9 @@ export default function PerformanceInfo({ performance }: Props) {
 						{/* 리뷰 */}
 						<ReviewSection
 							performanceId={performance.data.id}
-							currentUserId="c8d1e2a7-4a5b-437b-9d90-7b1a2c3f1235"
+							currentUserId={`${token}`}
+							isAuthenticated={isAuthenticated}
+							onRequireLogin={onRequireLogin}
 						/>
 					</div>
 				</div>
