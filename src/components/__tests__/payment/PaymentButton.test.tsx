@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { render, screen, fireEvent } from "@testing-library/react";
-import PaymentButton from "../../payment/PaymentButton.tsx";
+import TossPaymentCheckout from "../../payment/PaymentCheckout.tsx";
 
 jest.mock("react-router-dom", () => ({
 	...jest.requireActual("react-router-dom"),
@@ -18,7 +18,13 @@ describe("PaymentButton 컴포넌트", () => {
 	it("결제 시간 초과 시, 경고를 출력하고, /reservation으로 이동한다.", () => {
 		const alertMock = jest.spyOn(window, "alert").mockImplementation(() => {});
 
-		render(<PaymentButton paymentMethod="kakao" elapsedTime={601} />);
+		render(
+			<TossPaymentCheckout
+				reservationId="mock-1"
+				performanceName="오페라 유령"
+				totalAmount={300000}
+			/>
+		);
 
 		const button = screen.getByRole("button", { name: "결제하기" });
 		fireEvent.click(button);
@@ -34,7 +40,13 @@ describe("PaymentButton 컴포넌트", () => {
 	it("결제 방식이 없으면, 경고를 출력한다.", () => {
 		const alertMock = jest.spyOn(window, "alert").mockImplementation(() => {});
 
-		render(<PaymentButton paymentMethod="" elapsedTime={100} />);
+		render(
+			<TossPaymentCheckout
+				reservationId="mock-1"
+				performanceName="오페라 유령"
+				totalAmount={300000}
+			/>
+		);
 
 		const button = screen.getByRole("button", { name: "결제하기" });
 		fireEvent.click(button);
@@ -48,7 +60,13 @@ describe("PaymentButton 컴포넌트", () => {
 	it("정상적으로 결제 시, /mypage/success로 이동한다.", () => {
 		const alertMock = jest.spyOn(window, "alert").mockImplementation(() => {});
 
-		render(<PaymentButton paymentMethod="naver" elapsedTime={100} />);
+		render(
+			<TossPaymentCheckout
+				reservationId="mock-1"
+				performanceName="오페라 유령"
+				totalAmount={300000}
+			/>
+		);
 
 		const button = screen.getByRole("button", { name: "결제하기" });
 		fireEvent.click(button);
@@ -64,7 +82,13 @@ describe("PaymentButton 컴포넌트", () => {
 	it("중복 클릭 시, 처리되지 않는다.", () => {
 		const alertMock = jest.spyOn(window, "alert").mockImplementation(() => {});
 
-		render(<PaymentButton paymentMethod="naver" elapsedTime={100} />);
+		render(
+			<TossPaymentCheckout
+				reservationId="mock-1"
+				performanceName="오페라 유령"
+				totalAmount={300000}
+			/>
+		);
 
 		const button = screen.getByRole("button", { name: "결제하기" });
 

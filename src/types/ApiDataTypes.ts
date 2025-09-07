@@ -123,7 +123,8 @@ export type seatData = {
 };
 
 export interface selectSeatsData {
-	seats: seatData[];
+	code: string;
+	data: { seats: seatData[] };
 }
 
 /** 좌석 잠금 상태 여부를 판단할 때 사용하는 데이터 타입입니다. */

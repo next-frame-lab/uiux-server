@@ -19,8 +19,8 @@ beforeEach(() => {
 describe("인피니티 스크롤(공연) 컴포넌트 호출", () => {
 	it("초기 2개 공연 카드가 렌더링된다.", () => {
 		render(
-			<InfiniteScroll hasMore onFetchNext={() => {}}>
-				{performanceData.performanceList.map((item) => (
+			<InfiniteScroll hasMore onFetchNext={() => {}} delay={1000}>
+				{performanceData.data.performances.map((item) => (
 					<div key={item.id}>{item.name}</div>
 				))}
 			</InfiniteScroll>
@@ -34,8 +34,8 @@ describe("인피니티 스크롤(공연) 컴포넌트 호출", () => {
 
 	it("hasMore가 false라면, 하단 로더가 보이지 않음.", () => {
 		render(
-			<InfiniteScroll hasMore={false} onFetchNext={() => {}}>
-				{performanceData.performanceList.map((item) => (
+			<InfiniteScroll hasMore={false} onFetchNext={() => {}} delay={1000}>
+				{performanceData.data.performances.map((item) => (
 					<div key={item.id}>{item.name}</div>
 				))}
 			</InfiniteScroll>
@@ -48,8 +48,8 @@ describe("인피니티 스크롤(공연) 컴포넌트 호출", () => {
 		const fetchNext = jest.fn();
 
 		render(
-			<InfiniteScroll hasMore onFetchNext={fetchNext}>
-				{performanceData.performanceList.map((item) => (
+			<InfiniteScroll hasMore onFetchNext={fetchNext} delay={1000}>
+				{performanceData.data.performances.map((item) => (
 					<div key={item.id}>{item.name}</div>
 				))}
 			</InfiniteScroll>
@@ -66,8 +66,8 @@ describe("인피니티 스크롤(공연) 컴포넌트 호출", () => {
 		const fetchNext = jest.fn();
 
 		render(
-			<InfiniteScroll hasMore onFetchNext={() => {}}>
-				{performanceData.performanceList.map((item) => (
+			<InfiniteScroll hasMore onFetchNext={() => {}} delay={1000}>
+				{performanceData.data.performances.map((item) => (
 					<div key={item.id}>{item.name}</div>
 				))}
 			</InfiniteScroll>
@@ -84,9 +84,9 @@ describe("인피니티 스크롤(공연) 컴포넌트 호출", () => {
 describe("인피니티 스크롤(후기글) 컴포넌트 호출", () => {
 	it("초기 2개 후기글이 렌더링된다.", () => {
 		render(
-			<InfiniteScroll hasMore onFetchNext={() => {}}>
-				{performanceReview.reviewList.map((review) => (
-					<div key={review.writerId}>
+			<InfiniteScroll hasMore onFetchNext={() => {}} delay={1000}>
+				{performanceReview.data.reviews.map((review) => (
+					<div key={review.id}>
 						<p>{review.writerName}</p>
 						<p>{review.content}</p>
 					</div>
@@ -102,9 +102,9 @@ describe("인피니티 스크롤(후기글) 컴포넌트 호출", () => {
 
 	it("hasMore가 false라면, 하단 로더가 보이지 않음.", () => {
 		render(
-			<InfiniteScroll hasMore={false} onFetchNext={() => {}}>
-				{performanceReview.reviewList.map((review) => (
-					<div key={review.writerId}>
+			<InfiniteScroll hasMore={false} onFetchNext={() => {}} delay={1000}>
+				{performanceReview.data.reviews.map((review) => (
+					<div key={review.id}>
 						<p>{review.writerName}</p>
 						<p>{review.content}</p>
 					</div>
@@ -119,9 +119,9 @@ describe("인피니티 스크롤(후기글) 컴포넌트 호출", () => {
 		const fetchNext = jest.fn();
 
 		render(
-			<InfiniteScroll hasMore onFetchNext={fetchNext}>
-				{performanceReview.reviewList.map((review) => (
-					<div key={review.writerId}>
+			<InfiniteScroll hasMore onFetchNext={fetchNext} delay={1000}>
+				{performanceReview.data.reviews.map((review) => (
+					<div key={review.id}>
 						<p>{review.writerName}</p>
 						<p>{review.content}</p>
 					</div>
@@ -140,9 +140,9 @@ describe("인피니티 스크롤(후기글) 컴포넌트 호출", () => {
 		const fetchNext = jest.fn();
 
 		render(
-			<InfiniteScroll hasMore onFetchNext={() => {}}>
-				{performanceReview.reviewList.map((review) => (
-					<div key={review.writerId}>
+			<InfiniteScroll hasMore onFetchNext={() => {}} delay={1000}>
+				{performanceReview.data.reviews.map((review) => (
+					<div key={review.id}>
 						<p>{review.writerName}</p>
 						<p>{review.content}</p>
 					</div>
