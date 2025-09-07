@@ -3,14 +3,16 @@ import ReviewItem from "../../../performance/detail/ReviewItem.tsx";
 import performanceReview from "../../../__mocks__/performanceReviewData.ts";
 
 describe("ReviewItem 컴포넌트", () => {
-	const mockReview1 = performanceReview.reviewList[0];
-	const mockReview2 = performanceReview.reviewList[1];
+	const mockReview1 = performanceReview.data.reviews[0];
+	const mockReview2 = performanceReview.data.reviews[1];
 
 	it("작성자 정보, 후기 내용, 작성 날짜를 렌더링한다.", () => {
 		render(
 			<ReviewItem
 				review={mockReview1}
 				isMine={false}
+				isAuthenticated={false}
+				onRequireLogin={() => {}}
 				onUpdate={jest.fn()}
 				onDelete={jest.fn()}
 			/>
@@ -31,12 +33,14 @@ describe("ReviewItem 컴포넌트", () => {
 			<ReviewItem
 				review={mockReview2}
 				isMine={false}
+				isAuthenticated={false}
+				onRequireLogin={() => {}}
 				onUpdate={jest.fn()}
 				onDelete={jest.fn()}
 			/>
 		);
 
-		expect(screen.queryByTestId(mockReview2.writerId)).not.toBeInTheDocument();
+		expect(screen.queryByTestId(mockReview2.id)).not.toBeInTheDocument();
 	});
 
 	it("likeCount가 20 이상일 시, Best Review 뱃지가 표시된다.", () => {
@@ -44,12 +48,14 @@ describe("ReviewItem 컴포넌트", () => {
 			<ReviewItem
 				review={mockReview1}
 				isMine={false}
+				isAuthenticated={false}
+				onRequireLogin={() => {}}
 				onUpdate={jest.fn()}
 				onDelete={jest.fn()}
 			/>
 		);
 
-		expect(screen.queryByTestId(mockReview1.writerId)).toBeInTheDocument();
+		expect(screen.queryByTestId(mockReview1.id)).toBeInTheDocument();
 		expect(screen.getByText("Best Review")).toBeInTheDocument();
 	});
 
@@ -57,7 +63,9 @@ describe("ReviewItem 컴포넌트", () => {
 		render(
 			<ReviewItem
 				review={mockReview1}
-				isMine
+				isMine={false}
+				isAuthenticated={false}
+				onRequireLogin={() => {}}
 				onUpdate={jest.fn()}
 				onDelete={jest.fn()}
 			/>
@@ -77,7 +85,9 @@ describe("ReviewItem 컴포넌트", () => {
 		render(
 			<ReviewItem
 				review={mockReview1}
-				isMine
+				isMine={false}
+				isAuthenticated={false}
+				onRequireLogin={() => {}}
 				onUpdate={handleUpdate}
 				onDelete={jest.fn()}
 			/>
@@ -88,10 +98,7 @@ describe("ReviewItem 컴포넌트", () => {
 		fireEvent.change(textarea, { target: { value: "수정된 후기" } });
 		fireEvent.click(screen.getByText("저장"));
 
-		expect(handleUpdate).toHaveBeenCalledWith(
-			mockReview1.writerId,
-			"수정된 후기"
-		);
+		expect(handleUpdate).toHaveBeenCalledWith(mockReview1.id, "수정된 후기");
 		expect(screen.queryByRole("textbox")).not.toBeInTheDocument();
 	});
 
@@ -101,13 +108,15 @@ describe("ReviewItem 컴포넌트", () => {
 		render(
 			<ReviewItem
 				review={mockReview1}
-				isMine
+				isMine={false}
+				isAuthenticated={false}
+				onRequireLogin={() => {}}
 				onUpdate={jest.fn()}
 				onDelete={handleDelete}
 			/>
 		);
 
 		fireEvent.click(screen.getByText("삭제"));
-		expect(handleDelete).toHaveBeenCalledWith(mockReview1.writerId);
+		expect(handleDelete).toHaveBeenCalledWith(mockReview1.id);
 	});
 });

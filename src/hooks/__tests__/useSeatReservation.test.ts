@@ -7,7 +7,7 @@ describe("useSeatReservation", () => {
 
 	it("좌석 선택 및 해제를 정상적으로 수행한다", () => {
 		const { result } = renderHook(() => useSeatReservation());
-		const seat = mockSeat.seats[1];
+		const seat = mockSeat.data.seats[1];
 
 		// 선택
 		act(() => {
@@ -29,11 +29,11 @@ describe("useSeatReservation", () => {
 		const alertSpy = jest.spyOn(window, "alert").mockImplementation(() => {});
 		const { result } = renderHook(() => useSeatReservation());
 
-		act(() => result.current.toggleSeat(mockSeat.seats[1]));
-		act(() => result.current.toggleSeat(mockSeat.seats[2]));
-		act(() => result.current.toggleSeat(mockSeat.seats[4]));
-		act(() => result.current.toggleSeat(mockSeat.seats[5]));
-		act(() => result.current.toggleSeat(mockSeat.seats[6]));
+		act(() => result.current.toggleSeat(mockSeat.data.seats[1]));
+		act(() => result.current.toggleSeat(mockSeat.data.seats[2]));
+		act(() => result.current.toggleSeat(mockSeat.data.seats[4]));
+		act(() => result.current.toggleSeat(mockSeat.data.seats[5]));
+		act(() => result.current.toggleSeat(mockSeat.data.seats[6]));
 
 		expect(result.current.selectedSeats).toHaveLength(4);
 		expect(alertSpy).toHaveBeenCalledWith(
@@ -47,8 +47,8 @@ describe("useSeatReservation", () => {
 		const { result } = renderHook(() => useSeatReservation());
 
 		act(() => {
-			result.current.toggleSeat(mockSeat.seats[1]);
-			result.current.toggleSeat(mockSeat.seats[3]);
+			result.current.toggleSeat(mockSeat.data.seats[1]);
+			result.current.toggleSeat(mockSeat.data.seats[3]);
 			result.current.resetSelection();
 		});
 

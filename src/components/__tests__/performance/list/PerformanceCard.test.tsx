@@ -5,7 +5,7 @@ import performanceData from "../../../__mocks__/performanceData.ts";
 
 /* 공연 카드 렌더링 & 클릭 시, 상세 페이지로 navigate */
 describe("공연 카드 목록 조회", () => {
-	const mockPerformance = performanceData.performanceList;
+	const mockPerformance = performanceData.data.performances;
 
 	it("공연 카드에 공연 이름, 공연 장소, 공연 시작/종료 날짜, 공연 평균 별점이 표시된다.", () => {
 		render(<PerformanceCard performances={mockPerformance} />);

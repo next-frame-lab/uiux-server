@@ -9,12 +9,13 @@ describe("Seat 컴포넌트", () => {
 	beforeEach(() => {
 		render(
 			<>
-				{mockSeat.seats.map((seat) => (
+				{mockSeat.data.seats.map((seat) => (
 					<Seat
 						key={seat.id}
 						seat={seat}
 						isSelected={false}
 						onClick={mockClick}
+						disabled={false}
 					/>
 				))}
 			</>
@@ -23,13 +24,13 @@ describe("Seat 컴포넌트", () => {
 
 	it("좌석 수가 정확히 렌더링된다.", () => {
 		const buttons = screen.getAllByRole("button", { name: "seat" });
-		expect(buttons).toHaveLength(mockSeat.seats.length);
+		expect(buttons).toHaveLength(mockSeat.data.seats.length);
 	});
 
 	it("좌석 위치가 row, column에 따라 렌더링된다.", () => {
 		const buttons = screen.getAllByRole("button", { name: "seat" });
 
-		mockSeat.seats.forEach((seat, index) => {
+		mockSeat.data.seats.forEach((seat, index) => {
 			const button = buttons[index];
 			expect(button).toHaveStyle({
 				left: `${seat.column * 2.5}rem`,

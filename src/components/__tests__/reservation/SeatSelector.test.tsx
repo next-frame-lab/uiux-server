@@ -2,27 +2,34 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import selectSeatsAllData from "../../__mocks__/selectSeatsAllData.ts";
 import SeatSelector from "../../reservation/SeatSelector.tsx";
 import "@testing-library/jest-dom";
+import { SeatWithState } from "../../../types/ApiDataTypes.ts";
 
 describe("SeatSelector 컴포넌트", () => {
 	const mockSeatList = selectSeatsAllData;
+	const seatListWithState: SeatWithState[] = mockSeatList.data.seats.map(
+		(s) => ({
+			...s,
+			isLocked: false, // 초기값. 필요 시 서버/비즈 규칙으로 세팅
+		})
+	);
 
 	it("seatList만큼 Seat 컴포넌트를 렌더링한다.", () => {
 		render(
 			<SeatSelector
-				seatList={mockSeatList.seats}
+				seatList={seatListWithState}
 				selectedSeatIds={[]}
 				onSelect={() => {}}
 			/>
 		);
 
 		const buttons = screen.getAllByRole("button", { name: "seat" });
-		expect(buttons).toHaveLength(mockSeatList.seats.length);
+		expect(buttons).toHaveLength(mockSeatList.data.seats.length);
 	});
 
 	it("selectedSeatIds에 포함된 좌석만 isSelected 상태로 렌더링된다.", () => {
 		render(
 			<SeatSelector
-				seatList={mockSeatList.seats}
+				seatList={seatListWithState}
 				selectedSeatIds={["3fa85f64-5717-4562-b3fc-2c963f66afa2"]}
 				onSelect={() => {}}
 			/>
@@ -39,7 +46,7 @@ describe("SeatSelector 컴포넌트", () => {
 
 		render(
 			<SeatSelector
-				seatList={mockSeatList.seats}
+				seatList={seatListWithState}
 				selectedSeatIds={[]}
 				onSelect={mockSelect}
 			/>

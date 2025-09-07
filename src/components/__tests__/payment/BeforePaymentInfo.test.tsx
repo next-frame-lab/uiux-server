@@ -1,7 +1,7 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import * as elapsedTimeHook from "../../../hooks/useElapsedTime.ts";
-import BeforePaymentInfo from "../../payment/BeforePaymentInfo.tsx";
 import beforePaymentInfoData from "../../__mocks__/BeforePaymentInfoData.ts";
+import ReservationInfo from "../../reservation/ReservationInfo.tsx";
 
 jest.mock("react-router-dom", () => ({
 	...jest.requireActual("react-router-dom"),
@@ -19,7 +19,7 @@ describe("BeforePaymentInfo", () => {
 	});
 
 	it("공연 및 결제 정보가 정상적으로 렌더링된다.", () => {
-		render(<BeforePaymentInfo />);
+		render(<ReservationInfo />);
 
 		expect(screen.getByText("결제 정보")).toBeInTheDocument();
 		expect(
@@ -41,7 +41,7 @@ describe("BeforePaymentInfo", () => {
 	});
 
 	it("좌석 정보가 정확히 렌더링된다.", () => {
-		render(<BeforePaymentInfo />);
+		render(<ReservationInfo />);
 
 		beforePaymentInfoData.seats.forEach((seat) => {
 			expect(
@@ -51,7 +51,7 @@ describe("BeforePaymentInfo", () => {
 	});
 
 	it("결제하기 버튼이 렌더링된다.", () => {
-		render(<BeforePaymentInfo />);
+		render(<ReservationInfo />);
 
 		expect(
 			screen.getByRole("button", { name: "결제하기" })
@@ -60,7 +60,7 @@ describe("BeforePaymentInfo", () => {
 
 	it("결제 방식 선택 없이, 결제 시도하면, 경고가 출력된다.", () => {
 		const alertMock = jest.spyOn(window, "alert").mockImplementation(() => {});
-		render(<BeforePaymentInfo />);
+		render(<ReservationInfo />);
 
 		const button = screen.getByRole("button", { name: "결제하기" });
 
