@@ -17,7 +17,6 @@ export default function Seat({
 	const handleClick = () => {
 		if (disabled) return;
 		onClick(seat.id);
-		console.log(section, row, column, disabled);
 	};
 
 	const handleKeyDown: React.KeyboardEventHandler<HTMLDivElement> = (e) => {
@@ -39,8 +38,6 @@ export default function Seat({
 		<div
 			role="button"
 			tabIndex={disabled ? -1 : 0}
-			aria-disabled={disabled}
-			aria-pressed={isSelected}
 			onKeyDown={handleKeyDown}
 			onClick={handleClick}
 			className={` w-8 h-8 rounded ${seatColor} `}
@@ -49,8 +46,6 @@ export default function Seat({
 				top: `${(row - 1) * 2.5}rem`,
 			}}
 			aria-label={`seat ${section}`}
-			title={section}
-			data-seat-id={id}
 		/>
 	);
 }

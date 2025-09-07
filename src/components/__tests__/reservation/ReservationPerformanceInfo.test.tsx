@@ -5,8 +5,8 @@ import ReservationInfo from "../../reservation/ReservationInfo.tsx";
 import "@testing-library/jest-dom";
 
 describe("ReservationInfo 컴포넌트", () => {
-	const validPerformanceId = performanceDetail.id;
-	const validSchedule = performanceDetail.scheduleList[0];
+	const validPerformanceId = performanceDetail.data.id;
+	const validSchedule = performanceDetail.data.performanceSchedules[0];
 	const invalidPerformanceId = "invalid-performance-id";
 	const invalidScheduleId = "invalid-schedule-id";
 
@@ -28,7 +28,7 @@ describe("ReservationInfo 컴포넌트", () => {
 		renderWithRoute(validPerformanceId, validSchedule.id);
 
 		expect(screen.getByText("공연명")).toBeInTheDocument();
-		expect(screen.getByText(performanceDetail.name)).toBeInTheDocument();
+		expect(screen.getByText(performanceDetail.data.name)).toBeInTheDocument();
 
 		expect(screen.getByText("선택 날짜")).toBeInTheDocument();
 		expect(screen.getByText(validSchedule.date)).toBeInTheDocument();
@@ -36,7 +36,7 @@ describe("ReservationInfo 컴포넌트", () => {
 		expect(screen.getByText("선택 시간")).toBeInTheDocument();
 		expect(screen.getByText(validSchedule.time)).toBeInTheDocument();
 
-		performanceDetail.seatPrices.forEach((price) => {
+		performanceDetail.data.seatSectionPrices.forEach((price) => {
 			expect(screen.getByText(price.section)).toBeInTheDocument();
 			expect(
 				screen.getByText(`${price.price.toLocaleString()}원`)
