@@ -74,7 +74,7 @@ export default function SeatSelectPage() {
 		enabled: ready && !!scheduleId,
 		refetchOnWindowFocus: true,
 	});
-	
+
 	useEffect(() => {
 		resetSelection();
 	}, [resetSelection]);
@@ -117,7 +117,7 @@ export default function SeatSelectPage() {
 		if (code) {
 			return <p>에러 발생: {statusMessage[code]}</p>;
 		}
-		return <p> 알 수 없는 오류가 발생했습니다.</p>;
+		return <p>알 수 없는 오류가 발생했습니다.</p>;
 	}
 
 	return (
