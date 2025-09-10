@@ -15,11 +15,11 @@ export default function LoginPage() {
 			<Header />
 
 			{/* 하단 로그인 부분 */}
-			<main className="flex flex-1 items-center justify-center bg-[#FBFBFB]">
-				<div className="text-center space-y-6">
+			<main className="flex flex-1 items-center justify-center bg-[#FBFBFB] p-4">
+				<div className="w-full max-w-sm text-center space-y-6">
 					<div>
-						<h1 className="text-4xl font-semibold">로그인</h1>
-						<p className="text-gray-500 mt-5">Please Log in to continue</p>
+						<h1 className="text-3xl md:text-4xl font-semibold">로그인</h1>
+						<p className="text-gray-500 mt-2 md:mt-5">Please Log in to continue</p>
 					</div>
 
 					<div className="flex flex-col items-center space-y-3">
@@ -27,21 +27,21 @@ export default function LoginPage() {
 							<img
 								src="/icons/kakao_login.png"
 								alt="Kakao"
-								className="w-64 h-15"
+								className="w-full h-auto max-w-[280px] md:w-60"
 							/>
 						</button>
 						<button type="button">
 							<img
 								src="/icons/naver_login.png"
 								alt="naver"
-								className="w-64 h-14"
+								className="w-full h-auto max-w-[280px] md:w-60"
 							/>
 						</button>
 						<button type="button">
 							<img
 								src="/icons/google_login.png"
 								alt="google"
-								className="w-64 h-14"
+								className="w-full h-auto max-w-[280px] md:w-60"
 							/>
 						</button>
 					</div>
