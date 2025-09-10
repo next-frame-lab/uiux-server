@@ -4,6 +4,7 @@ import PerformanceCard from "../../components/performance/list/PerformanceCard.t
 import usePerformances from "../../hooks/usePerformances.ts";
 import InfiniteScroll from "../../components/ui/InfiniteScroll.tsx";
 import { AppErrorCode, statusMessage } from "../../lib/apiClient.ts";
+import Category from "../../components/layout/Category.tsx";
 
 export default function PerformancePage() {
 	const {
@@ -35,18 +36,7 @@ export default function PerformancePage() {
 			{/* 중간 부분 */}
 			<main className="bg-[#FBFBFB]">
 				{/* 카테고리 부분 */}
-				<div className="flex items-center justify-center divide-x divide-gray-300 border-b border-[#E8EDF5] bg-gray-100 py-4">
-					{["전체", "로맨스", "호러", "스릴러", "다큐", "코미디", "유머"].map(
-						(genre) => (
-							<button
-								type="button"
-								className="px-18 py-2 font-semibold hover:bg-gray-200"
-								key={genre}>
-								{genre}
-							</button>
-						)
-					)}
-				</div>
+				<Category />
 
 				{/* 공연 목록 제목 부분 */}
 				<div className="max-w-7xl mx-auto py-16 px-3">
