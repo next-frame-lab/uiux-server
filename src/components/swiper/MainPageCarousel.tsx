@@ -13,11 +13,11 @@ export default function MainPageCarousel() {
 	];
 
 	return (
-		<div className="mb-12">
+		<div className="mb-8 md:mb-12">
 			<Swiper
 				modules={[Autoplay, Pagination, Navigation]}
 				loop={true}
-				className="h-80 rounded-2xl"
+				className="h-56 rounded-2xl sm:h-64 md:h-80"
 				autoplay={{ delay: 2500 }}
 				pagination={{ clickable: true }}
 				navigation={true}>
