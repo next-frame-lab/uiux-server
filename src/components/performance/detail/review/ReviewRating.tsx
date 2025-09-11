@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { FaRegStar, FaStar, FaStarHalfAlt } from "react-icons/fa";
-import { getStarValueFromClick } from "../../../utils/StarRating.ts";
+import { getStarValueFromClick } from "../../../../utils/StarRating.ts";
 
 interface Props {
 	onChange: (star: number) => void;

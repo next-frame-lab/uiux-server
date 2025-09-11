@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import ReviewItem from "../../../performance/detail/ReviewItem.tsx";
+import ReviewItem from "../../../performance/detail/review/ReviewItem.tsx";
 import performanceReview from "../../../__mocks__/performanceReviewData.ts";
 
 describe("ReviewItem 컴포넌트", () => {
@@ -18,14 +18,10 @@ describe("ReviewItem 컴포넌트", () => {
 			/>
 		);
 
-		expect(screen.getByText("뮤덕이")).toBeInTheDocument();
-		expect(
-			screen.getByText("정말 감동적인 공연이었어요. 무대 연출도 최고!")
-		).toBeInTheDocument();
-		expect(screen.getByText("2025-07-01 14:32:00")).toBeInTheDocument();
-		expect(
-			screen.getByTestId("c8d1e2a7-4a5b-437b-9d90-7b1a2c3f1235")
-		).toBeInTheDocument();
+		expect(screen.getByText(mockReview1.writerName)).toBeInTheDocument();
+		expect(screen.getByText(mockReview1.content)).toBeInTheDocument();
+		expect(screen.getByText(mockReview1.createdAt)).toBeInTheDocument();
+		expect(screen.getByRole("button", { name: "👍 20" })).toBeInTheDocument();
 	});
 
 	it("likeCount가 20 미만일 시, Best Review 뱃지가 표시되지 않는다.", () => {
@@ -40,7 +36,7 @@ describe("ReviewItem 컴포넌트", () => {
 			/>
 		);
 
-		expect(screen.queryByTestId(mockReview2.id)).not.toBeInTheDocument();
+		expect(screen.queryByText("Best Review")).not.toBeInTheDocument();
 	});
 
 	it("likeCount가 20 이상일 시, Best Review 뱃지가 표시된다.", () => {
@@ -55,7 +51,6 @@ describe("ReviewItem 컴포넌트", () => {
 			/>
 		);
 
-		expect(screen.queryByTestId(mockReview1.id)).toBeInTheDocument();
 		expect(screen.getByText("Best Review")).toBeInTheDocument();
 	});
 
@@ -63,8 +58,8 @@ describe("ReviewItem 컴포넌트", () => {
 		render(
 			<ReviewItem
 				review={mockReview1}
-				isMine={false}
-				isAuthenticated={false}
+				isMine
+				isAuthenticated
 				onRequireLogin={() => {}}
 				onUpdate={jest.fn()}
 				onDelete={jest.fn()}
@@ -72,9 +67,7 @@ describe("ReviewItem 컴포넌트", () => {
 		);
 
 		fireEvent.click(screen.getByText("수정"));
-		expect(
-			screen.getByDisplayValue("정말 감동적인 공연이었어요. 무대 연출도 최고!")
-		).toBeInTheDocument();
+		expect(screen.getByDisplayValue(mockReview1.content)).toBeInTheDocument();
 		expect(screen.getByText("저장")).toBeInTheDocument();
 		expect(screen.getByText("취소")).toBeInTheDocument();
 	});
@@ -85,8 +78,8 @@ describe("ReviewItem 컴포넌트", () => {
 		render(
 			<ReviewItem
 				review={mockReview1}
-				isMine={false}
-				isAuthenticated={false}
+				isMine
+				isAuthenticated
 				onRequireLogin={() => {}}
 				onUpdate={handleUpdate}
 				onDelete={jest.fn()}
@@ -108,8 +101,8 @@ describe("ReviewItem 컴포넌트", () => {
 		render(
 			<ReviewItem
 				review={mockReview1}
-				isMine={false}
-				isAuthenticated={false}
+				isMine
+				isAuthenticated
 				onRequireLogin={() => {}}
 				onUpdate={jest.fn()}
 				onDelete={handleDelete}

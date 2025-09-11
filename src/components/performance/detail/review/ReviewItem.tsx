@@ -1,7 +1,7 @@
 import { FormEvent, useState } from "react";
-import { reviewList } from "../../../types/ApiDataTypes.ts";
+import { reviewList } from "../../../../types/ApiDataTypes.ts";
 import ReviewLikeButton from "./ReviewLikeButton.tsx";
-import fetchReviewLikes from "../../../api/ReviewLikes.ts";
+import fetchReviewLikes from "../../../../api/ReviewLikes.ts";
 
 interface ReviewItemProps {
 	review: reviewList;

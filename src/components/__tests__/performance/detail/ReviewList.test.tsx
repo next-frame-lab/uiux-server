@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import ReviewList from "../../../performance/detail/ReviewList.tsx";
+import ReviewList from "../../../performance/detail/review/ReviewList.tsx";
 import performanceReview from "../../../__mocks__/performanceReviewData.ts";
 import "@testing-library/jest-dom";
 
@@ -17,16 +17,17 @@ describe("ReviewList 컴포넌트", () => {
 				onDelete={jest.fn()}
 			/>
 		);
-		mockReviews.forEach((mockReview) => {
-			expect(screen.getByText(mockReview.writerName)).toBeInTheDocument();
-			expect(screen.getByText(mockReview.content)).toBeInTheDocument();
+
+		mockReviews.forEach((r) => {
+			expect(screen.getByText(r.writerName)).toBeInTheDocument();
+			expect(screen.getByText(r.content)).toBeInTheDocument();
 		});
 	});
 
-	it("작성자 본인인 경우, 수정/삭제 버튼이 보인다.", () => {
+	it("리뷰가 없으면 아무것도 렌더링되지 않는다.", () => {
 		render(
 			<ReviewList
-				reviews={mockReviews}
+				reviews={[]}
 				currentUserId="other-user-id"
 				isAuthenticated={false}
 				onRequireLogin={() => {}}
@@ -35,7 +36,6 @@ describe("ReviewList 컴포넌트", () => {
 			/>
 		);
 
-		expect(screen.queryByText("수정")).not.toBeInTheDocument();
-		expect(screen.queryByText("삭제")).not.toBeInTheDocument();
+		expect(screen.queryByText(/./)).toBeNull();
 	});
 });

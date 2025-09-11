@@ -1,6 +1,6 @@
 /* 필터 UI (유형, 카테고리) */
 import { fireEvent, render, screen } from "@testing-library/react";
-import FilterBar from "../../performance/list/FilterBar.tsx";
+import FilterBar from "../../ui/FilterBar.tsx";
 
 describe("필터바에서 장르(Genre) 선택", () => {
 	it("장르(genre) 버튼 클릭 시, onGenreChange 콜백이 호출", () => {
@@ -11,10 +11,10 @@ describe("필터바에서 장르(Genre) 선택", () => {
 			<FilterBar onTypeChange={onTypeChange} onGenreChange={onGenreChange} />
 		);
 
-		const genreButton = screen.getByRole("button", { name: "대중음악" });
+		const genreButton = screen.getByRole("button", { name: "CONCERT" });
 		fireEvent.click(genreButton);
 
-		expect(onGenreChange).toHaveBeenCalledWith("대중음악");
+		expect(onGenreChange).toHaveBeenCalledWith("CONCERT");
 		expect(onTypeChange).not.toHaveBeenCalled();
 
 		fireEvent.click(genreButton);
@@ -40,14 +40,14 @@ describe("필터바에서 장르(Genre) 선택", () => {
 			<FilterBar onTypeChange={onTypeChange} onGenreChange={onGenreChange} />
 		);
 
-		const musicButton = screen.getByRole("button", { name: "대중음악" });
-		const musicalButton = screen.getByRole("button", { name: "뮤지컬" });
+		const concertButton = screen.getByRole("button", { name: "CONCERT" });
+		const musicalButton = screen.getByRole("button", { name: "MUSICAL" });
 
-		fireEvent.click(musicButton);
-		expect(onGenreChange).toHaveBeenCalledWith("대중음악");
+		fireEvent.click(concertButton);
+		expect(onGenreChange).toHaveBeenCalledWith("CONCERT");
 
 		fireEvent.click(musicalButton);
-		expect(onGenreChange).toHaveBeenCalledWith("뮤지컬");
+		expect(onGenreChange).toHaveBeenCalledWith("MUSICAL");
 
 		fireEvent.click(musicalButton);
 		expect(onGenreChange).toHaveBeenCalledWith(null);

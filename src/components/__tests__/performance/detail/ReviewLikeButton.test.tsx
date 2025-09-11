@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import performanceReview from "../../__mocks__/performanceReviewData.ts";
-import ReviewLikeButton from "../../performance/detail/ReviewLikeButton.tsx";
+import performanceReview from "../../../__mocks__/performanceReviewData.ts";
+import ReviewLikeButton from "../../../performance/detail/review/ReviewLikeButton.tsx";
 
 describe("공연 후기글 좋아요 버튼", () => {
 	const mockToggleLike = jest.fn();
@@ -22,7 +22,7 @@ describe("공연 후기글 좋아요 버튼", () => {
 		);
 
 		const button = screen.getByTestId(`${review.id}`);
-		expect(button).toHaveTextContent("❤️ 21");
+		expect(button).toHaveTextContent("👍 20");
 		expect(button).toHaveClass("text-gray-500");
 	});
 
@@ -39,12 +39,12 @@ describe("공연 후기글 좋아요 버튼", () => {
 		);
 
 		const button = screen.getByTestId(`${review.id}`);
-		expect(button).toHaveTextContent("❤️ 2");
-		expect(button).toHaveClass("text-red-500");
+		expect(button).toHaveTextContent("👍 2");
+		expect(button).toHaveClass("text-yellow-500");
 
 		fireEvent.click(button);
 
-		expect(button).toHaveTextContent("❤️ 1");
+		expect(button).toHaveTextContent("👍 1");
 		expect(button).toHaveClass("text-gray-500");
 		expect(mockToggleLike).toHaveBeenCalledWith(review.id, false);
 	});

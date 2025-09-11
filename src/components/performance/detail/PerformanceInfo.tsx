@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { PerformanceDetailData } from "../../../types/ApiDataTypes.ts";
-import ReviewSection from "./ReviewSection.tsx";
+import ReviewSection from "./review/ReviewSection.tsx";
 
 interface Props {
 	performance: PerformanceDetailData;
