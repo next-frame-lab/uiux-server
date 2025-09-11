@@ -14,9 +14,7 @@ describe("useSeatReservation", () => {
 			result.current.toggleSeat(seat);
 		});
 		expect(result.current.selectedSeats).toHaveLength(1);
-		expect(result.current.selectedSeatIds).toContain(
-			"3fa85f64-5717-4562-b3fc-2c963f66afa1"
-		);
+		expect(result.current.selectedSeatIds).toContain("A-1-2");
 
 		// 해제
 		act(() => {

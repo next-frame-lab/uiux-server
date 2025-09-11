@@ -23,7 +23,6 @@ export default function ReservationInfo() {
 		);
 
 	if (!schedule) {
-		console.log(schedule);
 		return <p>스케줄 ID가 일치하지 않습니다. 잘못된 접근입니다.</p>;
 	}
 
