@@ -25,7 +25,7 @@ describe("ReviewList 컴포넌트", () => {
 	});
 
 	it("리뷰가 없으면 아무것도 렌더링되지 않는다.", () => {
-		render(
+		const { container } = render(
 			<ReviewList
 				reviews={[]}
 				currentUserId="other-user-id"
@@ -36,6 +36,6 @@ describe("ReviewList 컴포넌트", () => {
 			/>
 		);
 
-		expect(screen.queryByText(/./)).toBeNull();
+		expect(container.firstChild).toBeEmptyDOMElement();
 	});
 });
