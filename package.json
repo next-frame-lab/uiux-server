@@ -8,7 +8,8 @@
     "build": "tsc -b && vite build",
     "lint": "eslint",
     "preview": "vite preview",
-    "test": "NODE_OPTIONS=--experimental-vm-modules jest --watch --passWithNoTests"
+    "test": "NODE_OPTIONS=--experimental-vm-modules jest --watch --passWithNoTests",
+    "test:ci": "NODE_OPTIONS=--experimental-vm-modules jest --passWithNoTests --runInBand"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.7",
@@ -59,6 +60,7 @@
     "recoil": "^0.7.7",
     "tailwindcss": "^4.1.11",
     "ts-jest": "^29.4.0",
+    "ts-node": "^10.9.2",
     "typescript": "~5.8.3",
     "typescript-eslint": "^8.35.1",
     "vite": "^7.0.4"

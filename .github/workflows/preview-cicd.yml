@@ -45,7 +45,7 @@ jobs:
 
       # pnpm test로 테스트를 실행합니다.
       - name: Test
-        run: pnpm test
+        run: pnpm test:ci
 
   # project-build가 성공적으로 실행된다면, 다음 deploy-to-vercel이 실행됩니다.
   deploy-to-vercel:
