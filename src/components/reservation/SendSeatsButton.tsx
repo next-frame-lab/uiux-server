@@ -39,7 +39,6 @@ export default function SendSeatsButton({
 		try {
 			const reservation: ReservationResponse =
 				await fetchPostReservation(formData);
-			console.log("/reservation 응답:", reservation);
 			navigate("/payments", { state: { reservation } });
 		} catch (error) {
 			console.error(error);
