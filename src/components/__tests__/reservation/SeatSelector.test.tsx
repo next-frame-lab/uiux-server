@@ -5,15 +5,12 @@ import "@testing-library/jest-dom";
 import { SeatWithState } from "../../../types/ApiDataTypes.ts";
 
 describe("SeatSelector 컴포넌트", () => {
-	const mockSeatList = selectSeatsAllData;
-	const seatListWithState: SeatWithState[] = mockSeatList.data.seats.map(
-		(s) => ({
-			...s,
-			isLocked: false, // 초기값. 필요 시 서버/비즈 규칙으로 세팅
-		})
-	);
-
-	it("seatList만큼 Seat 컴포넌트를 렌더링한다.", () => {
+	const mockSeatList = selectSeatsAllData.data.seats;
+	const seatListWithState: SeatWithState[] = mockSeatList.map((s) => ({
+		...s,
+		isLocked: false,
+	}));
+	it("섹션 카드가 렌더링, 섹션 별 사용 가능한 좌석 수가 표시된다. ", () => {
 		render(
 			<SeatSelector
 				seatList={seatListWithState}
@@ -22,48 +19,60 @@ describe("SeatSelector 컴포넌트", () => {
 			/>
 		);
 
-		const buttons = screen.getAllByRole("button", { name: "seat" });
-		expect(buttons).toHaveLength(mockSeatList.data.seats.length);
+		["A", "B", "C", "D", "E", "F"].forEach((sec) => {
+			expect(
+				screen.getByRole("button", {
+					name: new RegExp(`SECTION\\s*${sec}`, "i"),
+				})
+			).toHaveTextContent(/100 seats/i);
+		});
 	});
 
-	it("selectedSeatIds에 포함된 좌석만 isSelected 상태로 렌더링된다.", () => {
+	it("섹션 클릭 시, 모달이 열리고 해당 섹션 좌석이 렌더링, 사용 가능 좌석 클릭 시 onSelect가 호출된다.", () => {
+		const onSelect = jest.fn();
+		const customSeatList = seatListWithState.map((s) =>
+			s.section === "A" && s.row === 1 && s.column === 2
+				? { ...s, isLocked: true }
+				: s
+		);
+		render(
+			<SeatSelector
+				seatList={customSeatList}
+				selectedSeatIds={[]}
+				onSelect={onSelect}
+			/>
+		);
+
+		fireEvent.click(screen.getByRole("button", { name: /SECTION\s*A/i }));
+		expect(screen.getByText("Section A")).toBeInTheDocument();
+
+		const seatsInModal = screen.getAllByRole("button", { name: /^seat A$/i });
+		expect(seatsInModal).toHaveLength(100);
+
+		fireEvent.click(seatsInModal[0]);
+		expect(onSelect).toHaveBeenCalledWith("A-1-1");
+
+		onSelect.mockClear();
+		fireEvent.click(seatsInModal[1]);
+		expect(onSelect).not.toHaveBeenCalled();
+	});
+
+	it("선택한 좌석의 스타일이 변경된다.", () => {
 		render(
 			<SeatSelector
 				seatList={seatListWithState}
-				selectedSeatIds={["3fa85f64-5717-4562-b3fc-2c963f66afa2"]}
+				selectedSeatIds={["A-1-3"]}
 				onSelect={() => {}}
 			/>
 		);
-		const buttons = screen.getAllByRole("button", { name: "seat" });
 
-		expect(buttons[0].className).toContain("bg-gray-300");
-		expect(buttons[1].className).toContain("bg-gray-100");
-		expect(buttons[2].className).toContain("bg-gray-600");
-	});
+		fireEvent.click(screen.getByRole("button", { name: /SECTION\s*A/i }));
+		expect(screen.getByText("Section A")).toBeInTheDocument();
 
-	it("좌석 클릭 시, onSelect 콜백이 seat.id로 호출된다.", () => {
-		const mockSelect = jest.fn();
+		const seatsInModal = screen.getAllByRole("button", { name: /^seat A$/i });
 
-		render(
-			<SeatSelector
-				seatList={seatListWithState}
-				selectedSeatIds={[]}
-				onSelect={mockSelect}
-			/>
-		);
-
-		const buttons = screen.getAllByRole("button", { name: "seat" });
-
-		// 잠기지 않은 좌석을 클릭
-		fireEvent.click(buttons[2]);
-		expect(mockSelect).toHaveBeenCalledWith(
-			"3fa85f64-5717-4562-b3fc-2c963f66afa2"
-		);
-
-		// 잠긴 좌석 클릭
-		fireEvent.click(buttons[0]);
-		expect(mockSelect).not.toHaveBeenCalledWith(
-			"3fa85f64-5717-4562-b3fc-2c963f66afa0"
-		);
+		const btn = seatsInModal[2];
+		expect(btn).toHaveClass("bg-gray-600");
+		expect(btn).toHaveClass("text-white");
 	});
 });

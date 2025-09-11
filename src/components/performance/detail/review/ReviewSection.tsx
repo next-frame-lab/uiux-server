@@ -1,7 +1,7 @@
 import ReviewList from "./ReviewList.tsx";
 import ReviewForm from "./ReviewForm.tsx";
-import useReviews from "../../../hooks/useReviews.ts";
-import { AppErrorCode, statusMessage } from "../../../lib/apiClient.ts";
+import useReviews from "../../../../hooks/useReviews.ts";
+import { AppErrorCode, statusMessage } from "../../../../lib/apiClient.ts";
 
 interface ReviewSectionProps {
 	performanceId: string;
