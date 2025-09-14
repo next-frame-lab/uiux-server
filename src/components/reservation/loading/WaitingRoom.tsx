@@ -41,7 +41,7 @@ export default function WaitingRoom({
 			]);
 		};
 
-		void prefetchAll();
+		prefetchAll().catch(() => {});
 
 		return () => {
 			cancelled = true;

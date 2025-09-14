@@ -1,9 +1,9 @@
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { MemoryRouter } from "react-router-dom";
 import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import performanceDetail from "../../../__mocks__/performanceDetailData.ts";
 import PerformanceInfo from "../../../performance/detail/PerformanceInfo.tsx";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 // useNavigate mocking
 const navigateMock = jest.fn();

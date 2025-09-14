@@ -1,7 +1,7 @@
-import Header from "../../components/layout/Header.tsx";
-import Footer from "../../components/layout/Footer.tsx";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
+import Header from "../../components/layout/Header.tsx";
+import Footer from "../../components/layout/Footer.tsx";
 import fetchPerformanceDetail from "../../api/performanceDetail.ts";
 import PerformanceInfo from "../../components/performance/detail/PerformanceInfo.tsx";
 import { PerformanceDetailData } from "../../types/ApiDataTypes.ts";

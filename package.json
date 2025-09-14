@@ -6,10 +6,12 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "lint": "eslint",
+    "lint": "eslint 'src/**/*.{js,jsx,ts,tsx}'",
+    "format": "prettier --check .",
     "preview": "vite preview",
     "test": "NODE_OPTIONS=--experimental-vm-modules jest --watch --passWithNoTests",
-    "test:ci": "NODE_OPTIONS=--experimental-vm-modules jest --passWithNoTests --runInBand"
+    "test:ci": "NODE_OPTIONS=--experimental-vm-modules jest --passWithNoTests --runInBand",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.7",
