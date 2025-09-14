@@ -16,14 +16,14 @@ export default function MainPageCarousel() {
 		<div className="mb-8 md:mb-12">
 			<Swiper
 				modules={[Autoplay, Pagination, Navigation]}
-				loop={true}
+				loop
 				className="h-56 rounded-2xl sm:h-64 md:h-80"
 				autoplay={{ delay: 2500 }}
 				pagination={{ clickable: true }}
-				navigation={true}>
-				{slideImage.map((color, index) => (
-					<SwiperSlide key={index}>
-						<div className={`w-full h-full ${color} rounded-2xl`}></div>
+				navigation>
+				{slideImage.map((color) => (
+					<SwiperSlide key={color}>
+						<div className={`w-full h-full ${color} rounded-2xl`} />
 					</SwiperSlide>
 				))}
 			</Swiper>

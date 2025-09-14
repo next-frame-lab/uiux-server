@@ -19,7 +19,9 @@ export default function LoginPage() {
 				<div className="w-full max-w-sm text-center space-y-6">
 					<div>
 						<h1 className="text-3xl md:text-4xl font-semibold">로그인</h1>
-						<p className="text-gray-500 mt-2 md:mt-5">Please Log in to continue</p>
+						<p className="text-gray-500 mt-2 md:mt-5">
+							Please Log in to continue
+						</p>
 					</div>
 
 					<div className="flex flex-col items-center space-y-3">
