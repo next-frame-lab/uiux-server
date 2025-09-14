@@ -1,11 +1,11 @@
 import globals from "globals";
-import tseslint from "typescript-eslint";
 import pluginReact from "eslint-plugin-react";
 import { defineConfig } from "eslint/config";
 import { FlatCompat } from "@eslint/eslintrc";
 import path from "path";
 import { fileURLToPath } from "url";
 import prettier from "eslint-config-prettier";
+import * as tseslint from "typescript-eslint";
 
 // mimic CommonJS variables -- not needed if using CommonJS
 const __filename = fileURLToPath(import.meta.url);
@@ -32,12 +32,15 @@ export default defineConfig([
 		rules: {
 			// package import를 제외한 모든 import 구문에 대해 확장자를 사용하도록 강제
 			"import/no-extraneous-dependencies": ["error", { devDependencies: true }],
+			"import/no-unresolved": "off",
 			"import/extensions": ["error", "ignorePackages"],
 			"react/react-in-jsx-scope": "off",
 			"react/jsx-filename-extension": [
 				"warn",
 				{ extensions: [".jsx", ".tsx"] },
 			],
+			"@tanstack/query/stable-query-client": "off",
+			"@tanstack/query/exhaustive-deps": "off",
 		},
 	},
 

@@ -1,13 +1,13 @@
+import { useLocation, useNavigate } from "react-router-dom";
+import { useEffect, useMemo, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import performanceDetail from "../../components/__mocks__/performanceDetailData.ts";
 import {
 	seatPrices,
 	seatStateData,
 	selectSeatsData,
 } from "../../types/ApiDataTypes.ts";
-import { useLocation, useNavigate } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
 import useSeatReservation from "../../hooks/useSeatReservation.ts";
-import { useEffect, useMemo, useState } from "react";
 import SeatSelector from "../../components/reservation/SeatSelector.tsx";
 import fetchSeats from "../../api/seats.ts";
 import ReservationInfo from "../../components/reservation/ReservationInfo.tsx";
@@ -46,10 +46,12 @@ export default function SeatSelectPage() {
 		};
 	};
 
-	const performanceId = location.state.performanceId;
-	const scheduleId = location.state.scheduleId;
-	const seatPricesList = location.state.seatPrices;
-	const stadiumId = location.state.stadiumId;
+	const {
+		performanceId,
+		scheduleId,
+		seatPrices: seatPricesList,
+		stadiumId,
+	} = location.state;
 
 	const totalAmount = calculateTotalPrice(selectedSeats, seatPricesList);
 
@@ -134,10 +136,6 @@ export default function SeatSelectPage() {
 									<h2 className="mt-2 font-semibold text-gray-700">
 										좌석 선택
 									</h2>
-									{/* 새로고침 버튼 임시로 제거 */}
-									{/*<button type="button" onClick={() => refetchSeatStates()}>*/}
-									{/*	<TbRefresh />*/}
-									{/*</button>*/}
 								</div>
 								<div className="w-full bg-gray-600 text-center border-none rounded-sm p-2 mb-4 mt-4">
 									SCREEN
