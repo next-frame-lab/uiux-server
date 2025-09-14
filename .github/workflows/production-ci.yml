@@ -3,14 +3,14 @@ name: production-ci.yml
 
 on:
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   project-build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [ 20 ]
+        node-version: [20]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
