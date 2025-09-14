@@ -4,14 +4,14 @@ name: preview-ci.yml
 
 on:
   pull_request:
-    branches: [ develop ]
+    branches: [develop]
 
 jobs:
   install-cache:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [ 20 ]
+        node-version: [20]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -46,7 +46,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [ 20 ]
+        node-version: [20]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -75,7 +75,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [ 20 ]
+        node-version: [20]
 
     needs: install-cache
 
@@ -85,6 +85,8 @@ jobs:
 
       - name: Install pnpm
         uses: pnpm/action-setup@v4
+        with:
+          version: 10
 
       - name: Use Node.js ${{matrix.node-version}}
         uses: actions/setup-node@v4
@@ -103,16 +105,15 @@ jobs:
       - name: Check Types
         run: |
           pnpm typecheck
-  
 
   project-build:
-    needs: [ lint-format, type-check ]
+    needs: [lint-format, type-check]
     # 실행 환경으로 ubuntu의 최신 버전을 사용합니다.
     runs-on: ubuntu-latest
     strategy:
       # Node.js는 20 버전을, pnpm은 10 버전을 사용합니다.
       matrix:
-        node-version: [ 20 ]
+        node-version: [20]
     steps:
       # 저장소를 체크아웃합니다.
       - name: Checkout
@@ -142,7 +143,6 @@ jobs:
       # pnpm test로 테스트를 실행합니다.
       - name: Test
         run: pnpm test:ci
-
 # 추후, 파이어폭스 & 크롬에서 각각 테스트를 진행하다고 가정하면, 빌드를 2 번 하게 된다.
 # 그런 문제를 해결하기 위해서는, 추후 actions/upload-artifact, actions/download-artifact를 사용한다.
 
