@@ -23,8 +23,11 @@ export default function KakaoRedirectPage() {
 
 				setUser(userData);
 
-				console.log(`${userData.name}님, 환영합니다!`);
-				navigate("/");
+				const fromState = searchParams.get("state");
+				const redirectTo =
+					fromState || sessionStorage.getItem("redirectTo") || "/";
+
+				navigate(redirectTo, { replace: true });
 			} catch (error) {
 				console.error("로그인에 실패했습니다:", error);
 				alert("로그인에 실패했습니다. 문제가 지속되면 관리자에게 문의하세요.");

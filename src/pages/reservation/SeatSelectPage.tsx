@@ -16,7 +16,7 @@ import CombineSeatsWithState from "../../utils/CombineSeatsWithState.ts";
 import calculateTotalPrice from "../../utils/CalculatePrice.ts";
 import SendSeatsButton from "../../components/reservation/SendSeatsButton.tsx";
 import fetchSeatsStates from "../../api/seatsStates.ts";
-import { AppErrorCode, statusMessage } from "../../lib/apiClient.ts";
+import { ApiError } from "../../lib/apiClient.ts";
 
 const TIMEOUT_MS = 10 * 60 * 10; // 예매 진입 로딩 시간
 
@@ -55,26 +55,26 @@ export default function SeatSelectPage() {
 
 	const totalAmount = calculateTotalPrice(selectedSeats, seatPricesList);
 
-	const {
-		data: seatDataResponse,
-		status: seatsStatus,
-		error: seatsError,
-	} = useQuery<selectSeatsData>({
+	const { data: seatDataResponse, status: seatsStatus } = useQuery<
+		selectSeatsData,
+		ApiError
+	>({
 		queryKey: ["selectSeats", stadiumId],
 		queryFn: async () => fetchSeats(stadiumId),
 		enabled: ready && !!stadiumId,
 		staleTime: 60 * 1000,
+		useErrorBoundary: true,
 	});
 
-	const {
-		data: seatStateDataResponse,
-		status: seatsStatus2,
-		error: seatsError2,
-	} = useQuery<seatStateData[]>({
+	const { data: seatStateDataResponse, status: seatsStatus2 } = useQuery<
+		seatStateData[],
+		ApiError
+	>({
 		queryKey: ["seatsState", scheduleId],
 		queryFn: () => fetchSeatsStates(scheduleId),
 		enabled: ready && !!scheduleId,
 		refetchOnWindowFocus: true,
+		useErrorBoundary: true,
 	});
 
 	useEffect(() => {
@@ -109,18 +109,6 @@ export default function SeatSelectPage() {
 
 	if (seatsStatus === "loading" || seatsStatus2 === "loading")
 		return <p>로딩 중</p>;
-
-	if (seatsStatus === "error" || seatsStatus2 === "error") {
-		const err = (seatsError ?? seatsError2) as
-			| { status?: AppErrorCode }
-			| undefined;
-		const code = err?.status;
-
-		if (code) {
-			return <p>에러 발생: {statusMessage[code]}</p>;
-		}
-		return <p>알 수 없는 오류가 발생했습니다.</p>;
-	}
 
 	return (
 		<main className="bg-[#FBFBFB]">
