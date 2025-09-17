@@ -1,36 +1,81 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
+import { useEffect, useMemo, useState } from "react";
 import Header from "../../components/layout/Header.tsx";
 import Footer from "../../components/layout/Footer.tsx";
 import fetchPerformanceDetail from "../../api/performanceDetail.ts";
 import PerformanceInfo from "../../components/performance/detail/PerformanceInfo.tsx";
 import { PerformanceDetailData } from "../../types/ApiDataTypes.ts";
-import { ApiError, AppErrorCode, statusMessage } from "../../lib/apiClient.ts";
+import { ApiError } from "../../lib/apiClient.ts";
+import AdultVerificationModal from "../../components/common/AdultVerificationModal.tsx";
 
 export default function PerformanceDetailPage() {
 	const { id } = useParams();
+	const navigate = useNavigate();
 
-	const { data, status, error } = useQuery<PerformanceDetailData, ApiError>({
+	const adult = sessionStorage.getItem("adultOnly") === "true";
+	const isLoggedIn = !!localStorage.getItem("accessToken");
+
+	const [confirmed, setConfirmed] = useState<boolean>(!adult);
+
+	useEffect(() => {
+		if (adult) {
+			sessionStorage.removeItem("adultConfirmed");
+			setConfirmed(false);
+		} else {
+			setConfirmed(true);
+		}
+	}, [id, adult]);
+
+	// 전체 이용가 : 바로 호출
+	// 성인 이용가 : 모달 "들어가기" 후, 호출
+	const enabled = useMemo(
+		() => !!id && (!adult || confirmed),
+		[id, adult, confirmed]
+	);
+
+	const { data, status } = useQuery<PerformanceDetailData, ApiError>({
 		queryKey: ["performanceDetail", id],
 		queryFn: () => fetchPerformanceDetail(id as string),
-		enabled: !!id,
+		enabled,
+		retry: 0,
+		refetchOnWindowFocus: false,
+		useErrorBoundary: true,
 	});
 
-	if (status === "loading") return <p>로딩 중</p>;
-	if (status === "error") {
-		const code = error?.status as AppErrorCode | undefined;
-
-		if (code) {
-			return <p>에러 발생: {statusMessage[code]}</p>;
+	useEffect(() => {
+		if (status === "success") {
+			sessionStorage.removeItem("redirectTo");
+			sessionStorage.removeItem("adultOnly");
 		}
-		return <p> 알 수 없는 오류가 발생했습니다.</p>;
-	}
+	}, [status]);
+
+	const handleConfirm = () => {
+		sessionStorage.setItem("redirectTo", `/performances/${id}`);
+		sessionStorage.setItem("adultConfirmed", "true");
+		if (!isLoggedIn) {
+			navigate("/login", {
+				replace: true,
+				state: { redirectTo: `/performances/${id}` },
+			});
+		}
+		setConfirmed(true);
+	};
+	const handleClose = () => navigate(-1);
 
 	return (
 		<div>
 			<Header />
 			<main className="bg-[#FBFBFB]">
-				{data && <PerformanceInfo performance={data} />}
+				{adult && !confirmed && (
+					<AdultVerificationModal
+						isOpen
+						onClose={handleClose}
+						onConfirm={handleConfirm}
+					/>
+				)}
+				{status === "loading" && <p>로딩 중</p>}
+				{data && confirmed && <PerformanceInfo performance={data} />}
 			</main>
 			<Footer />
 		</div>

@@ -13,6 +13,7 @@ export default function useReviews(id: string) {
 		queryKey: ["performanceReviews", id],
 		queryFn: () => fetchGetReview(id!),
 		enabled: !!id,
+		useErrorBoundary: true,
 	});
 
 	return {

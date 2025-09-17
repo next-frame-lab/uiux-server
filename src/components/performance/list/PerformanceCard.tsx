@@ -7,7 +7,9 @@ interface Props {
 
 export default function PerformanceCard({ performances }: Props) {
 	const navigate = useNavigate();
-	const handleClick = (id: string) => {
+
+	const handleClick = (id: string, adultOnly: boolean) => {
+		sessionStorage.setItem("adultOnly", String(adultOnly));
 		navigate(`/performances/${id}`);
 	};
 
@@ -16,14 +18,14 @@ export default function PerformanceCard({ performances }: Props) {
 	}
 
 	return (
-		<div className="grid grid-cols-4 gap-6 mb-10">
+		<div className="grid grid-cols-5 gap-6 mb-10">
 			{performances.map((performance) => (
 				<button
 					type="button"
 					key={performance.id}
 					data-testid="performanceId"
 					className="bg-white rounded-2xl shadow-md overflow-hidden text-left transition-transform transform hover:scale-105 hover:shadow-lg"
-					onClick={() => handleClick(performance.id)}>
+					onClick={() => handleClick(performance.id, performance.adultOnly)}>
 					<img
 						className="w-full object-cover"
 						src={performance.imageUrl}

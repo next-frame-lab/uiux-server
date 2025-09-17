@@ -13,7 +13,7 @@ const performanceData: PerformanceData = {
 			stadiumName: "올림픽공원",
 			startDate: "20250228",
 			endDate: "20250302",
-			adultOnly: false,
+			adultOnly: true,
 		})),
 	},
 	pagination: {

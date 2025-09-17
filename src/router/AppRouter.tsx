@@ -14,24 +14,45 @@ import SeatSelectPage from "../pages/reservation/SeatSelectPage.tsx";
 import PaymentPage from "../pages/payment/PaymentPage.tsx";
 import SuccessPage from "../pages/payment/SuccessPage.tsx";
 import FailPage from "../pages/payment/FailPage.tsx";
+import NotFoundPage from "../pages/common/NotFoundPage.tsx";
+import ErrorBoundary from "../components/ui/ErrorBoundary.tsx";
 
 const router = createBrowserRouter(
 	createRoutesFromElements(
-		<Route path="/">
+		<Route errorElement={<ErrorBoundary />}>
+			{/* / */}
 			<Route index element={<MainPage />} />
+
+			{/* /login /mypage */}
 			<Route path="login" element={<LoginPage />} />
 			<Route path="mypage" element={<MyPage />} />
-			<Route path="auth/kakao/callback" element={<KakaoRedirectPage />} />
-			<Route path="performances" element={<PerformancePage />} />
-			<Route path="performances/:id" element={<PerformanceDetailPage />} />
-			<Route path="performances/:id/seats" element={<SeatSelectPage />} />
-			<Route path="payments" element={<PaymentPage />} />
-			<Route path="payments/success" element={<SuccessPage />} />
-			<Route path="payments/fail" element={<FailPage />} />
+
+			{/* /auth/... */}
+			<Route path="auth">
+				<Route path="kakao/callback" element={<KakaoRedirectPage />} />
+			</Route>
+
+			{/* /performances/... */}
+			<Route path="performances">
+				<Route index element={<PerformancePage />} />
+				<Route path=":id">
+					<Route index element={<PerformanceDetailPage />} />
+					<Route path="seats" element={<SeatSelectPage />} />
+				</Route>
+			</Route>
+
+			{/* /payments */}
+			<Route path="payments">
+				<Route index element={<PaymentPage />} />
+				<Route path="success" element={<SuccessPage />} />
+				<Route path="fail" element={<FailPage />} />
+			</Route>
+
+			{/* 404 */}
+			<Route path="*" element={<NotFoundPage />} />
 		</Route>
 	)
 );
-
 export default function AppRouter() {
 	return <RouterProvider router={router} />;
 }
