@@ -11,6 +11,7 @@ export default function useAuth() {
 		localStorage.removeItem("accessToken");
 		localStorage.removeItem("refreshToken");
 		localStorage.removeItem("recoil-persist");
+		sessionStorage.removeItem("adultConfirmed");
 
 		resetUser();
 
