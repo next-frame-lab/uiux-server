@@ -5,6 +5,7 @@ import MainPageCarousel from "../../components/swiper/MainPageCarousel.tsx";
 import Header from "../../components/layout/Header.tsx";
 import Footer from "../../components/layout/Footer.tsx";
 import Category from "../../components/layout/Category.tsx";
+import { PerformanceListItem } from "../../types/ApiDataTypes.ts";
 
 export default function MainPage() {
 	const [page, setPage] = useState(1);
@@ -12,10 +13,10 @@ export default function MainPage() {
 	const { data, isLoading, isError, error } = useQuery({
 		queryKey: ["popularPerformances", page],
 		queryFn: () => fetchPerformances(page, 10),
-		placeholderData: (prev) => prev,
+		keepPreviousData: true,
 	});
 
-	const performances = data?.data.performances ?? [];
+	const performances: PerformanceListItem[] = data?.data.performances ?? [];
 	const pagination = data?.pagination;
 
 	return (
