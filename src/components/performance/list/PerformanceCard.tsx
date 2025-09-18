@@ -18,7 +18,7 @@ export default function PerformanceCard({ performances }: Props) {
 	}
 
 	return (
-		<div className="grid grid-cols-5 gap-6 mb-10">
+		<div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-5 md:gap-6">
 			{performances.map((performance) => (
 				<button
 					type="button"
@@ -27,7 +27,7 @@ export default function PerformanceCard({ performances }: Props) {
 					className="bg-white rounded-2xl shadow-md overflow-hidden text-left transition-transform transform hover:scale-105 hover:shadow-lg"
 					onClick={() => handleClick(performance.id, performance.adultOnly)}>
 					<img
-						className="w-full object-cover"
+						className="w-full h-64 sm:h-72 lg:h-80 rounded-2xl mb-3 object-cover bg-gray-200"
 						src={performance.imageUrl}
 						alt={`${performance.name} 포스터 이미지`}
 					/>
