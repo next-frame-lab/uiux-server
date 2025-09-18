@@ -20,8 +20,7 @@ export default function PerformanceDetailPage() {
 
 	useEffect(() => {
 		if (adult) {
-			sessionStorage.removeItem("adultConfirmed");
-			setConfirmed(false);
+			setConfirmed(sessionStorage.getItem("adultConfirmed") === "true");
 		} else {
 			setConfirmed(true);
 		}
@@ -47,18 +46,22 @@ export default function PerformanceDetailPage() {
 		if (status === "success") {
 			sessionStorage.removeItem("redirectTo");
 			sessionStorage.removeItem("adultOnly");
+			sessionStorage.removeItem("adultConfirmed");
 		}
 	}, [status]);
 
 	const handleConfirm = () => {
 		sessionStorage.setItem("redirectTo", `/performances/${id}`);
-		sessionStorage.setItem("adultConfirmed", "true");
 		if (!isLoggedIn) {
+			sessionStorage.setItem("pendingIntent", "adult-confirm");
 			navigate("/login", {
 				replace: true,
 				state: { redirectTo: `/performances/${id}` },
 			});
+			return;
 		}
+
+		sessionStorage.setItem("adultConfirmed", "true");
 		setConfirmed(true);
 	};
 	const handleClose = () => navigate(-1);

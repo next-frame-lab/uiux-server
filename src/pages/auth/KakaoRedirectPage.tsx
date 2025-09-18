@@ -23,6 +23,12 @@ export default function KakaoRedirectPage() {
 
 				setUser(userData);
 
+				const intent = sessionStorage.getItem("pendingIntent");
+				if (intent === "adult-confirm") {
+					sessionStorage.setItem("adultConfirmed", "true");
+					sessionStorage.removeItem("pendingIntent");
+				}
+
 				const fromState = searchParams.get("state");
 				const redirectTo =
 					fromState || sessionStorage.getItem("redirectTo") || "/";

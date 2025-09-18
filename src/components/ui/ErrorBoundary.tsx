@@ -13,7 +13,7 @@ export default function ErrorBoundary() {
 		<div className="p-8 text-center">
 			<h1 className="text-2xl font-bold">오류 {status}</h1>
 			<p className="mt-2 text-gray-600">
-				{statusMessage[status as 400 | 401 | 404 | 500] ?? e.message}
+				{statusMessage[status] || e.message || "알 수 없는 오류"}
 			</p>
 		</div>
 	);
