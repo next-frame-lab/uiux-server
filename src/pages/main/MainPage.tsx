@@ -62,7 +62,7 @@ export default function MainPage() {
 									handleClick(performance.id, performance.adultOnly)
 								}
 								onKeyDown={(e) => {
-									if (e.key === "enter" || e.key === " ")
+									if (e.key === "Enter" || e.key === " ")
 										handleClick(performance.id, performance.adultOnly);
 								}}
 								key={performance.id}
