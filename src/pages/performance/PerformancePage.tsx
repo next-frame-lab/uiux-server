@@ -48,8 +48,7 @@ export default function PerformancePage() {
 						hasMore={!!hasNextPage}
 						onFetchNext={fetchNextPage}
 						delay={1000}>
-						<PerformanceCard performances={performances} />
-						{isFetchingNextPage && <p>로딩 중..</p>}
+						<PerformanceCard performances={performances} />g
 					</InfiniteScroll>
 					{isFetchingNextPage && (
 						<p className="text-center py-4">더 많은 공연을 불러오는 중...</p>
