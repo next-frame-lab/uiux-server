@@ -1,7 +1,7 @@
 import { authedJSON } from "../lib/apiClient.ts";
 import { ConfirmPaymentResponse } from "../types/ApiDataTypes.ts";
-
-const { VITE_BACKEND_PAYMENT_API } = import.meta.env;
+import getEnvVar from "../utils/env.ts";
+const VITE_BACKEND_PAYMENT_API = getEnvVar("VITE_BACKEND_PAYMENT_API");
 
 const fetchConfirmPayment = async (
 	reservationId: string,

@@ -2,8 +2,8 @@
 import type { User } from "../recoil/auth.ts";
 import { authedJSON, publicJSON } from "../lib/apiClient.ts";
 import { LoginResponse } from "../types/ApiDataTypes.ts";
-
-const { VITE_BACKEND_SRT_API } = import.meta.env;
+import getEnvVar from "../utils/env.ts";
+const VITE_BACKEND_SRT_API = getEnvVar("VITE_BACKEND_SRT_API");
 
 const loginWithKakao = async (authCode: string): Promise<LoginResponse> => {
 	return publicJSON(`${VITE_BACKEND_SRT_API}/api/v1/auth/kakao/login`, {

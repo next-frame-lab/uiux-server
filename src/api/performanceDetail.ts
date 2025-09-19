@@ -1,7 +1,7 @@
 import { PerformanceDetailData } from "../types/ApiDataTypes.ts";
 import { authedJSON } from "../lib/apiClient.ts";
-
-const { VITE_BACKEND_SRT_API } = import.meta.env;
+import getEnvVar from "../utils/env.ts";
+const VITE_BACKEND_SRT_API = getEnvVar("VITE_BACKEND_SRT_API");
 
 const fetchPerformanceDetail = async (
 	id: string
