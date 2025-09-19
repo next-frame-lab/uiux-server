@@ -1,18 +1,18 @@
 name: production-cd.yml
 on:
-  pull_request:
-    branches: [ develop ]
+  push:
+    branches: ["#57-chore-cd"]
 
 jobs:
   project-deploy:
     runs-on: ubuntu-latest
 
     env:
-      APP_DIR: '~/next-frame/app/uiux-server'
+      APP_DIR: "~/next-frame/app/uiux-server"
       DIST_DIR: "./dist"
     strategy:
       matrix:
-        node-version: [ 20 ]
+        node-version: [20]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
