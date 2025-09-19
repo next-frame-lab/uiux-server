@@ -1,7 +1,8 @@
 name: production-cd.yml
 on:
   push:
-    branches: ["#57-chore-cd"]
+    branches:
+      - main
 
 jobs:
   project-deploy:
