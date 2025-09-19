@@ -1,7 +1,7 @@
 name: production-cd.yml
 on:
   push:
-    branches: [ "#57-chore-cd" ]
+    branches: ["#57-chore-cd"]
 
 jobs:
   project-deploy:
@@ -12,7 +12,7 @@ jobs:
       DIST_DIR: "./dist"
     strategy:
       matrix:
-        node-version: [ 20 ]
+        node-version: [20]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
