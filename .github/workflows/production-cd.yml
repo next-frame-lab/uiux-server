@@ -1,7 +1,7 @@
 name: production-cd.yml
 on:
   push:
-    branches: ["#57-chore-cd"]
+    branches: [ "#57-chore-cd" ]
 
 jobs:
   project-deploy:
@@ -12,7 +12,7 @@ jobs:
       DIST_DIR: "./dist"
     strategy:
       matrix:
-        node-version: [20]
+        node-version: [ 20 ]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -41,7 +41,7 @@ jobs:
 
       - name: 중간(Bastion) 서버 연결 테스트
         run: |
-          ssh -o StrictHostKeyChecking=no -p ${{secrets.BASTION_USER}}@${{secrets.BASTION_HOST}} -p ${{ secrets.BASTION_PORT }} "echo \"Bastion 중간 서버 연결 성공\""
+          ssh -o StrictHostKeyChecking=no ${{secrets.BASTION_USER}}@${{secrets.BASTION_HOST}} -p ${{ secrets.BASTION_PORT }} "echo \"Bastion 중간 서버 연결 성공\""
 
       - name: 빌드 파일 애플리케이션 서버로 복사
         run: |

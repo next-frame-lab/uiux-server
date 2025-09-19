@@ -38,7 +38,7 @@ export default function Header() {
 					className="flex items-center gap-4 cursor-pointer"
 					onClick={() => handleNavigate("/")}>
 					<img
-						src="/src/assets/images/logo.png"
+						src="../../assets/images/user.png"
 						className="w-10 h-10"
 						alt="NextFrame 로고 이미지입니다"
 					/>
