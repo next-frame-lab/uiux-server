@@ -4,8 +4,7 @@ import { useEffect, useState } from "react";
 import Debouncing from "../../utils/Debouncing.ts";
 import useElapsedTime from "../../hooks/useElapsedTime.ts";
 
-const apiUrl = process.env.TOSS_CLIENT_KEY ?? "";
-
+const { VITE_TOSS_CLIENT_KEY } = import.meta.env;
 const customerKey = `user-id`; // OAuth로 받은 user.id 값을 사용
 
 export default function TossPaymentCheckout({
@@ -36,7 +35,7 @@ export default function TossPaymentCheckout({
 
 		async function fetchPayment() {
 			try {
-				const tossPayments = await loadTossPayments(apiUrl);
+				const tossPayments = await loadTossPayments(VITE_TOSS_CLIENT_KEY);
 
 				// 회원 결제
 				const paymentInfo = tossPayments.payment({

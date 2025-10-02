@@ -1,16 +1,18 @@
 import { publicJSON } from "../lib/apiClient.ts";
 import { PerformanceData } from "../types/ApiDataTypes.ts";
-
-const apiUrl = process.env.BACKEND_SRT_API;
+import getEnvVar from "../utils/env.ts";
+const VITE_BACKEND_SRT_API = getEnvVar("VITE_BACKEND_SRT_API");
 
 const fetchPerformances = async (
 	page: number,
-	size = 32
+	size = 10
 ): Promise<PerformanceData> => {
-	const url = `${apiUrl}/api/v1/performances?${new URLSearchParams({
-		page: String(page),
-		size: String(size),
-	})}`;
+	const url = `${VITE_BACKEND_SRT_API}/api/v1/performances?${new URLSearchParams(
+		{
+			page: String(page),
+			size: String(size),
+		}
+	)}`;
 
 	return publicJSON(url, {
 		method: "GET",
