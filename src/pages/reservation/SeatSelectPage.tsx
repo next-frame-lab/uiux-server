@@ -33,17 +33,18 @@ export default function SeatSelectPage() {
 		}
 	}, [navigate]);
 
-	// 새로고침 여부
-	const isReload =
-		(
-			performance.getEntriesByType("navigation")[0] as
-				| PerformanceNavigationTiming
-				| undefined
-		)?.type === "reload";
-
 	// 시간 조절
 	const startAt = useMemo(() => new Date(Date.now() + TIMEOUT_MS), []);
-	const [ready, setReady] = useState(isReload);
+	const [ready, setReady] = useState(
+		() =>
+			typeof performance !== "undefined" &&
+			typeof performance.getEntriesByType === "function" &&
+			(
+				performance.getEntriesByType("navigation")[0] as
+					| PerformanceNavigationTiming
+					| undefined
+			)?.type === "reload"
+	);
 
 	const location = useLocation() as {
 		state: {
