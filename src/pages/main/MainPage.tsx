@@ -14,7 +14,7 @@ export default function MainPage() {
 
 	const { data, isLoading, isError, error } = useQuery({
 		queryKey: ["popularPerformances", page],
-		queryFn: () => fetchPerformances(page - 1, 10),
+		queryFn: () => fetchPerformances(page, 10),
 		keepPreviousData: true,
 	});
 
@@ -91,7 +91,7 @@ export default function MainPage() {
 					<div className="flex justify-center items-center gap-x-4 mt-12">
 						<button
 							type="button"
-							onClick={() => setPage((p) => Math.max(p - 1, 1))}
+							onClick={() => setPage((p) => p - 1)}
 							disabled={page === 1}
 							className="px-4 py-2 bg-gray-200 rounded-md disabled:opacity-50 disabled:cursor-not-allowed">
 							이전

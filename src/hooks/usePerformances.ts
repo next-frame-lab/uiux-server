@@ -3,10 +3,10 @@ import fetchPerformances from "../api/performance.ts";
 import { PerformanceData } from "../types/ApiDataTypes.ts";
 import { ApiError } from "../lib/apiClient.ts";
 
-export default function usePerformances(size = 32) {
+export default function usePerformances(size = 10) {
 	return useInfiniteQuery<PerformanceData, ApiError>({
 		queryKey: ["performances", size],
-		queryFn: ({ pageParam = 0 }) => fetchPerformances(pageParam, size),
+		queryFn: ({ pageParam = 1 }) => fetchPerformances(pageParam, size),
 		getNextPageParam: (lastPage) =>
 			lastPage.pagination.hasNext ? lastPage.pagination.page + 1 : undefined,
 	});

@@ -12,7 +12,7 @@ export default function AppInitializer({
 
 	useEffect(() => {
 		if (window.Kakao && !window.Kakao.isInitialized()) {
-			window.Kakao.init(process.env.KAKAO_JAVASCRIPT_KEY);
+			window.Kakao.init(import.meta.env.VITE_KAKAO_JAVASCRIPT_KEY);
 			setKakaoSdkReady(true);
 		} else if (window.Kakao?.isInitialized()) {
 			setKakaoSdkReady(true);
