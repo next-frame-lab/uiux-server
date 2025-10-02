@@ -4,7 +4,7 @@ import perfImage from "../../assets/images/Performance1.gif";
 const performanceData: PerformanceData = {
 	code: "SUCCESS",
 	data: {
-		performances: Array.from({ length: 40 }).map((_, index) => ({
+		performances: Array.from({ length: 100 }).map((_, index) => ({
 			id: `mock-${index + 1}`,
 			name: `공연 이름-${index + 1}`,
 			imageUrl: perfImage,
@@ -17,9 +17,9 @@ const performanceData: PerformanceData = {
 		})),
 	},
 	pagination: {
-		page: 1,
-		size: 10,
-		totalItems: 40,
+		page: 0,
+		size: 32,
+		totalItems: 100,
 		totalPages: 4,
 		hasNext: true,
 		hasPrevious: false,
