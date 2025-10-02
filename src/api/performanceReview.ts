@@ -3,6 +3,8 @@ import { reviewData } from "../types/ApiDataTypes.ts";
 import getEnvVar from "../utils/env.ts";
 const VITE_BACKEND_SRT_API = getEnvVar("VITE_BACKEND_SRT_API");
 
+const { VITE_BACKEND_SRT_API } = import.meta.env;
+
 const fetchGetReview = async (id: string) => {
 	return authedJSON<reviewData>(
 		`${VITE_BACKEND_SRT_API}/api/v1/performances/${id}/reviews`,
