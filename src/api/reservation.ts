@@ -3,14 +3,13 @@ import {
 	ReservationResponse,
 } from "../types/ApiDataTypes.ts";
 import { authedJSON } from "../lib/apiClient.ts";
-import getEnvVar from "../utils/env.ts";
 
-const VITE_BACKEND_SRT_API = getEnvVar("VITE_BACKEND_SRT_API");
+const apiUrl = process.env.BACKEND_SRT_API;
 
 const fetchPostReservation = async (
 	body: ReservationRequest
 ): Promise<ReservationResponse> => {
-	return authedJSON(`${VITE_BACKEND_SRT_API}/api/v1/reservation`, {
+	return authedJSON(`${apiUrl}/api/v1/reservation`, {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",

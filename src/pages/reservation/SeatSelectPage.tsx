@@ -35,7 +35,16 @@ export default function SeatSelectPage() {
 
 	// 시간 조절
 	const startAt = useMemo(() => new Date(Date.now() + TIMEOUT_MS), []);
-	const [ready, setReady] = useState(() => Date.now() >= startAt.getTime());
+	const [ready, setReady] = useState(
+		() =>
+			typeof performance !== "undefined" &&
+			typeof performance.getEntriesByType === "function" &&
+			(
+				performance.getEntriesByType("navigation")[0] as
+					| PerformanceNavigationTiming
+					| undefined
+			)?.type === "reload"
+	);
 
 	const location = useLocation() as {
 		state: {
