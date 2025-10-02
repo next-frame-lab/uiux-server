@@ -4,7 +4,7 @@ export default function LoginPage() {
 	const handleKakaoLogin = () => {
 		if (window.Kakao) {
 			window.Kakao.Auth.authorize({
-				redirectUri: import.meta.env.VITE_KAKAO_REDIRECT_URI,
+				redirectUri: process.env.KAKAO_REDIRECT_KEY,
 			});
 		}
 	};
