@@ -38,11 +38,7 @@ export default function Header() {
 					type="button"
 					className="flex items-center gap-4 cursor-pointer"
 					onClick={() => handleNavigate("/")}>
-					<img
-						src={logoImage}
-						className="w-10 h-10"
-						alt="NextFrame 로고 이미지입니다"
-					/>
+					<img src={logoImage} className="w-10 h-10" alt="NextFrame 로고" />
 					<p className="text-2xl font-bold">NextFrame</p>
 				</button>
 
