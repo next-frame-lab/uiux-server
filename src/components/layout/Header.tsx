@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid";
 import useAuth from "../../hooks/useAuth.ts";
+import logoImage from "../../assets/images/logo.png";
 
 export default function Header() {
 	// 모바일 크기에서 햄버거 메뉴 상태를 관리하는 state
@@ -37,11 +38,7 @@ export default function Header() {
 					type="button"
 					className="flex items-center gap-4 cursor-pointer"
 					onClick={() => handleNavigate("/")}>
-					<img
-						src="../../assets/images/user.png"
-						className="w-10 h-10"
-						alt="NextFrame 로고 이미지입니다"
-					/>
+					<img src={logoImage} className="w-10 h-10" alt="NextFrame 로고" />
 					<p className="text-2xl font-bold">NextFrame</p>
 				</button>
 
