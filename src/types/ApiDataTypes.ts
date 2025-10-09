@@ -32,13 +32,21 @@ export interface PerformancePagination {
 	hasNext: boolean;
 	hasPrevious: boolean;
 }
-
+/** 공연 목록을 조회하여 응답으로 받는 데이터 타입입니다. */
 export interface PerformanceData {
 	code: string;
 	data: {
 		performances: PerformanceListItem[];
 	};
 	pagination: PerformancePagination;
+}
+
+/** 인기 공연 목록을 조회하기 위한 데이터 타입입니다. */
+export interface PopularPerformanceData {
+	code: string;
+	data: {
+		performances: PerformanceListItem[];
+	};
 }
 
 /** 공연 ID를 통해 공연의 상세 정보를 조회하는 데이터 타입입니다. */

@@ -29,8 +29,57 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+      # Secrets에서 .env 파일 생성
+      - name: Create .env from GitHub Secrets
+        run: |
+          cat <<EOF > .env
+            VITE_TOSS_CLIENT_KEY=${{ secrets.VITE_TOSS_CLIENT_KEY }}
+            VITE_TOSS_REDIRECT_KEY=${{ secrets.VITE_TOSS_REDIRECT_KEY }}
+            VITE_TOSS_SECRET_KEY=${{ secrets.VITE_TOSS_SECRET_KEY }}
+            VITE_KAKAO_JAVASCRIPT_KEY=${{ secrets.VITE_KAKAO_JAVASCRIPT_KEY }}
+            VITE_KAKAO_REDIRECT_KEY=${{ secrets.VITE_KAKAO_REDIRECT_KEY }}
+            VITE_BACKEND_SRT_API=${{ secrets.VITE_BACKEND_SRT_API }}
+            VITE_BACKEND_PAYMENT_API=${{ secrets.VITE_BACKEND_PAYMENT_API }}
+            EOF
+
       - name: Build
         run: pnpm run build
 
       - name: Test
         run: pnpm test:ci
+
+      - name: Verify .env file
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          if ! ls dist >/dev/null 2>&1; then
+            echo "dist directory not found!" >&2
+            exit 1
+          fi
+
+          if [ ! -f .env ]; then
+            echo ".env file not found!" >&2
+            exit 1
+          fi
+
+          line=""
+
+          while IFS= read -r line || [ -n "$line" ]; do
+          [[ "$line" =~ ^[[:space:]]*# ]] && continue
+          [[ -z "$line" ]] && continue
+          if [[ "$line" =~ ^(VITE_[A-Za-z0-9_]+)=(.*)$ ]]; then
+            key="${BASH_REMATCH[1]}"
+            val="${BASH_REMATCH[2]}"
+
+            if [ -z "$val" ]; then
+              echo "Error: $key is empty value" >&2
+              exit 1
+            fi
+
+            if ! grep -qF -- "$val" dist/assets/*.js 2>/dev/null; then
+              echo "$key not found in build output" >&2
+              exit 1
+            fi
+          fi
+            done < .env

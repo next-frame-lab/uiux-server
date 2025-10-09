@@ -1,19 +1,30 @@
 import { authedJSON } from "../lib/apiClient.ts";
 import { reviewData } from "../types/ApiDataTypes.ts";
 
-const apiUrl = process.env.BACKEND_SRT_API;
+const apiUrl =
+	process.env.MODE === "development"
+		? process.env.BACKEND_DEVELOPMENT_SRT_API
+		: process.env.BACKEND_SRT_API;
 
 const fetchGetReview = async (id: string) => {
 	return authedJSON<reviewData>(`${apiUrl}/api/v1/performances/${id}/reviews`, {
 		method: "GET",
-		headers: { "Content-Type": "application/json" },
+		headers: {
+			"Content-Type": "application/json",
+			accept: "application/json",
+			credentials: "include",
+		},
 	});
 };
 
 const fetchPostReview = async (id: string, content: string, star: number) => {
 	return authedJSON(`${apiUrl}/api/v1/performances/${id}/reviews`, {
 		method: "POST",
-		headers: { "Content-Type": "application/json" },
+		headers: {
+			"Content-Type": "application/json",
+			accept: "application/json",
+			credentials: "include",
+		},
 		body: JSON.stringify({ content, star }),
 	});
 };
@@ -21,7 +32,11 @@ const fetchPostReview = async (id: string, content: string, star: number) => {
 const fetchPatchReview = async (reviewId: string, content: string) => {
 	return authedJSON(`${apiUrl}/api/v1/reviews/${reviewId}`, {
 		method: "PATCH",
-		headers: { "Content-Type": "application/json" },
+		headers: {
+			"Content-Type": "application/json",
+			accept: "application/json",
+			credentials: "include",
+		},
 		body: JSON.stringify({ content }),
 	});
 };
@@ -29,7 +44,11 @@ const fetchPatchReview = async (reviewId: string, content: string) => {
 const fetchDeleteReview = async (reviewId: string) => {
 	return authedJSON(`${apiUrl}/api/v1/reviews/${reviewId}`, {
 		method: "DELETE",
-		headers: { "Content-Type": "application/json" },
+		credentials: "include",
+		headers: {
+			"Content-Type": "application/json",
+			accept: "application/json",
+		},
 	});
 };
 
