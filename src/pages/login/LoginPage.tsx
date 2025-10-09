@@ -1,10 +1,15 @@
 import Header from "../../components/layout/Header.tsx";
 
+const apiUrl =
+	process.env.MODE === "development"
+		? process.env.KAKAO_DEVELOPMENT_REDIRECT_KEY
+		: process.env.KAKAO_REDIRECT_KEY;
+
 export default function LoginPage() {
 	const handleKakaoLogin = () => {
 		if (window.Kakao) {
 			window.Kakao.Auth.authorize({
-				redirectUri: process.env.KAKAO_REDIRECT_KEY,
+				redirectUri: apiUrl,
 			});
 		}
 	};
