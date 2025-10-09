@@ -3,6 +3,8 @@ import { useEffect } from "react";
 import { useSetRecoilState } from "recoil";
 import { kakaoSdkReadyState } from "../../recoil/auth.ts";
 
+const apiUrl = process.env.KAKAO_JAVASCRIPT_KEY;
+
 export default function AppInitializer({
 	children,
 }: {
@@ -12,7 +14,7 @@ export default function AppInitializer({
 
 	useEffect(() => {
 		if (window.Kakao && !window.Kakao.isInitialized()) {
-			window.Kakao.init(process.env.KAKAO_JAVASCRIPT_KEY);
+			window.Kakao.init(apiUrl);
 			setKakaoSdkReady(true);
 		} else if (window.Kakao?.isInitialized()) {
 			setKakaoSdkReady(true);

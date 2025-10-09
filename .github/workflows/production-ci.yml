@@ -1,4 +1,3 @@
-# develop -> main에 PR 할 때 사용되는 워크플로입니다.
 name: production-ci.yml
 
 on:
@@ -11,6 +10,15 @@ jobs:
     strategy:
       matrix:
         node-version: [20]
+
+    env:
+      VITE_TOSS_CLIENT_KEY: ${{ secrets.VITE_TOSS_CLIENT_KEY }}
+      VITE_KAKAO_JAVASCRIPT_KEY: ${{ secrets.VITE_KAKAO_JAVASCRIPT_KEY }}
+      VITE_KAKAO_REDIRECT_KEY: ${{ secrets.VITE_KAKAO_REDIRECT_KEY }}
+      VITE_BACKEND_SRT_API: ${{ secrets.VITE_BACKEND_SRT_API }}
+      VITE_BACKEND_PAYMENT_API: ${{ secrets.VITE_BACKEND_PAYMENT_API }}
+      VITE_ENABLE_MSW: ${{ secrets.VITE_ENABLE_MSW }}
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -29,8 +37,65 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+      # ✅ GitHub Secrets 정상 주입 여부 확인
+      - name: Check GitHub Secrets
+        shell: bash
+        run: |
+          set -euo pipefail
+          CHECK_VARS=(
+            VITE_TOSS_CLIENT_KEY
+            VITE_KAKAO_JAVASCRIPT_KEY
+            VITE_KAKAO_REDIRECT_KEY
+            VITE_BACKEND_SRT_API
+            VITE_BACKEND_PAYMENT_API
+          )
+
+          for key in "${CHECK_VARS[@]}"; do
+            val="${!key:-}"
+            if [ -z "$val" ]; then
+              echo "❌ $key is NOT set or empty" >&2
+              exit 1
+            else
+              echo "✅ $key is set"
+            fi
+          done
+
       - name: Build
         run: pnpm run build
 
       - name: Test
         run: pnpm test:ci
+
+      # ✅ Secrets가 빌드 결과에 반영됐는지 검증
+      - name: Verify GitHub Secrets injection
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          if ! ls dist >/dev/null 2>&1; then
+            echo "dist directory not found!" >&2
+            exit 1
+          fi
+
+          CHECK_VARS=(
+            VITE_TOSS_CLIENT_KEY
+            VITE_KAKAO_JAVASCRIPT_KEY
+            VITE_KAKAO_REDIRECT_KEY
+            VITE_BACKEND_SRT_API
+            VITE_BACKEND_PAYMENT_API
+          )
+
+          for key in "${CHECK_VARS[@]}"; do
+            vals="${!key:-}"
+            if [ -z "$vals" ]; then
+              echo "❌ $key is empty value" >&2
+              exit 1
+            fi
+
+            if ! grep -qF -- "$vals" dist/assets/*.js 2>/dev/null; then
+              echo "❌ $key not found in build output" >&2
+              exit 1
+            fi
+
+            echo "✅ $key found in build output"
+          done

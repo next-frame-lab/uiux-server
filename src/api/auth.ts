@@ -3,12 +3,19 @@ import type { User } from "../recoil/auth.ts";
 import { authedJSON, publicJSON } from "../lib/apiClient.ts";
 import { LoginResponse } from "../types/ApiDataTypes.ts";
 
-const apiUrl = process.env.BACKEND_SRT_API;
+const apiUrl =
+	process.env.MODE === "development"
+		? process.env.BACKEND_DEVELOPMENT_SRT_API
+		: process.env.BACKEND_SRT_API;
 
 const loginWithKakao = async (authCode: string): Promise<LoginResponse> => {
 	return publicJSON(`${apiUrl}/api/v1/auth/kakao/login`, {
 		method: "POST",
-		headers: { "Content-Type": "application/json" },
+		credentials: "include",
+		headers: {
+			"Content-Type": "application/json",
+			accept: "application/json",
+		},
 		body: JSON.stringify({
 			provider: "kakao",
 			authCode,
@@ -19,7 +26,11 @@ const loginWithKakao = async (authCode: string): Promise<LoginResponse> => {
 const fetchMyInfo = async (): Promise<User> => {
 	return authedJSON(`${apiUrl}/api/v1/me`, {
 		method: "GET",
-		headers: { "Content-Type": "application/json" },
+		credentials: "include",
+		headers: {
+			"Content-Type": "application/json",
+			accept: "application/json",
+		},
 	});
 };
 
