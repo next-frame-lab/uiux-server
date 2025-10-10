@@ -1,12 +1,22 @@
-import { useState } from "react";
+import {
+	useState,
+	ChangeEvent,
+	KeyboardEvent as ReactKeyboardEvent,
+} from "react";
 import { useNavigate } from "react-router-dom";
-import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid";
+import {
+	Bars3Icon,
+	XMarkIcon,
+	MagnifyingGlassIcon,
+} from "@heroicons/react/24/solid";
 import useAuth from "../../hooks/useAuth.ts";
 import logoImage from "../../assets/images/logo.png";
 
 export default function Header() {
 	// 모바일 크기에서 햄버거 메뉴 상태를 관리하는 state
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
+	// 검색어 상태를 관리하기 위한 state
+	const [searchTerm, setSearchTerm] = useState<string>("");
 	const navigate = useNavigate();
 	const { isLoggedIn, logout } = useAuth();
 
@@ -31,16 +41,58 @@ export default function Header() {
 		setIsMenuOpen(false);
 	};
 
+	// 검색 실행 함수
+	const handleSearch = () => {
+		if (!searchTerm.trim()) {
+			alert("검색어를 입력해주세요.");
+			return;
+		}
+		navigate(`/performances/search?query=${encodeURIComponent(searchTerm)}`);
+		setIsMenuOpen(false);
+	};
+
+	// Enter 키를 누르면 검색 실행
+	const handleKeyDown = (event: ReactKeyboardEvent<HTMLInputElement>) => {
+		if (event.key === "Enter") {
+			handleSearch();
+		}
+	};
+
+	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+		setSearchTerm(event.target.value);
+	};
+
 	return (
 		<header className="bg-[#FBFBFB] border-b border-[#E8EDF5] sticky top-0 z-50">
-			<div className="max-w-screen-xl mx-auto flex items-center justify-between flex-wrap px-6 py-14 md:px-6">
-				<button
-					type="button"
-					className="flex items-center gap-4 cursor-pointer"
-					onClick={() => handleNavigate("/")}>
-					<img src={logoImage} className="w-10 h-10" alt="NextFrame 로고" />
-					<p className="text-2xl font-bold">NextFrame</p>
-				</button>
+			<div className="max-w-screen-xl mx-auto flex items-center justify-between flex-wrap px-6 py-14 md:px-6 gap-y-6">
+				<div className="flex items-center gap-x-6">
+					<button
+						type="button"
+						className="flex items-center gap-4 cursor-pointer"
+						onClick={() => handleNavigate("/")}>
+						<img src={logoImage} className="w-10 h-10" alt="NextFrame 로고" />
+						<p className="text-2xl font-bold">NextFrame</p>
+					</button>
+
+					{/* 검색창 UI */}
+					<div className="relative hidden md:block">
+						<input
+							type="text"
+							value={searchTerm}
+							onChange={handleChange}
+							onKeyDown={handleKeyDown}
+							placeholder="공연을 검색해보세요"
+							className="w-48 lg:w-80 h-11 pl-4 pr-10 text-sm border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-gray-400"
+						/>
+						<button
+							type="button"
+							onClick={handleSearch}
+							className="absolute top-0 right-0 h-full px-3.5 text-gray-500 hover:text-gray-800"
+							aria-label="검색">
+							<MagnifyingGlassIcon className="w-5 h-5" />
+						</button>
+					</div>
+				</div>
 
 				<nav className="hidden md:flex items-center justify-end flex-wrap gap-x-4 gap-y-2 md:gap-x-6">
 					<button
@@ -128,6 +180,25 @@ export default function Header() {
 						<div className="flex justify-end mb-8">
 							<button type="button" onClick={() => setIsMenuOpen(false)}>
 								<XMarkIcon className="w-6 h-6" />
+							</button>
+						</div>
+
+						{/* 모바일용 검색창 UI */}
+						<div className="relative mb-6">
+							<input
+								type="text"
+								value={searchTerm}
+								onChange={handleChange}
+								onKeyDown={handleKeyDown}
+								placeholder="공연을 검색해보세요"
+								className="w-full h-11 pl-4 pr-10 text-sm border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-gray-400"
+							/>
+							<button
+								type="button"
+								onClick={handleSearch}
+								className="absolute top-0 right-0 h-full px-3.5 text-gray-500"
+								aria-label="검색">
+								<MagnifyingGlassIcon className="w-5 h-5" />
 							</button>
 						</div>
 
