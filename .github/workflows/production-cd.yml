@@ -48,7 +48,7 @@ jobs:
         run: |
           scp -r -o StrictHostKeyChecking=no \
               -J ${{ secrets.BASTION_USER }}@${{ secrets.BASTION_HOST }}:${{ secrets.BASTION_PORT }} \
-              ${{env.DIST_DIR}} \
+              ${{env.DIST_DIR}}/ \
               ${{ secrets.DAISY04_USER }}@${{ secrets.DAISY04_HOST }}:${{ env.APP_DIR }}/
 
       - name: 애플리케이션 서버에 변경 사항 적용
