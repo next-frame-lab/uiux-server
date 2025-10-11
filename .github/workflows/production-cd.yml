@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      APP_DIR: "/var/www/nextframe-uiux/dist/"
+      APP_DIR: "/var/www/nextframe-uiux"
       DIST_DIR: "./dist"
     strategy:
       matrix:
