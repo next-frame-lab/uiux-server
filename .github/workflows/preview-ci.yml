@@ -136,6 +136,19 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      # Secrets에서 .env 파일 생성
+      - name: Create .env from GitHub Secrets
+        run: |
+          cat <<EOF > .env
+            VITE_TOSS_CLIENT_KEY: ${{ secrets.VITE_TOSS_CLIENT_KEY }}
+            VITE_TOSS_REDIRECT_KEY: ${{ secrets.VITE_TOSS_REDIRECT_KEY }}
+            VITE_TOSS_SECRET_KEY: ${{ secrets.VITE_TOSS_SECRET_KEY }}
+            VITE_KAKAO_JAVASCRIPT_KEY: ${{ secrets.VITE_KAKAO_JAVASCRIPT_KEY }}
+            VITE_KAKAO_REDIRECT_KEY: ${{ secrets.VITE_KAKAO_REDIRECT_KEY }}
+            VITE_BACKEND_SRT_API: ${{ secrets.VITE_BACKEND_SRT_API }}
+            VITE_BACKEND_PAYMENT_API: ${{ secrets.VITE_BACKEND_PAYMENT_API }}
+            EOF
+
       # pnpm run build를 실행합니다.
       - name: Build
         run: pnpm run build
