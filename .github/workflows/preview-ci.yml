@@ -4,14 +4,14 @@ name: preview-ci.yml
 
 on:
   pull_request:
-    branches: [develop]
+    branches: [ develop ]
 
 jobs:
   install-cache:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [20]
+        node-version: [ 20 ]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -46,7 +46,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [20]
+        node-version: [ 20 ]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -75,7 +75,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [20]
+        node-version: [ 20 ]
 
     needs: install-cache
 
@@ -107,13 +107,13 @@ jobs:
           pnpm typecheck
 
   project-build:
-    needs: [lint-format, type-check]
+    needs: [ lint-format, type-check ]
     # 실행 환경으로 ubuntu의 최신 버전을 사용합니다.
     runs-on: ubuntu-latest
     strategy:
       # Node.js는 20 버전을, pnpm은 10 버전을 사용합니다.
       matrix:
-        node-version: [20]
+        node-version: [ 20 ]
     steps:
       # 저장소를 체크아웃합니다.
       - name: Checkout
@@ -143,76 +143,39 @@ jobs:
       # pnpm test로 테스트를 실행합니다.
       - name: Test
         run: pnpm test:ci
-# 추후, 파이어폭스 & 크롬에서 각각 테스트를 진행하다고 가정하면, 빌드를 2 번 하게 된다.
-# 그런 문제를 해결하기 위해서는, 추후 actions/upload-artifact, actions/download-artifact를 사용한다.
 
-#  # project-build가 성공적으로 실행된다면, 다음 deploy-to-vercel이 실행됩니다.
-#  deploy-to-vercel:
-#    runs-on: ubuntu-latest
-#    needs: project-build
-#    # 출력값으로, preview_url(사전 Vercel 배포 링크) & current_time(현재 시각)을 출력합니다.
-#    outputs:
-#      preview_url: ${{ steps.deploy-vercel.outputs.preview_url }}
-#      current_time: ${{ steps.current-time.outputs.formattedTime }}
-#    strategy:
-#      matrix:
-#        node-version: [ 20 ]
-#    steps:
-#      - name: Checkout
-#        uses: actions/checkout@v4
-#
-#      - name: Install pnpm
-#        uses: pnpm/action-setup@v4
-#        with:
-#          version: 10
-#
-#      - name: Use Node.js ${{ matrix.node-version }}
-#        uses: actions/setup-node@v4
-#        with:
-#          node-version: ${{ matrix.node-version }}
-#          cache: pnpm
-#
-#      - name: Install dependencies
-#        run: pnpm install
-#
-#      # Github Action 실행 환경과 vercel 프로젝트를 연결합니다.
-#      - name: Link Vercel project (non-interactive)
-#        run: |
-#          pnpm dlx vercel@latest link --project uiux-server --yes --token=${{ secrets.VERCEL_TOKEN }}
-#
-#      # Vercel에 저장된 환경 변수(VERCEL_TOKEN)을 현재 CI 환경으로 가져옵니다.
-#      - name: Pull env (preview)
-#        run: pnpm dlx vercel@latest pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
-#
-#      # Vercel CLI를 이용해 프로젝트를 빌드합니다.
-#      - name: Build
-#        run: pnpm dlx vercel@latest build --token=${{ secrets.VERCEL_TOKEN }}
-#
-#      # 앞에서 빌드한 결과물을 그대로 업로드 후, Preview 환경에 배포합니다.
-#      # 출력된 Preview URL은 vercel-output.txt에 저장하고, 해당 URL을 불러와 job output에 등록합니다.
-#      - name: Deploy (prebuilt)
-#        id: deploy-vercel
-#        run: |
-#          pnpm dlx vercel@latest deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }} > vercel-output.txt
-#          echo "preview_url=$(cat vercel-output.txt)" >> $GITHUB_OUTPUT
-#
-#      # 배포 완료 시각을 가져와, PR 코멘트에 표시하도록 합니다.
-#      - name: Get current Time
-#        uses: josStorer/get-current-time@v2
-#        id: current-time
-#        with:
-#          format: "YYYY년 MM월 DD일 HH시 mm분"
-#          utcOffset: "+09:00"
-#
-#  # PR 코멘트에 preview URL과 배포 시각을 코멘트로 달아주는 역할을 합니다.
-#  preview-comment:
-#    runs-on: ubuntu-latest
-#    needs: [ deploy-to-vercel ]
-#    steps:
-#      - name: Comment PR
-#        uses: thollander/actions-comment-pull-request@v3
-#        with:
-#          comment-tag: ${{ github.event.number }}
-#          message: |
-#            🧷 Preview: ${{ needs.deploy-to-vercel.outputs.preview_url }}
-#            ⏰ Update: ${{ needs.deploy-to-vercel.outputs.current_time }}
+      # 빌드 결과물이 .env 파일의 VITE_ 로 시작하는 환경 변수들을 잘 포함하고 있는지 확인합니다.
+      - name: Verify .env file
+        shell: bash
+        run: |
+          set -euo pipefail
+          
+          if ! ls dist >/dev/null 2>&1; then
+            echo "dist directory not found!" >&2
+            exit 1
+          fi
+          
+          if [ ! -f .env ]; then
+            echo ".env file not found!" >&2
+            exit 1
+          fi
+          
+          while IFS = read -r line || [ -n "$line" ]; do
+          [[ "$line" =~ ^[[:space:]]*# ]] && continue
+          [[ -z "$line" ]] && continue
+          if [[ "$line" =~ ^(VITE_[A-Za-z0-9_]+)=(.*)$ ]]; then
+            key="${BASH_REMATCH[1]}"
+            val="${BASH_REMATCH[2]}"
+          
+            if [ -z "$val" ]; then
+              echo "Error: $key is empty value" >&2
+              exit 1
+            fi
+          
+            if ! grep -qF -- "$val" dist/assets/*.js 2>/dev/null; then
+              echo "$key not found in build output" >&2
+              exit 1
+            fi
+          fi
+            done < .env
+          
