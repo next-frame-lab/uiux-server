@@ -7,7 +7,10 @@ import App from "./App.tsx";
 import "./index.css";
 
 async function enableMocking() {
-	if (import.meta.env.MODE !== "development") {
+	const isDev = import.meta.env.NODE_ENV === "development";
+	const useMsw = process.env.USE_MSW === "true";
+
+	if (!isDev || !useMsw) {
 		return;
 	}
 
