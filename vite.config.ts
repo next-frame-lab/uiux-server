@@ -16,10 +16,12 @@ export default defineConfig(({ mode }) => {
 			{} as Record<string, string>
 		);
 
+	processEnv["process.env.MODE"] = JSON.stringify(mode);
+
 	return {
 		plugins: [react(), tailwindcss()],
 		server: {
-			port: 15173,
+			port: mode === "development" ? 5173 : 15173,
 		},
 		define: processEnv,
 	};
