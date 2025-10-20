@@ -41,6 +41,13 @@ export interface PerformanceData {
 	pagination: PerformancePagination;
 }
 
+export interface PopularPerformanceData {
+	code: string;
+	data: {
+		performances: PerformanceListItem[];
+	};
+}
+
 /** 공연 ID를 통해 공연의 상세 정보를 조회하는 데이터 타입입니다. */
 export type stadium = {
 	id: string;

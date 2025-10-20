@@ -1,20 +1,18 @@
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import fetchPerformances from "../../api/performance.ts";
 import MainPageCarousel from "../../components/swiper/MainPageCarousel.tsx";
 import Header from "../../components/layout/Header.tsx";
 import Footer from "../../components/layout/Footer.tsx";
 import Category from "../../components/layout/Category.tsx";
 import { PerformanceListItem } from "../../types/ApiDataTypes.ts";
+import fetchPopularPerformances from "../../api/popularPerformance.ts";
 
 export default function MainPage() {
 	const navigate = useNavigate();
-	const [page, setPage] = useState(1);
 
 	const { data, isLoading, isError, error } = useQuery({
-		queryKey: ["popularPerformances", page],
-		queryFn: () => fetchPerformances(page - 1, 10),
+		queryKey: ["popularPerformances"],
+		queryFn: () => fetchPopularPerformances(),
 		keepPreviousData: true,
 	});
 
@@ -24,7 +22,6 @@ export default function MainPage() {
 	};
 
 	const performances: PerformanceListItem[] = data?.data.performances ?? [];
-	const pagination = data?.pagination;
 
 	return (
 		<>
@@ -85,27 +82,6 @@ export default function MainPage() {
 								</div>
 							</div>
 						))}
-					</div>
-
-					{/* 페이지네이션 */}
-					<div className="flex justify-center items-center gap-x-4 mt-12">
-						<button
-							type="button"
-							onClick={() => setPage((p) => Math.max(p - 1, 1))}
-							disabled={page === 1}
-							className="px-4 py-2 bg-gray-200 rounded-md disabled:opacity-50 disabled:cursor-not-allowed">
-							이전
-						</button>
-						<span>
-							{page} / {pagination?.totalPages ?? 1}
-						</span>
-						<button
-							type="button"
-							onClick={() => setPage((p) => p + 1)}
-							disabled={!pagination?.hasNext}
-							className="px-4 py-2 bg-gray-200 rounded-md disabled:opacity-50 disabled:cursor-not-allowed">
-							다음
-						</button>
 					</div>
 				</div>
 			</main>
