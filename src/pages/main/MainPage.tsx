@@ -13,7 +13,7 @@ export default function MainPage() {
 	const { data, isLoading, isError, error } = useQuery({
 		queryKey: ["popularPerformances"],
 		queryFn: () => fetchPopularPerformances(),
-		keepPreviousData: true,
+		staleTime: 1000 * 60,
 	});
 
 	const handleClick = (id: string, adultOnly: boolean) => {
