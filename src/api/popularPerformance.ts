@@ -13,7 +13,6 @@ const fetchPopularPerformances = async (): Promise<PopularPerformanceData> => {
 		method: "GET",
 		credentials: "include",
 		headers: {
-			"Content-Type": "application/json",
 			accept: "application/json",
 		},
 	});
