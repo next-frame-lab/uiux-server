@@ -7,7 +7,9 @@ export default function usePerformances(size = 32) {
 	return useInfiniteQuery<PerformanceData, ApiError>({
 		queryKey: ["performances", size],
 		queryFn: ({ pageParam = 0 }) => fetchPerformances(pageParam, size),
-		getNextPageParam: (lastPage) =>
-			lastPage.pagination.hasNext ? lastPage.pagination.page + 1 : undefined,
+		getNextPageParam: (lastPage) => {
+			const { pagination } = lastPage;
+			return pagination?.hasNext ? pagination.page + 1 : undefined;
+		},
 	});
 }
