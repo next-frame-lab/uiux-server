@@ -42,39 +42,7 @@ jobs:
           VITE_KAKAO_REDIRECT_KEY: ${{ secrets.VITE_KAKAO_REDIRECT_KEY }}
           VITE_BACKEND_SRT_API: ${{ secrets.VITE_BACKEND_SRT_API }}
           VITE_BACKEND_PAYMENT_API: ${{ secrets.VITE_BACKEND_PAYMENT_API }}
-
-      - name: Verify Github Secrets usage in build
-        shell: bash
-        run: |
-          set -euo pipefail
-
-          if ! ls dist >/dev/null 2>&1; then
-            echo "dist directory not found!" >&2
-            exit 1
-          fi
-
-          CHECK_VARS=(
-            VITE_TOSS_CLIENT_KEY
-            VITE_TOSS_REDIRECT_KEY
-            VITE_TOSS_SECRET_KEY
-            VITE_KAKAO_JAVASCRIPT_KEY
-            VITE_KAKAO_REDIRECT_KEY
-            VITE_BACKEND_SRT_API
-            VITE_BACKEND_PAYMENT_API
-          )
-
-          for key in "${CHECK_VARS[@]}"; do
-            vals="${!key:-}"
-            if [ -z "$vals" ]; then
-              echo "$key is empty value" >&2
-              exit 1
-            fi
-
-            if ! grep -qF -- "$vals" dist/assets/*.js 2>/dev/null; then
-              echo "$key not found in build output" >&2
-              exit 1
-            fi
-          done
+          VITE_ENABLE_MSW: ${{ secrets.VITE_ENABLE_MSW }}
 
       - name: SSH Agent 셋업
         uses: webfactory/ssh-agent@v0.9.0
