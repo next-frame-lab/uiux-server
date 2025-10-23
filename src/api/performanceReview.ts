@@ -1,10 +1,7 @@
 import { authedJSON } from "../lib/apiClient.ts";
 import { reviewData } from "../types/ApiDataTypes.ts";
 
-const apiUrl =
-	process.env.MODE === "development"
-		? process.env.BACKEND_DEVELOPMENT_SRT_API
-		: process.env.BACKEND_SRT_API;
+const apiUrl = process.env.BACKEND_SRT_API;
 
 const fetchGetReview = async (id: string) => {
 	return authedJSON<reviewData>(`${apiUrl}/api/v1/performances/${id}/reviews`, {

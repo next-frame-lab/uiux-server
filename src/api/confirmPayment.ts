@@ -1,10 +1,7 @@
 import { authedJSON } from "../lib/apiClient.ts";
 import { ConfirmPaymentResponse } from "../types/ApiDataTypes.ts";
 
-const apiUrl =
-	process.env.MODE === "development"
-		? process.env.BACKEND_DEVELOPMENT_PAYMENT_API
-		: process.env.BACKEND_PAYMENT_API;
+const apiUrl = process.env.BACKEND_PAYMENT_API;
 
 const fetchConfirmPayment = async (
 	reservationId: string,

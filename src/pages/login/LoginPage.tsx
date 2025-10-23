@@ -1,9 +1,6 @@
 import Header from "../../components/layout/Header.tsx";
 
-const apiUrl =
-	process.env.MODE === "development"
-		? process.env.KAKAO_DEVELOPMENT_REDIRECT_KEY
-		: process.env.KAKAO_REDIRECT_KEY;
+const apiUrl = process.env.KAKAO_REDIRECT_KEY;
 
 export default function LoginPage() {
 	const handleKakaoLogin = () => {

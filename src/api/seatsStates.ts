@@ -3,10 +3,7 @@ import { authedJSON } from "../lib/apiClient.ts";
 
 type Raw = { code: string; data: { seats: seatStateData[] } };
 
-const apiUrl =
-	process.env.MODE === "development"
-		? process.env.BACKEND_DEVELOPMENT_SRT_API
-		: process.env.BACKEND_SRT_API;
+const apiUrl = process.env.BACKEND_SRT_API;
 
 const fetchSeatsStates = async (id: string) => {
 	const json = await authedJSON<Raw>(
