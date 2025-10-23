@@ -1,10 +1,7 @@
 import { authedJSON } from "../lib/apiClient.ts";
 import { selectSeatsData } from "../types/ApiDataTypes.ts";
 
-const apiUrl =
-	process.env.MODE === "development"
-		? process.env.BACKEND_DEVELOPMENT_SRT_API
-		: process.env.BACKEND_SRT_API;
+const apiUrl = process.env.BACKEND_SRT_API;
 
 const fetchSeats = async (id: string): Promise<selectSeatsData> => {
 	return authedJSON(`${apiUrl}/api/v1/stadiums/${id}/seat-definitions`, {
