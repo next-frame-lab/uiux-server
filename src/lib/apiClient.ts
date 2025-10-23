@@ -40,7 +40,7 @@ export default async function requestJSON<T>(
 
 	const body = await res.json();
 
-	if (res.status !== 200) {
+	if (!res.ok) {
 		switch (res.status) {
 			case 401:
 				localStorage.removeItem("accessToken");
