@@ -1,10 +1,7 @@
 import { PerformanceDetailData } from "../types/ApiDataTypes.ts";
 import { authedJSON } from "../lib/apiClient.ts";
 
-const apiUrl =
-	process.env.MODE === "development"
-		? process.env.BACKEND_DEVELOPMENT_SRT_API
-		: process.env.BACKEND_SRT_API;
+const apiUrl = process.env.BACKEND_SRT_API;
 
 const fetchPerformanceDetail = async (
 	id: string
