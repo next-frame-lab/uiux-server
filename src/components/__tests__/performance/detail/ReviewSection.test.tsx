@@ -25,7 +25,7 @@ jest.mock("../../../performance/detail/review/ReviewForm.tsx", () => ({
 const mockedUseReviews = useReviews as unknown as jest.Mock;
 
 describe("ReviewSection", () => {
-	it("로딩 상태라면, '로딩 중'을 보여준다.", () => {
+	it("로딩 상태라면, '리뷰를 불러오는 중입니다...'을 보여준다.", () => {
 		mockedUseReviews.mockReturnValue({
 			status: "loading",
 		});
@@ -37,10 +37,10 @@ describe("ReviewSection", () => {
 				onRequireLogin={jest.fn()}
 			/>
 		);
-		expect(screen.getByText("로딩 중")).toBeInTheDocument();
+		expect(screen.getByText("리뷰를 불러오는 중입니다...")).toBeInTheDocument();
 	});
 
-	it("에러 상태에서 에러 코드가 없다면 '알 수 없는 오류가 발생했습니다.'를 보여준다.", () => {
+	it("에러 상태에서 에러 코드가 없다면 '리뷰를 불러오는 도중 오류가 발생했습니다.'를 보여준다.", () => {
 		mockedUseReviews.mockReturnValue({
 			status: "error",
 			error: {},
@@ -54,7 +54,7 @@ describe("ReviewSection", () => {
 			/>
 		);
 		expect(
-			screen.getByText("알 수 없는 오류가 발생했습니다.")
+			screen.getByText("리뷰를 불러오는 도중 오류가 발생했습니다.")
 		).toBeInTheDocument();
 	});
 

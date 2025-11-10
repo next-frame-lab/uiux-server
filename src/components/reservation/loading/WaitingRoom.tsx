@@ -7,14 +7,14 @@ import fetchSeatsStates from "../../../api/seatsStates.ts";
 interface WaitingRoomProps {
 	stadiumId: string;
 	scheduleId: string;
-	startAt: Date;
+	duration: number;
 	onDone: () => void;
 }
 
 export default function WaitingRoom({
 	stadiumId,
 	scheduleId,
-	startAt,
+	duration,
 	onDone,
 }: WaitingRoomProps) {
 	const qc = useQueryClient();
@@ -48,5 +48,5 @@ export default function WaitingRoom({
 		};
 	}, [stadiumId, qc]);
 
-	return <Countdown target={startAt} onDone={onDone} />;
+	return <Countdown duration={duration} onDone={onDone} />;
 }

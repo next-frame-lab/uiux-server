@@ -5,6 +5,7 @@ import { recoilPersist } from "recoil-persist";
 const { persistAtom } = recoilPersist();
 
 export interface User {
+	id: string;
 	imageUrl: string;
 	name: string;
 	age: number;

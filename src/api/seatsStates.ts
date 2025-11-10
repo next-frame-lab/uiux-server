@@ -10,7 +10,6 @@ const fetchSeatsStates = async (id: string) => {
 		`${apiUrl}/api/v1/schedules/${id}/seat-states`,
 		{
 			method: "GET",
-			credentials: "include",
 			headers: {
 				"Content-Type": "application/json",
 				accept: "application/json",

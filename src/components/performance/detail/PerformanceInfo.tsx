@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useRecoilValue } from "recoil";
 import { PerformanceDetailData } from "../../../types/ApiDataTypes.ts";
 import ReviewSection from "./review/ReviewSection.tsx";
+import { authState } from "../../../recoil/auth.ts";
 
 interface Props {
 	performance: PerformanceDetailData;
@@ -11,6 +13,8 @@ export default function PerformanceInfo({ performance }: Props) {
 	const navigate = useNavigate();
 	const location = useLocation();
 	const [selectedScheduleId, setSelectedScheduleId] = useState<string>("");
+
+	const { user } = useRecoilValue(authState);
 
 	const token = localStorage.getItem("accessToken");
 	const isAuthenticated = !!token;
@@ -23,9 +27,11 @@ export default function PerformanceInfo({ performance }: Props) {
 		navigate(`/performances/${performance.data.id}/seats`, {
 			state: {
 				performanceId: performance.data.id,
+				performanceName: performance.data.name,
 				scheduleId: selectedScheduleId,
 				seatPrices: performance.data.seatSectionPrices,
 				stadiumId: performance.data.stadium.id,
+				performanceSchedules: performance.data.performanceSchedules,
 			},
 		});
 	};
@@ -130,7 +136,7 @@ export default function PerformanceInfo({ performance }: Props) {
 						{/* 리뷰 */}
 						<ReviewSection
 							performanceId={performance.data.id}
-							currentUserId="c8d1e2a7-4a5b-437b-9d90-7b1a2c3f1235"
+							currentUserId={user?.id || ""}
 							isAuthenticated={isAuthenticated}
 							onRequireLogin={onRequireLogin}
 						/>

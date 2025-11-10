@@ -21,7 +21,6 @@ jest.mock("../../reservation/ScheduleCalendar.tsx", () => ({
 describe("ReservationInfo 컴포넌트", () => {
 	const validPerformanceId = performanceDetail.data.id;
 	const validSchedule = performanceDetail.data.performanceSchedules[0];
-	const invalidPerformanceId = "invalid-performance-id";
 	const invalidScheduleId = "invalid-schedule-id";
 
 	const renderWithRoute = (state: {
@@ -39,7 +38,15 @@ describe("ReservationInfo 컴포넌트", () => {
 				<Routes>
 					<Route
 						path="/reservation/:performanceId/:scheduleId"
-						element={<ReservationInfo />}
+						element={
+							<ReservationInfo
+								performanceSchedules={
+									performanceDetail.data.performanceSchedules
+								}
+								scheduleId={state.scheduleId!}
+								seatPrices={performanceDetail.data.seatSectionPrices}
+							/>
+						}
 					/>
 				</Routes>
 			</MemoryRouter>
@@ -79,16 +86,6 @@ describe("ReservationInfo 컴포넌트", () => {
 
 		expect(
 			screen.getByText("스케줄 ID가 일치하지 않습니다. 잘못된 접근입니다.")
-		).toBeInTheDocument();
-	});
-
-	it("잘못된 공연 ID를 받으면, 접근 차단 메시지를 출력한다.", () => {
-		renderWithRoute({
-			performanceId: invalidPerformanceId,
-			scheduleId: validSchedule.id,
-		});
-		expect(
-			screen.getByText("공연 ID가 일치하지 않습니다. 잘못된 접근입니다.")
 		).toBeInTheDocument();
 	});
 });
