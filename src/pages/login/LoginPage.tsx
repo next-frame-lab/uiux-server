@@ -1,9 +1,20 @@
+import { useNavigate } from "react-router-dom";
 import Header from "../../components/layout/Header.tsx";
 
-const apiUrl = process.env.KAKAO_REDIRECT_KEY;
+const apiUrl =
+	process.env.MODE === "development"
+		? process.env.KAKAO_DEVELOPMENT_REDIRECT_KEY
+		: process.env.KAKAO_REDIRECT_KEY;
+const isMockMode = process.env.ENABLE_MSW === "true";
 
 export default function LoginPage() {
+	const navigate = useNavigate();
 	const handleKakaoLogin = () => {
+		if (isMockMode) {
+			console.log("🧩 MSW mode: skipping real Kakao redirect");
+			navigate("/auth/kakao/callback?code=mockCode");
+			return;
+		}
 		if (window.Kakao) {
 			window.Kakao.Auth.authorize({
 				redirectUri: apiUrl,

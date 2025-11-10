@@ -7,12 +7,14 @@ import App from "./App.tsx";
 import "./index.css";
 
 async function enableMocking() {
-	const isDev = import.meta.env.NODE_ENV === "development";
-	const useMsw = process.env.USE_MSW === "true";
+	const isDev = import.meta.env.MODE === "development";
+	const useMsw = process.env.ENABLE_MSW === "true";
 
 	if (!isDev || !useMsw) {
 		return;
 	}
+
+	console.log("🧩 isDev:", isDev, "useMsw:", useMsw);
 
 	const { default: worker } = await import("./mocks/browser.ts");
 
