@@ -1,10 +1,11 @@
-export type AppErrorCode = 400 | 401 | 404 | 500;
+export type AppErrorCode = 400 | 401 | 403 | 404 | 500;
 
 export type ApiError = Error & { status?: AppErrorCode };
 
 export const statusMessage: Record<AppErrorCode, string> = {
 	400: "잘못된 요청",
 	401: "인증 실패",
+	403: "권한 없음",
 	404: "리소스를 찾을 수 없음",
 	500: "서버 내부 오류",
 };
@@ -46,6 +47,7 @@ export default async function requestJSON<T>(
 				localStorage.removeItem("accessToken");
 				throw makeError(401, statusMessage[401]);
 			case 400:
+			case 403:
 			case 404:
 			case 500: {
 				const msg = statusMessage[res.status as AppErrorCode];

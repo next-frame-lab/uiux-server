@@ -9,8 +9,8 @@ const fetchGetReview = async (id: string) => {
 		headers: {
 			"Content-Type": "application/json",
 			accept: "application/json",
-			credentials: "include",
 		},
+		credentials: "include",
 	});
 };
 
@@ -20,8 +20,8 @@ const fetchPostReview = async (id: string, content: string, star: number) => {
 		headers: {
 			"Content-Type": "application/json",
 			accept: "application/json",
-			credentials: "include",
 		},
+		credentials: "include",
 		body: JSON.stringify({ content, star }),
 	});
 };
@@ -32,7 +32,6 @@ const fetchPatchReview = async (reviewId: string, content: string) => {
 		headers: {
 			"Content-Type": "application/json",
 			accept: "application/json",
-			credentials: "include",
 		},
 		body: JSON.stringify({ content }),
 	});
@@ -41,7 +40,6 @@ const fetchPatchReview = async (reviewId: string, content: string) => {
 const fetchDeleteReview = async (reviewId: string) => {
 	return authedJSON(`${apiUrl}/api/v1/reviews/${reviewId}`, {
 		method: "DELETE",
-		credentials: "include",
 		headers: {
 			"Content-Type": "application/json",
 			accept: "application/json",

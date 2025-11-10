@@ -3,6 +3,7 @@ import { useSearchParams, useNavigate } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 import authApi from "../../api/auth.ts";
 import { userState } from "../../recoil/auth.ts";
+import getUserIdFromToken from "../../utils/auth.ts";
 
 export default function KakaoRedirectPage() {
 	const [searchParams] = useSearchParams();
@@ -21,7 +22,12 @@ export default function KakaoRedirectPage() {
 				localStorage.setItem("accessToken", accessToken);
 				localStorage.setItem("refreshToken", refreshToken);
 
-				setUser(userData);
+				const userId = getUserIdFromToken(accessToken);
+
+				setUser({
+					id: userId ?? "",
+					...userData,
+				});
 
 				const intent = sessionStorage.getItem("pendingIntent");
 				if (intent === "adult-confirm") {

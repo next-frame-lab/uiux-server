@@ -1,20 +1,43 @@
 import { FormEvent, useState } from "react";
 import ReviewRating from "./ReviewRating.tsx";
+import type { ApiError } from "../../../../lib/apiClient.ts";
 
 interface ReviewFormProps {
 	onSubmit: (content: string, star: number) => void;
 }
 
+function isApiError(error: unknown): error is ApiError {
+	return error instanceof Error && "status" in error;
+}
+
 export default function ReviewForm({ onSubmit }: ReviewFormProps) {
 	const [content, setContent] = useState("");
 	const [star, setStar] = useState(0);
+	const [errorMsg, setErrorMsg] = useState("");
+	const [isSubmitting, setIsSubmitting] = useState(false);
 
-	const handleSubmit = (e: FormEvent) => {
+	const handleSubmit = async (e: FormEvent) => {
 		e.preventDefault();
 		if (!content.trim() || star <= 0) return;
-		onSubmit(content.trim(), star);
-		setContent("");
-		setStar(0);
+
+		setIsSubmitting(true);
+		setErrorMsg("");
+
+		try {
+			await onSubmit(content.trim(), star);
+			setContent("");
+			setStar(0);
+		} catch (error: unknown) {
+			if (isApiError(error) && error.status === 403) {
+				setErrorMsg("리뷰 작성은 공연을 예매한 사용자만 가능합니다.");
+			} else if (isApiError(error) && error.status) {
+				setErrorMsg(error.message);
+			} else {
+				setErrorMsg("리뷰 작성 중 알 수 없는 오류가 발생했습니다.");
+			}
+		} finally {
+			setIsSubmitting(false);
+		}
 	};
 
 	const disabledButton = content.trim().length === 0 || star <= 0;
@@ -35,6 +58,8 @@ export default function ReviewForm({ onSubmit }: ReviewFormProps) {
 				placeholder="후기를 작성해주세요."
 				rows={4}
 			/>
+			{/* 오류 메시지 표시 */}
+			{errorMsg && <p className="text-red-500 text-sm mt-2">{errorMsg}</p>}
 			<div className="flex justify-end mt-4">
 				<button
 					type="submit"
@@ -44,7 +69,7 @@ export default function ReviewForm({ onSubmit }: ReviewFormProps) {
 							? "bg-gray-300 text-gray-500 cursor-not-allowed"
 							: "bg-blue-500 text-white hover:bg-blue-600"
 					}`}>
-					작성
+					{isSubmitting ? "등록 중..." : "작성"}
 				</button>
 			</div>
 		</form>

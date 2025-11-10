@@ -1,8 +1,8 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import performanceDetail from "../../components/__mocks__/performanceDetailData.ts";
 import {
+	scheduleList,
 	seatPrices,
 	seatStateData,
 	selectSeatsData,
@@ -18,8 +18,6 @@ import SendSeatsButton from "../../components/reservation/SendSeatsButton.tsx";
 import fetchSeatsStates from "../../api/seatsStates.ts";
 import { ApiError } from "../../lib/apiClient.ts";
 
-const TIMEOUT_MS = 10 * 60 * 10; // 예매 진입 로딩 시간
-
 export default function SeatSelectPage() {
 	const { selectedSeats, selectedSeatIds, toggleSeat, resetSelection } =
 		useSeatReservation();
@@ -34,7 +32,8 @@ export default function SeatSelectPage() {
 	}, [navigate]);
 
 	// 시간 조절
-	const startAt = useMemo(() => new Date(Date.now() + TIMEOUT_MS), []);
+	const [elapsedTime, setElapsedTime] = useState<number | null>(null);
+	const [startTime] = useState(() => performance.now());
 	const [ready, setReady] = useState(
 		() =>
 			typeof performance !== "undefined" &&
@@ -47,19 +46,24 @@ export default function SeatSelectPage() {
 	);
 
 	const location = useLocation() as {
+		key: string;
 		state: {
 			performanceId: string;
+			performanceName: string;
 			scheduleId: string;
 			seatPrices: seatPrices[];
 			stadiumId: string;
+			performanceSchedules: scheduleList[];
 		};
 	};
 
 	const {
 		performanceId,
+		performanceName,
 		scheduleId,
 		seatPrices: seatPricesList,
 		stadiumId,
+		performanceSchedules,
 	} = location.state;
 
 	const totalAmount = calculateTotalPrice(selectedSeats, seatPricesList);
@@ -70,25 +74,43 @@ export default function SeatSelectPage() {
 	>({
 		queryKey: ["selectSeats", stadiumId],
 		queryFn: async () => fetchSeats(stadiumId),
-		enabled: ready && !!stadiumId,
-		staleTime: 60 * 1000,
-		useErrorBoundary: true,
+		enabled: !!stadiumId,
+		staleTime: Infinity,
+		useErrorBoundary: false,
 	});
 
-	const { data: seatStateDataResponse, status: seatsStatus2 } = useQuery<
+	const { data: seatStateDataResponse, status: seatsStateStatus } = useQuery<
 		seatStateData[],
 		ApiError
 	>({
 		queryKey: ["seatsState", scheduleId],
 		queryFn: () => fetchSeatsStates(scheduleId),
-		enabled: ready && !!scheduleId,
+		enabled: !!scheduleId,
 		refetchOnWindowFocus: true,
-		useErrorBoundary: true,
+		useErrorBoundary: false,
 	});
 
 	useEffect(() => {
-		resetSelection();
-	}, [resetSelection]);
+		const navType = (
+			performance.getEntriesByType("navigation")[0] as
+				| PerformanceNavigationTiming
+				| undefined
+		)?.type;
+
+		// 새로고침이 아닌 모든 경우에 WaitingRoom 다시 실행
+		if (navType !== "reload") {
+			setReady(false);
+			resetSelection();
+		}
+	}, [scheduleId, location.key, resetSelection]);
+
+	useEffect(() => {
+		if (seatsStatus === "success" && seatsStateStatus === "success") {
+			const endTime = performance.now();
+			const elapsed = Math.max(endTime - startTime, 100);
+			setElapsedTime(elapsed);
+		}
+	}, [seatsStatus, seatsStateStatus, startTime]);
 
 	const CombineSeats = useMemo(
 		() =>
@@ -105,19 +127,16 @@ export default function SeatSelectPage() {
 		toggleSeat(seat);
 	};
 
-	if (!ready) {
+	if (!ready && elapsedTime !== null) {
 		return (
 			<WaitingRoom
 				stadiumId={stadiumId}
 				scheduleId={scheduleId}
-				startAt={startAt}
+				duration={elapsedTime}
 				onDone={() => setReady(true)}
 			/>
 		);
 	}
-
-	if (seatsStatus === "loading" || seatsStatus2 === "loading")
-		return <p>로딩 중</p>;
 
 	return (
 		<main className="bg-[#FBFBFB]">
@@ -126,7 +145,7 @@ export default function SeatSelectPage() {
 					<div className="flex gap-x-16">
 						<div className="flex-1">
 							<h1 className="text-4xl font-bold text-gray-900">
-								{performanceDetail.data.name}
+								{performanceName}
 							</h1>
 							<div className="h-full flex flex-col">
 								<div className="flex flex-row justify-between text-center items-center text-2xl">
@@ -152,7 +171,11 @@ export default function SeatSelectPage() {
 						{/* 오른쪽 예약 패널 */}
 						<div className="w-[380px] flex-shrink-0 rounded-lg bg-gray-50 p-6">
 							{/* 공연 일정 & 관람 선택 시간 & 좌석 가격 안내 */}
-							<ReservationInfo />
+							<ReservationInfo
+								performanceSchedules={performanceSchedules}
+								scheduleId={scheduleId}
+								seatPrices={seatPricesList}
+							/>
 
 							<div className="mt-8 border-t border-gray-200 pt-6 text-sm text-gray-600">
 								총 가격:{" "}
