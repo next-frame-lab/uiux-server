@@ -1,4 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { RecoilRoot } from "recoil";
 import { MemoryRouter } from "react-router-dom";
 import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
@@ -16,11 +17,13 @@ function renderWithProviders(ui: React.ReactElement) {
 	const qc = new QueryClient();
 
 	return render(
-		<QueryClientProvider client={qc}>
-			<MemoryRouter initialEntries={["/performances/mock-1"]}>
-				{ui}
-			</MemoryRouter>
-		</QueryClientProvider>
+		<RecoilRoot>
+			<QueryClientProvider client={qc}>
+				<MemoryRouter initialEntries={["/performances/mock-1"]}>
+					{ui}
+				</MemoryRouter>
+			</QueryClientProvider>
+		</RecoilRoot>
 	);
 }
 
