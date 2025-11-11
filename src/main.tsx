@@ -14,8 +14,6 @@ async function enableMocking() {
 		return;
 	}
 
-	console.log("🧩 isDev:", isDev, "useMsw:", useMsw);
-
 	const { default: worker } = await import("./mocks/browser.ts");
 
 	// 결제 SDK 사용으로 인한 문제 해결을 위해, unhandledRequest를 bypass로 설정

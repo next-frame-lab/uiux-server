@@ -27,9 +27,11 @@ export default function PerformanceInfo({ performance }: Props) {
 		navigate(`/performances/${performance.data.id}/seats`, {
 			state: {
 				performanceId: performance.data.id,
+				performanceName: performance.data.name,
 				scheduleId: selectedScheduleId,
 				seatPrices: performance.data.seatSectionPrices,
 				stadiumId: performance.data.stadium.id,
+				performanceSchedules: performance.data.performanceSchedules,
 			},
 		});
 	};

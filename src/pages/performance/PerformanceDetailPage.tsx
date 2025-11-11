@@ -39,7 +39,7 @@ export default function PerformanceDetailPage() {
 		enabled,
 		retry: 0,
 		refetchOnWindowFocus: false,
-		useErrorBoundary: true,
+		useErrorBoundary: false,
 	});
 
 	useEffect(() => {
