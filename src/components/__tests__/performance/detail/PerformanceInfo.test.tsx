@@ -100,6 +100,8 @@ describe("공연 목록 상세 페이지 - 정보 렌더링", () => {
 			{
 				state: {
 					performanceId: data.id,
+					performanceName: data.name,
+					performanceSchedules: data.performanceSchedules,
 					scheduleId: data.performanceSchedules[0].id,
 					seatPrices: data.seatSectionPrices,
 					stadiumId: data.stadium.id,
