@@ -39,7 +39,15 @@ describe("ReservationInfo 컴포넌트", () => {
 				<Routes>
 					<Route
 						path="/reservation/:performanceId/:scheduleId"
-						element={<ReservationInfo />}
+						element={
+							<ReservationInfo
+								performanceSchedules={
+									performanceDetail.data.performanceSchedules
+								}
+								scheduleId={state.scheduleId!}
+								seatPrices={performanceDetail.data.seatSectionPrices}
+							/>
+						}
 					/>
 				</Routes>
 			</MemoryRouter>

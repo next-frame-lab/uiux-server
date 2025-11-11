@@ -1,29 +1,28 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 
-interface CountDownProps {
-	target: Date | string;
+interface CountdownProps {
+	duration: number; // ms 단위로 전달받음
 	onDone: () => void;
 }
 
-export default function Countdown({ target, onDone }: CountDownProps) {
-	const targetMs = useMemo(
-		() =>
-			typeof target === "string"
-				? new Date(target).getTime()
-				: target.getTime(),
-		[target]
-	);
-
-	const [msLeft, setMsLeft] = useState(Math.max(targetMs - Date.now(), 0));
+export default function Countdown({ duration, onDone }: CountdownProps) {
+	const [msLeft, setMsLeft] = useState(duration);
 
 	useEffect(() => {
+		if (msLeft <= 0) {
+			onDone();
+		}
+
 		const id = setInterval(() => {
-			const left = Math.max(targetMs - Date.now(), 0);
-			setMsLeft(left);
-			if (left === 0 && onDone) onDone();
+			setMsLeft((prev) => {
+				const next = Math.max(prev - 250, 0);
+				if (next === 0) onDone();
+				return next;
+			});
 		}, 250);
+
 		return () => clearInterval(id);
-	}, [targetMs, onDone]);
+	}, [onDone, msLeft]);
 
 	const totalSec = Math.ceil(msLeft / 1000);
 	const m = Math.floor(totalSec / 60);
