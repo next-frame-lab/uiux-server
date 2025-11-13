@@ -42,7 +42,7 @@ export default function Header() {
 		setIsMenuOpen(false);
 	};
 	const handleMyPageClick = () => {
-		if (isLoggedIn) {
+		if (user) {
 			navigate("/mypage");
 		} else {
 			alert("로그인이 필요한 서비스입니다.");
@@ -50,13 +50,14 @@ export default function Header() {
 		}
 		setIsMenuOpen(false);
 	};
+
 	const handleLogout = () => {
 		logout();
 		setIsMenuOpen(false);
 	};
 
 	const handleMyPageClickWithDropdown = () => {
-		if (isLoggedIn) {
+		if (user) {
 			navigate("/mypage");
 		} else {
 			alert("로그인이 필요한 서비스입니다.");
@@ -91,6 +92,10 @@ export default function Header() {
 		setSearchTerm(event.target.value);
 	};
 
+	const toggleDropdown = () => {
+		setIsDropdownOpen((prev) => !prev);
+	};
+
 	// 드롭다운 메뉴 외부 클릭 시 메뉴를 닫는 useEffect
 	useEffect(() => {
 		function handleClickOutside(event: MouseEvent) {
@@ -105,7 +110,7 @@ export default function Header() {
 		return () => {
 			document.removeEventListener("mousedown", handleClickOutside);
 		};
-	}, [dropdownRef]);
+	}, []);
 
 	return (
 		<header className="bg-[#FBFBFB] border-b border-[#E8EDF5] sticky top-0 z-50">
@@ -140,30 +145,32 @@ export default function Header() {
 				</div>
 
 				<nav className="hidden md:flex items-center justify-end flex-wrap gap-x-4 gap-y-2 md:gap-x-6">
-					{isLoggedIn ? (
+					{user ? (
 						// 로그인 상태
 						<div className="relative" ref={dropdownRef}>
 							<button
 								type="button"
-								onClick={() => setIsDropdownOpen((prev) => !prev)}
-								className="flex items-center rounded-full focus:outline-none">
+								onClick={toggleDropdown}
+								className="flex items-center rounded-full focus:outline-none"
+								aria-label="프로필 메뉴"
+								aria-expanded={isDropdownOpen}
+								aria-haspopup="true">
 								<img
 									className="h-10 w-10 rounded-full object-cover"
-									src={
-										user?.imageUrl ||
-										"https://placehold.co/40x40/E8EDF5/333?text=?"
-									}
+									src={user.imageUrl}
 									alt="프로필 사진"
 								/>
 							</button>
 
 							{/* 드롭다운 메뉴 */}
 							{isDropdownOpen && (
-								<div className="absolute right-0 mt-2 w-72 bg-white rounded-lg shadow-xl z-50 ring-1 ring-black ring-opacity-5">
+								<div
+									className="absolute right-0 mt-2 w-72 bg-white rounded-lg shadow-xl z-50 ring-1 ring-black ring-opacity-5"
+									role="menu">
 									{/* 환영 헤더 */}
 									<div className="px-4 py-4">
 										<p className="text-lg font-bold text-gray-900 truncate">
-											{user?.name || "사용자"}님
+											{user.name}님
 										</p>
 										<button
 											type="button"
@@ -196,7 +203,8 @@ export default function Header() {
 											onClick={() => {
 												/* 회사 소개 페이지 구현 예정 */
 											}}
-											className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+											className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+											role="menuitem">
 											회사 소개
 										</button>
 									</div>
@@ -206,7 +214,9 @@ export default function Header() {
 									<div className="py-2">
 										<button
 											type="button"
-											className="w-full flex justify-between items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+											className="w-full flex justify-between items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+											role="menuitem"
+											aria-label="라이트/다크모드">
 											<span>라이트/다크모드</span>
 											<img
 												src="/icons/change_mode.png"
@@ -216,7 +226,9 @@ export default function Header() {
 										</button>
 										<button
 											type="button"
-											className="w-full flex justify-between items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+											className="w-full flex justify-between items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+											role="menuitem"
+											aria-label="언어 변경">
 											<span>언어 변경</span>
 											<img
 												src="/icons/change_language.png"
@@ -344,19 +356,23 @@ export default function Header() {
 						<div className="mt-auto flex justify-center gap-x-4">
 							<button
 								type="button"
-								className="bg-gray-100 p-3 rounded-full font-semibold hover:bg-gray-200">
+								className="bg-gray-100 p-3 rounded-full font-semibold hover:bg-gray-200"
+								aria-label="모드 변경">
 								<img
 									src="/icons/change_mode.png"
 									alt="모드 변경"
+									aria-hidden="true"
 									className="w-6 h-6"
 								/>
 							</button>
 							<button
 								type="button"
-								className="bg-gray-100 p-3 rounded-full font-semibold hover:bg-gray-200">
+								className="bg-gray-100 p-3 rounded-full font-semibold hover:bg-gray-200"
+								aria-label="언어 변경">
 								<img
 									src="/icons/change_language.png"
 									alt="언어 변경"
+									aria-hidden="true"
 									className="w-6 h-6"
 								/>
 							</button>
