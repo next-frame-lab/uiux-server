@@ -24,13 +24,12 @@ export default function Header() {
 	// 검색어 상태를 관리하기 위한 state
 	const [searchTerm, setSearchTerm] = useState<string>("");
 	const navigate = useNavigate();
-	const { isLoggedIn, logout } = useAuth();
 	// Recoil state에서 사용자 정보를 가져옵니다.
-	const { user } = useRecoilValue(authState);
+	const { isLoggedIn, user, logout } = useAuth();
 	// 드롭다운 외부 클릭 감지를 위한 ref를 생성
 	const dropdownRef = useRef<HTMLDivElement>(null);
 
-	// 드롭다운 메뉴 링크 클릭 시 드롭다운과 모바일 메뉴를 모두 닫는 헬퍼 함수
+	// 드롭다운 메뉴 링크 클릭 시 드롭다운를 닫는 헬퍼 함수
 	const handleNavigateWithDropdown = (path: string) => {
 		navigate(path);
 		setIsDropdownOpen(false);
@@ -106,9 +105,19 @@ export default function Header() {
 				setIsDropdownOpen(false);
 			}
 		}
+
+		function handleEscapeKey(event: KeyboardEvent) {
+			if (event.key === "Escape") {
+				setIsDropdownOpen(false);
+			}
+		}
+
 		document.addEventListener("mousedown", handleClickOutside);
+		document.addEventListener("keydown", handleEscapeKey);
+
 		return () => {
 			document.removeEventListener("mousedown", handleClickOutside);
+			document.removeEventListener("keydown", handleEscapeKey);
 		};
 	}, []);
 
@@ -175,7 +184,8 @@ export default function Header() {
 										<button
 											type="button"
 											onClick={handleMyPageClickWithDropdown}
-											className="text-sm text-blue-600 hover:underline">
+											className="text-sm text-blue-600 hover:underline"
+											role="menuitem">
 											마이페이지 가기 &gt;
 										</button>
 									</div>
@@ -187,7 +197,8 @@ export default function Header() {
 										<button
 											type="button"
 											onClick={() => handleNavigateWithDropdown("/")}
-											className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+											className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+											role="menuitem">
 											메인
 										</button>
 										<button
@@ -195,7 +206,8 @@ export default function Header() {
 											onClick={() =>
 												handleNavigateWithDropdown("/performances")
 											}
-											className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+											className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+											role="menuitem">
 											공연
 										</button>
 										<button
