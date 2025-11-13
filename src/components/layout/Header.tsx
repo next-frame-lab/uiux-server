@@ -2,6 +2,8 @@ import {
 	useState,
 	ChangeEvent,
 	KeyboardEvent as ReactKeyboardEvent,
+	useRef,
+	useEffect,
 } from "react";
 import { useNavigate } from "react-router-dom";
 import {
@@ -9,23 +11,36 @@ import {
 	XMarkIcon,
 	MagnifyingGlassIcon,
 } from "@heroicons/react/24/solid";
+import { useRecoilValue } from "recoil";
 import useAuth from "../../hooks/useAuth.ts";
 import logoImage from "../../assets/images/logo.png";
+import { authState } from "../../recoil/auth.ts";
 
 export default function Header() {
 	// 모바일 크기에서 햄버거 메뉴 상태를 관리하는 state
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
+	// 프로필 드롭다운 메뉴의 상태를 관리하는 state
+	const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 	// 검색어 상태를 관리하기 위한 state
 	const [searchTerm, setSearchTerm] = useState<string>("");
 	const navigate = useNavigate();
 	const { isLoggedIn, logout } = useAuth();
+	// Recoil state에서 사용자 정보를 가져옵니다.
+	const { user } = useRecoilValue(authState);
+	// 드롭다운 외부 클릭 감지를 위한 ref를 생성
+	const dropdownRef = useRef<HTMLDivElement>(null);
+
+	// 드롭다운 메뉴 링크 클릭 시 드롭다운과 모바일 메뉴를 모두 닫는 헬퍼 함수
+	const handleNavigateWithDropdown = (path: string) => {
+		navigate(path);
+		setIsDropdownOpen(false);
+	};
 
 	// 모바일 크기에서 햄버거 메뉴 링크 클릭 시 메뉴가 자동으로 닫힘
 	const handleNavigate = (path: string) => {
 		navigate(path);
 		setIsMenuOpen(false);
 	};
-
 	const handleMyPageClick = () => {
 		if (isLoggedIn) {
 			navigate("/mypage");
@@ -35,10 +50,24 @@ export default function Header() {
 		}
 		setIsMenuOpen(false);
 	};
-
 	const handleLogout = () => {
 		logout();
 		setIsMenuOpen(false);
+	};
+
+	const handleMyPageClickWithDropdown = () => {
+		if (isLoggedIn) {
+			navigate("/mypage");
+		} else {
+			alert("로그인이 필요한 서비스입니다.");
+			navigate("/login");
+		}
+		setIsDropdownOpen(false);
+	};
+
+	const handleLogoutWithDropdown = () => {
+		logout();
+		setIsDropdownOpen(false);
 	};
 
 	// 검색 실행 함수
@@ -61,6 +90,22 @@ export default function Header() {
 	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
 		setSearchTerm(event.target.value);
 	};
+
+	// 드롭다운 메뉴 외부 클릭 시 메뉴를 닫는 useEffect
+	useEffect(() => {
+		function handleClickOutside(event: MouseEvent) {
+			if (
+				dropdownRef.current &&
+				!dropdownRef.current.contains(event.target as Node)
+			) {
+				setIsDropdownOpen(false);
+			}
+		}
+		document.addEventListener("mousedown", handleClickOutside);
+		return () => {
+			document.removeEventListener("mousedown", handleClickOutside);
+		};
+	}, [dropdownRef]);
 
 	return (
 		<header className="bg-[#FBFBFB] border-b border-[#E8EDF5] sticky top-0 z-50">
@@ -95,39 +140,107 @@ export default function Header() {
 				</div>
 
 				<nav className="hidden md:flex items-center justify-end flex-wrap gap-x-4 gap-y-2 md:gap-x-6">
-					<button
-						type="button"
-						onClick={() => navigate("/")}
-						className="hover:bg-gray-200">
-						메인
-					</button>
-
-					<button
-						type="button"
-						onClick={() => navigate("/performances")}
-						className="hover:bg-gray-200">
-						공연
-					</button>
-
-					<button type="button" className="hover:bg-gray-200">
-						회사 소개
-					</button>
-
-					<button
-						type="button"
-						onClick={handleMyPageClick}
-						className="hover:bg-gray-200">
-						마이페이지
-					</button>
-
 					{isLoggedIn ? (
-						<button
-							type="button"
-							onClick={logout}
-							className="px-5 py-2 font-semibold transition-colors bg-gray-100 text-black rounded-full hover:bg-gray-200">
-							로그아웃
-						</button>
+						// 로그인 상태
+						<div className="relative" ref={dropdownRef}>
+							<button
+								type="button"
+								onClick={() => setIsDropdownOpen((prev) => !prev)}
+								className="flex items-center rounded-full focus:outline-none">
+								<img
+									className="h-10 w-10 rounded-full object-cover"
+									src={
+										user?.imageUrl ||
+										"https://placehold.co/40x40/E8EDF5/333?text=?"
+									}
+									alt="프로필 사진"
+								/>
+							</button>
+
+							{/* 드롭다운 메뉴 */}
+							{isDropdownOpen && (
+								<div className="absolute right-0 mt-2 w-72 bg-white rounded-lg shadow-xl z-50 ring-1 ring-black ring-opacity-5">
+									{/* 환영 헤더 */}
+									<div className="px-4 py-4">
+										<p className="text-lg font-bold text-gray-900 truncate">
+											{user?.name || "사용자"}님
+										</p>
+										<button
+											type="button"
+											onClick={handleMyPageClickWithDropdown}
+											className="text-sm text-blue-600 hover:underline">
+											마이페이지 가기 &gt;
+										</button>
+									</div>
+
+									<div className="border-t border-gray-100" />
+
+									{/* 메인 링크 목록 */}
+									<div className="py-2">
+										<button
+											type="button"
+											onClick={() => handleNavigateWithDropdown("/")}
+											className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+											메인
+										</button>
+										<button
+											type="button"
+											onClick={() =>
+												handleNavigateWithDropdown("/performances")
+											}
+											className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+											공연
+										</button>
+										<button
+											type="button"
+											onClick={() => {
+												/* 회사 소개 페이지 구현 예정 */
+											}}
+											className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+											회사 소개
+										</button>
+									</div>
+
+									<div className="border-t border-gray-100" />
+
+									<div className="py-2">
+										<button
+											type="button"
+											className="w-full flex justify-between items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+											<span>라이트/다크모드</span>
+											<img
+												src="/icons/change_mode.png"
+												alt="라이트모드/다크모드 변경용 버튼입니다"
+												className="w-5 h-5"
+											/>
+										</button>
+										<button
+											type="button"
+											className="w-full flex justify-between items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+											<span>언어 변경</span>
+											<img
+												src="/icons/change_language.png"
+												alt="언어 변경용 버튼입니다"
+												className="w-5 h-5"
+											/>
+										</button>
+									</div>
+
+									<div className="border-t border-gray-100" />
+
+									<div className="py-2">
+										<button
+											type="button"
+											onClick={handleLogoutWithDropdown}
+											className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+											로그아웃
+										</button>
+									</div>
+								</div>
+							)}
+						</div>
 					) : (
+						// 비로그인 상태
 						<button
 							type="button"
 							onClick={() => navigate("/login")}
@@ -135,27 +248,9 @@ export default function Header() {
 							로그인
 						</button>
 					)}
-
-					<button
-						type="button"
-						className="bg-gray-100 px-3 py-2 rounded-full font-semibold hover:bg-gray-200">
-						<img
-							src="/icons/change_mode.png"
-							alt="라이트모드/다크모드 변경용 버튼입니다"
-						/>
-					</button>
-
-					<button
-						type="button"
-						className="bg-gray-100 px-3 py-2 rounded-full font-semibold hover:bg-gray-200">
-						<img
-							src="/icons/change_language.png"
-							alt="언어 변경용 버튼입니다"
-						/>
-					</button>
 				</nav>
 
-				{/* --- 2. 모바일용 햄버거 버튼 --- */}
+				{/* 모바일용 햄버거 버튼 */}
 				<div className="md:hidden">
 					<button type="button" onClick={() => setIsMenuOpen(true)}>
 						<Bars3Icon className="w-6 h-6" />
@@ -163,7 +258,7 @@ export default function Header() {
 				</div>
 			</div>
 
-			{/* --- 3. 모바일 사이드바 메뉴 --- */}
+			{/* 모바일 사이드바 메뉴 */}
 			<div
 				className={`fixed inset-0 z-50 transition-opacity duration-300 md:hidden ${isMenuOpen ? "opacity-100" : "opacity-0 pointer-events-none"}`}>
 				<button
