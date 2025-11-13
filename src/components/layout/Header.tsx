@@ -11,10 +11,8 @@ import {
 	XMarkIcon,
 	MagnifyingGlassIcon,
 } from "@heroicons/react/24/solid";
-import { useRecoilValue } from "recoil";
 import useAuth from "../../hooks/useAuth.ts";
 import logoImage from "../../assets/images/logo.png";
-import { authState } from "../../recoil/auth.ts";
 
 export default function Header() {
 	// 모바일 크기에서 햄버거 메뉴 상태를 관리하는 state
