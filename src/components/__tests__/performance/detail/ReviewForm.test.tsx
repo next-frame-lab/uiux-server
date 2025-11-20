@@ -1,4 +1,4 @@
-import { render, fireEvent, screen } from "@testing-library/react";
+import { render, fireEvent, screen, waitFor } from "@testing-library/react";
 import ReviewForm from "../../../performance/detail/review/ReviewForm.tsx";
 import "@testing-library/jest-dom";
 
@@ -43,7 +43,7 @@ describe("ReviewForm 컴포넌트(후기 작성 컴포넌트)", () => {
 		expect(submitBtn).toBeDisabled();
 	});
 
-	it("유효한 내용 + 별점 선택 시, onSubmit이 호출되고, textarea는 비워지며 버튼은 비활성화된다.", () => {
+	it("유효한 내용 + 별점 선택 시, onSubmit이 호출되고, textarea는 비워지며 버튼은 비활성화된다.", async () => {
 		const handleSubmit = jest.fn();
 		render(<ReviewForm onSubmit={handleSubmit} />);
 
@@ -59,7 +59,9 @@ describe("ReviewForm 컴포넌트(후기 작성 컴포넌트)", () => {
 
 		expect(handleSubmit).toHaveBeenCalledWith("멋진 공연이였어요.", 3);
 
-		expect(textarea).toHaveValue("");
-		expect(submitBtn).toBeDisabled();
+		await waitFor(() => {
+			expect(textarea).toHaveValue("");
+			expect(submitBtn).toBeDisabled();
+		});
 	});
 });

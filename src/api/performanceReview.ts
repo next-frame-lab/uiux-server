@@ -10,6 +10,7 @@ const fetchGetReview = async (id: string) => {
 			"Content-Type": "application/json",
 			accept: "application/json",
 		},
+		credentials: "include",
 	});
 };
 
