@@ -94,6 +94,26 @@ export default function Header() {
 		setIsDropdownOpen((prev) => !prev);
 	};
 
+	// 드롭다운 메뉴 아이템 배열 정의
+	const dropdownItems = [
+		{
+			label: "마이페이지",
+			onClick: handleMyPageClickWithDropdown,
+		},
+		{
+			label: "메인",
+			onClick: () => handleNavigateWithDropdown("/"),
+		},
+		{
+			label: "공연",
+			onClick: () => handleNavigateWithDropdown("/performances"),
+		},
+		{
+			label: "로그아웃",
+			onClick: handleLogoutWithDropdown,
+		},
+	];
+
 	// 드롭다운 메뉴 외부 클릭 시 메뉴를 닫는 useEffect
 	useEffect(() => {
 		function handleClickOutside(event: MouseEvent) {
@@ -177,58 +197,27 @@ export default function Header() {
 									role="menu">
 									<div className="p-6 pb-4">
 										<div className="flex items-center gap-x-2 mb-1">
-											<h2 className="text-xl font-bold text-gray-900">
+											<h2 className="text-xl font-bold text-gray-900 truncate">
 												{user.name}
 											</h2>
 										</div>
 									</div>
 
 									<div className="px-4 pb-4 space-y-1">
-										<button
-											type="button"
-											onClick={handleMyPageClickWithDropdown}
-											className="w-full flex items-center justify-between p-3 rounded-xl hover:bg-gray-50 transition-colors group"
-											role="menuitem">
-											<span className="text-gray-700 font-medium group-hover:text-gray-900">
-												마이페이지
-											</span>
-											<ChevronRightIcon className="w-4 h-4 text-gray-300 group-hover:text-gray-500" />
-										</button>
-
-										<button
-											type="button"
-											onClick={() => handleNavigateWithDropdown("/")}
-											className="w-full flex items-center justify-between p-3 rounded-xl hover:bg-gray-50 transition-colors group"
-											role="menuitem">
-											<span className="text-gray-700 font-medium group-hover:text-gray-900">
-												메인
-											</span>
-											<ChevronRightIcon className="w-4 h-4 text-gray-300 group-hover:text-gray-500" />
-										</button>
-
-										<button
-											type="button"
-											onClick={() =>
-												handleNavigateWithDropdown("/performances")
-											}
-											className="w-full flex items-center justify-between p-3 rounded-xl hover:bg-gray-50 transition-colors group"
-											role="menuitem">
-											<span className="text-gray-700 font-medium group-hover:text-gray-900">
-												공연
-											</span>
-											<ChevronRightIcon className="w-4 h-4 text-gray-300 group-hover:text-gray-500" />
-										</button>
-
-										<button
-											type="button"
-											onClick={handleLogoutWithDropdown}
-											className="w-full flex items-center justify-between p-3 rounded-xl hover:bg-gray-50 transition-colors group"
-											role="menuitem">
-											<span className="text-gray-700 font-medium group-hover:text-gray-900">
-												로그아웃
-											</span>
-											<ChevronRightIcon className="w-4 h-4 text-gray-300 group-hover:text-gray-500" />
-										</button>
+										{/* map 함수를 이용한 렌더링 */}
+										{dropdownItems.map((item) => (
+											<button
+												key={item.label}
+												type="button"
+												onClick={item.onClick}
+												className="w-full flex items-center justify-between p-3 rounded-xl hover:bg-gray-50 transition-colors group"
+												role="menuitem">
+												<span className="text-gray-700 font-medium group-hover:text-gray-900">
+													{item.label}
+												</span>
+												<ChevronRightIcon className="w-4 h-4 text-gray-300 group-hover:text-gray-500" />
+											</button>
+										))}
 									</div>
 								</div>
 							)}
