@@ -10,6 +10,7 @@ import {
 	Bars3Icon,
 	XMarkIcon,
 	MagnifyingGlassIcon,
+	ChevronRightIcon,
 } from "@heroicons/react/24/solid";
 import useAuth from "../../hooks/useAuth.ts";
 import logoImage from "../../assets/images/logo.png";
@@ -23,7 +24,7 @@ export default function Header() {
 	const [searchTerm, setSearchTerm] = useState<string>("");
 	const navigate = useNavigate();
 	// Recoil state에서 사용자 정보를 가져옵니다.
-	const { isLoggedIn, user, logout } = useAuth();
+	const { user, logout } = useAuth();
 	// 드롭다운 외부 클릭 감지를 위한 ref를 생성
 	const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -172,90 +173,61 @@ export default function Header() {
 							{/* 드롭다운 메뉴 */}
 							{isDropdownOpen && (
 								<div
-									className="absolute right-0 mt-2 w-72 bg-white rounded-lg shadow-xl z-50 ring-1 ring-black ring-opacity-5"
+									className="absolute right-0 mt-3 w-80 bg-white rounded-3xl shadow-[0_10px_40px_-10px_rgba(0,0,0,0.1)] border border-gray-100 overflow-hidden z-50 animate-fadeIn"
 									role="menu">
-									{/* 환영 헤더 */}
-									<div className="px-4 py-4">
-										<p className="text-lg font-bold text-gray-900 truncate">
-											{user.name}님
-										</p>
+									<div className="p-6 pb-4">
+										<div className="flex items-center gap-x-2 mb-1">
+											<h2 className="text-xl font-bold text-gray-900">
+												{user.name}
+											</h2>
+										</div>
+									</div>
+
+									<div className="px-4 pb-4 space-y-1">
 										<button
 											type="button"
 											onClick={handleMyPageClickWithDropdown}
-											className="text-sm text-blue-600 hover:underline"
+											className="w-full flex items-center justify-between p-3 rounded-xl hover:bg-gray-50 transition-colors group"
 											role="menuitem">
-											마이페이지 가기 &gt;
+											<span className="text-gray-700 font-medium group-hover:text-gray-900">
+												마이페이지
+											</span>
+											<ChevronRightIcon className="w-4 h-4 text-gray-300 group-hover:text-gray-500" />
 										</button>
-									</div>
 
-									<div className="border-t border-gray-100" />
-
-									{/* 메인 링크 목록 */}
-									<div className="py-2">
 										<button
 											type="button"
 											onClick={() => handleNavigateWithDropdown("/")}
-											className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+											className="w-full flex items-center justify-between p-3 rounded-xl hover:bg-gray-50 transition-colors group"
 											role="menuitem">
-											메인
+											<span className="text-gray-700 font-medium group-hover:text-gray-900">
+												메인
+											</span>
+											<ChevronRightIcon className="w-4 h-4 text-gray-300 group-hover:text-gray-500" />
 										</button>
+
 										<button
 											type="button"
 											onClick={() =>
 												handleNavigateWithDropdown("/performances")
 											}
-											className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+											className="w-full flex items-center justify-between p-3 rounded-xl hover:bg-gray-50 transition-colors group"
 											role="menuitem">
-											공연
+											<span className="text-gray-700 font-medium group-hover:text-gray-900">
+												공연
+											</span>
+											<ChevronRightIcon className="w-4 h-4 text-gray-300 group-hover:text-gray-500" />
 										</button>
-										<button
-											type="button"
-											onClick={() => {
-												/* 회사 소개 페이지 구현 예정 */
-											}}
-											className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-											role="menuitem">
-											회사 소개
-										</button>
-									</div>
 
-									<div className="border-t border-gray-100" />
-
-									<div className="py-2">
-										<button
-											type="button"
-											className="w-full flex justify-between items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-											role="menuitem"
-											aria-label="라이트/다크모드">
-											<span>라이트/다크모드</span>
-											<img
-												src="/icons/change_mode.png"
-												alt="라이트모드/다크모드 변경용 버튼입니다"
-												className="w-5 h-5"
-											/>
-										</button>
-										<button
-											type="button"
-											className="w-full flex justify-between items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-											role="menuitem"
-											aria-label="언어 변경">
-											<span>언어 변경</span>
-											<img
-												src="/icons/change_language.png"
-												alt="언어 변경용 버튼입니다"
-												className="w-5 h-5"
-											/>
-										</button>
-									</div>
-
-									<div className="border-t border-gray-100" />
-
-									<div className="py-2">
 										<button
 											type="button"
 											onClick={handleLogoutWithDropdown}
-											className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-											로그아웃
+											className="w-full flex items-center justify-between p-3 rounded-xl hover:bg-gray-50 transition-colors group"
+											role="menuitem">
+											<span className="text-gray-700 font-medium group-hover:text-gray-900">
+												로그아웃
+											</span>
+											<ChevronRightIcon className="w-4 h-4 text-gray-300 group-hover:text-gray-500" />
 										</button>
 									</div>
 								</div>
@@ -282,7 +254,9 @@ export default function Header() {
 
 			{/* 모바일 사이드바 메뉴 */}
 			<div
-				className={`fixed inset-0 z-50 transition-opacity duration-300 md:hidden ${isMenuOpen ? "opacity-100" : "opacity-0 pointer-events-none"}`}>
+				className={`fixed inset-0 z-50 transition-opacity duration-300 md:hidden ${
+					isMenuOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+				}`}>
 				<button
 					type="button"
 					className="absolute inset-0 bg-black bg-opacity-50"
@@ -291,7 +265,9 @@ export default function Header() {
 				/>
 
 				<nav
-					className={`absolute top-0 right-0 h-full w-3/4 max-w-xs bg-white shadow-lg p-6 transition-transform duration-300 ease-in-out ${isMenuOpen ? "translate-x-0" : "translate-x-full"}`}>
+					className={`absolute top-0 right-0 h-full w-3/4 max-w-xs bg-white shadow-lg p-6 transition-transform duration-300 ease-in-out ${
+						isMenuOpen ? "translate-x-0" : "translate-x-full"
+					}`}>
 					<div className="flex flex-col h-full">
 						{/* 닫기 버튼 */}
 						<div className="flex justify-end mb-8">
@@ -334,11 +310,6 @@ export default function Header() {
 							</button>
 							<button
 								type="button"
-								className="py-3 w-full text-left hover:bg-gray-100 rounded-md px-3">
-								회사 소개
-							</button>
-							<button
-								type="button"
 								onClick={handleMyPageClick}
 								className="py-3 w-full text-left hover:bg-gray-100 rounded-md px-3">
 								마이페이지
@@ -347,7 +318,7 @@ export default function Header() {
 
 						<div className="w-full border-t border-gray-200 my-4" />
 
-						{isLoggedIn ? (
+						{user ? (
 							<button
 								type="button"
 								onClick={handleLogout}
@@ -362,31 +333,6 @@ export default function Header() {
 								로그인
 							</button>
 						)}
-
-						<div className="mt-auto flex justify-center gap-x-4">
-							<button
-								type="button"
-								className="bg-gray-100 p-3 rounded-full font-semibold hover:bg-gray-200"
-								aria-label="모드 변경">
-								<img
-									src="/icons/change_mode.png"
-									alt="모드 변경"
-									aria-hidden="true"
-									className="w-6 h-6"
-								/>
-							</button>
-							<button
-								type="button"
-								className="bg-gray-100 p-3 rounded-full font-semibold hover:bg-gray-200"
-								aria-label="언어 변경">
-								<img
-									src="/icons/change_language.png"
-									alt="언어 변경"
-									aria-hidden="true"
-									className="w-6 h-6"
-								/>
-							</button>
-						</div>
 					</div>
 				</nav>
 			</div>
