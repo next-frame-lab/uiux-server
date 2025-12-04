@@ -97,7 +97,8 @@ export default function HeroCarousel() {
 										</Link>
 										<button
 											type="button"
-											className="rounded-lg border border-white/60 px-6 py-3 text-basetext-white transition-colors hover:bg-white/10">
+											disabled
+											className="rounded-lg border border-white/60 px-6 py-3 text-base text-white transition-colors hover:bg-white/10">
 											상세정보
 										</button>
 									</div>
