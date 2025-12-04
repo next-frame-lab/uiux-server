@@ -12,7 +12,7 @@ export default function Footer() {
 				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
 					{/* 프로젝트 설명 */}
 					<div className="lg:col-span-2">
-						<h2 className="text-xl font-bold text-gray-900 mb-4">NextFrame</h2>
+						<h2 className="text-xl font-bold text-blue-950 mb-4">NextFrame</h2>
 						<p className="text-gray-500 text-sm leading-relaxed mb-6 pr-4">
 							시네마틱 UX와 인터랙티브 기술을 결합해
 							<br />
