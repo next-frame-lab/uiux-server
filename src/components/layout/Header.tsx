@@ -13,7 +13,6 @@ import {
 	ChevronRightIcon,
 } from "@heroicons/react/24/solid";
 import useAuth from "../../hooks/useAuth.ts";
-import logoImage from "../../assets/images/logo.png";
 
 export default function Header() {
 	// 모바일 크기에서 햄버거 메뉴 상태를 관리하는 state
@@ -142,102 +141,110 @@ export default function Header() {
 
 	return (
 		<header className="bg-[#FBFBFB] border-b border-[#E8EDF5] sticky top-0 z-50">
-			<div className="max-w-screen-xl mx-auto flex items-center justify-between flex-wrap px-6 py-14 md:px-6 gap-y-6">
-				<div className="flex items-center gap-x-6">
+			<div className="max-w-screen-xl mx-auto px-6 py-8 md:px-6">
+				<div className="relative flex w-full items-center justify-center">
+					{/* 모바일용 햄버거 버튼 */}
+					<div className="md:hidden absolute left-0">
+						<button type="button" onClick={() => setIsMenuOpen(true)}>
+							<Bars3Icon className="w-6 h-6" />
+						</button>
+					</div>
+
 					<button
 						type="button"
 						className="flex items-center gap-4 cursor-pointer"
 						onClick={() => handleNavigate("/")}>
-						<img src={logoImage} className="w-10 h-10" alt="NextFrame 로고" />
-						<p className="text-2xl font-bold">NextFrame</p>
+						<p className="text-2xl font-semibold text-blue-950">NextFrame</p>
 					</button>
 
-					{/* 검색창 UI */}
-					<div className="relative hidden md:block">
-						<input
-							type="text"
-							value={searchTerm}
-							onChange={handleChange}
-							onKeyDown={handleKeyDown}
-							placeholder="공연을 검색해보세요"
-							className="w-48 lg:w-80 h-11 pl-4 pr-10 text-sm border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-gray-400"
-						/>
-						<button
-							type="button"
-							onClick={handleSearch}
-							className="absolute top-0 right-0 h-full px-3.5 text-gray-500 hover:text-gray-800"
-							aria-label="검색">
-							<MagnifyingGlassIcon className="w-5 h-5" />
-						</button>
-					</div>
-				</div>
+					<div className="absolute right-0 flex items-end justify-end gap-x-3 md:gap-x-5">
+						{/* 검색창 UI */}
+						<div className="relative hidden md:block pb-1">
+							<input
+								type="text"
+								value={searchTerm}
+								onChange={handleChange}
+								onKeyDown={handleKeyDown}
+								placeholder="공연을 검색해보세요"
+								className="w-36 lg:w-48 h-8 pr-10 text-sm bg-transparent border-none border-b border-gray-400
+               focus:outline-none focus:ring-0 focus:border-gray-600 leading-tight"
+							/>
 
-				<nav className="hidden md:flex items-center justify-end flex-wrap gap-x-4 gap-y-2 md:gap-x-6">
-					{user ? (
-						// 로그인 상태
-						<div className="relative" ref={dropdownRef}>
 							<button
 								type="button"
-								onClick={toggleDropdown}
-								className="flex items-center rounded-full focus:outline-none"
-								aria-label="프로필 메뉴"
-								aria-expanded={isDropdownOpen}
-								aria-haspopup="true">
-								<img
-									className="h-10 w-10 rounded-full object-cover"
-									src={user.imageUrl}
-									alt="프로필 사진"
-								/>
+								onClick={handleSearch}
+								className="absolute right-0 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-800"
+								aria-label="검색">
+								<MagnifyingGlassIcon className="w-5 h-5" />
 							</button>
 
-							{/* 드롭다운 메뉴 */}
-							{isDropdownOpen && (
-								<div
-									className="absolute right-0 mt-3 w-80 bg-white rounded-3xl shadow-[0_10px_40px_-10px_rgba(0,0,0,0.1)] border border-gray-100 overflow-hidden z-50 animate-fadeIn"
-									role="menu">
-									<div className="p-6 pb-4">
-										<div className="flex items-center gap-x-2 mb-1">
-											<h2 className="text-xl font-bold text-gray-900 truncate">
-												{user.name}
-											</h2>
-										</div>
-									</div>
-
-									<div className="px-4 pb-4 space-y-1">
-										{/* map 함수를 이용한 렌더링 */}
-										{dropdownItems.map((item) => (
-											<button
-												key={item.label}
-												type="button"
-												onClick={item.onClick}
-												className="w-full flex items-center justify-between p-3 rounded-xl hover:bg-gray-50 transition-colors group"
-												role="menuitem">
-												<span className="text-gray-700 font-medium group-hover:text-gray-900">
-													{item.label}
-												</span>
-												<ChevronRightIcon className="w-4 h-4 text-gray-300 group-hover:text-gray-500" />
-											</button>
-										))}
-									</div>
-								</div>
-							)}
+							<div
+								className="absolute -bottom-[1px] left-0 right-0 h-px bg-gray-200"
+								aria-hidden="true"
+							/>
 						</div>
-					) : (
-						// 비로그인 상태
-						<button
-							type="button"
-							onClick={() => navigate("/login")}
-							className="px-5 py-2 font-semibold transition-colors bg-gray-100 rounded-full hover:bg-gray-200">
-							로그인
-						</button>
-					)}
-				</nav>
 
-				{/* 모바일용 햄버거 버튼 */}
-				<div className="md:hidden">
-					<button type="button" onClick={() => setIsMenuOpen(true)}>
-						<Bars3Icon className="w-6 h-6" />
-					</button>
+						<nav className="hidden md:flex items-center justify-end flex-wrap gap-x-4 gap-y-2 md:gap-x-6">
+							{user ? (
+								// 로그인 상태
+								<div className="relative" ref={dropdownRef}>
+									<button
+										type="button"
+										onClick={toggleDropdown}
+										className="flex items-center rounded-full focus:outline-none"
+										aria-label="프로필 메뉴"
+										aria-expanded={isDropdownOpen}
+										aria-haspopup="true">
+										<img
+											className="h-10 w-10 rounded-full object-cover"
+											src={user.imageUrl}
+											alt="프로필 사진"
+										/>
+									</button>
+
+									{/* 드롭다운 메뉴 */}
+									{isDropdownOpen && (
+										<div
+											className="absolute right-0 mt-3 w-80 bg-white rounded-3xl shadow-[0_10px_40px_-10px_rgba(0,0,0,0.1)] border border-gray-100 overflow-hidden z-50 animate-fadeIn"
+											role="menu">
+											<div className="p-6 pb-4">
+												<div className="flex items-center gap-x-2 mb-1">
+													<h2 className="text-xl font-bold text-gray-900 truncate">
+														{user.name}
+													</h2>
+												</div>
+											</div>
+
+											<div className="px-4 pb-4 space-y-1">
+												{/* map 함수를 이용한 렌더링 */}
+												{dropdownItems.map((item) => (
+													<button
+														key={item.label}
+														type="button"
+														onClick={item.onClick}
+														className="w-full flex items-center justify-between p-3 rounded-xl hover:bg-gray-50 transition-colors group"
+														role="menuitem">
+														<span className="text-gray-700 font-medium group-hover:text-gray-900">
+															{item.label}
+														</span>
+														<ChevronRightIcon className="w-4 h-4 text-gray-300 group-hover:text-gray-500" />
+													</button>
+												))}
+											</div>
+										</div>
+									)}
+								</div>
+							) : (
+								// 비로그인 상태
+								<button
+									type="button"
+									onClick={() => navigate("/login")}
+									className="px-5 py-2 transition-colors text-gray-500 rounded-full hover:bg-gray-200">
+									로그인
+								</button>
+							)}
+						</nav>
+					</div>
 				</div>
 			</div>
 

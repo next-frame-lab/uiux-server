@@ -31,19 +31,11 @@ export default function PerformancePage() {
 
 	return (
 		<div>
-			{/* 상단 부분 */}
-			<Header />
-
-			{/* 중간 부분 */}
 			<main className="bg-[#FBFBFB]">
-				{/* 카테고리 부분 */}
+				<Header />
 				<Category />
-
-				{/* 공연 목록 제목 부분 */}
 				<div className="max-w-7xl mx-auto py-16 px-4 md:px-6">
-					<h1 className="text-3xl font-bold mb-8">공연 목록</h1>
-
-					{/* 공연 부분 - 반응형 그리드 및 무한 스크롤 적용 */}
+					<h1 className="text-3xl text-blue-950 mb-8">공연 목록</h1>
 					<InfiniteScroll
 						hasMore={!!hasNextPage}
 						onFetchNext={fetchNextPage}
@@ -54,9 +46,8 @@ export default function PerformancePage() {
 						<p className="text-center py-4">더 많은 공연을 불러오는 중...</p>
 					)}
 				</div>
+				<Footer />
 			</main>
-			{/* 하단 부분 */}
-			<Footer />
 		</div>
 	);
 }
