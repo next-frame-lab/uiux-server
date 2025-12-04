@@ -21,10 +21,10 @@ export default function Category() {
 	useEffect(() => {
 		const params = new URLSearchParams(location.search);
 		const type = params.get("type");
-		if (!type && location.pathname === "/") {
-			setActiveCategory("all");
-		} else if (type) {
+		if (type) {
 			setActiveCategory(type);
+		} else {
+			setActiveCategory("all");
 		}
 	}, [location]);
 
