@@ -184,7 +184,15 @@ export default function Header() {
 							/>
 						</div>
 
-						<nav className="hidden md:flex items-center justify-end flex-wrap gap-x-4 gap-y-2 md:gap-x-6">
+						<nav className="hidden md:flex items-center justify-end flex-wrap gap-x-2 gap-y-2 md:gap-x-2">
+							{/* About 버튼 */}
+							<button
+								type="button"
+								onClick={() => navigate("/about")}
+								className="px-5 py-2 transition-colors text-gray-500 rounded-full hover:bg-gray-200">
+								About
+							</button>
+
 							{user ? (
 								// 로그인 상태
 								<div className="relative" ref={dropdownRef}>
@@ -303,6 +311,12 @@ export default function Header() {
 								onClick={() => handleNavigate("/performances")}
 								className="py-3 w-full text-left hover:bg-gray-100 rounded-md px-3">
 								공연
+							</button>
+							<button
+								type="button"
+								onClick={() => handleNavigate("/about")}
+								className="py-3 w-full text-left hover:bg-gray-100 rounded-md px-3">
+								About
 							</button>
 							<button
 								type="button"

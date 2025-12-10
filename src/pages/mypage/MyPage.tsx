@@ -1,12 +1,10 @@
 import {
 	EnvelopeIcon,
 	CalendarIcon,
-	StarIcon,
 	TicketIcon,
-	FilmIcon,
-	HeartIcon,
 	TagIcon,
 } from "@heroicons/react/24/solid";
+import { FilmIcon, HeartIcon, StarIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { authState } from "../../recoil/auth.ts";
@@ -24,25 +22,25 @@ const STATS = [
 		icon: FilmIcon,
 		count: 5,
 		label: "관람한 공연",
-		gradientFrom: "from-blue-500",
-		gradientTo: "to-blue-600",
+		bgColor: "bg-blue-50",
+		iconColor: "text-blue-600",
 		hoverBorder: "hover:border-blue-300",
 	},
 	{
 		icon: HeartIcon,
 		count: 24,
 		label: "관심 공연",
-		gradientFrom: "from-pink-500",
-		gradientTo: "to-pink-600",
+		bgColor: "bg-pink-50",
+		iconColor: "text-pink-600",
 		hoverBorder: "hover:border-pink-300",
 	},
 	{
 		icon: StarIcon,
 		count: 11,
 		label: "작성한 리뷰",
-		gradientFrom: "from-blue-600",
-		gradientTo: "to-blue-700",
-		hoverBorder: "hover:border-blue-300",
+		bgColor: "bg-purple-50",
+		iconColor: "text-purple-600",
+		hoverBorder: "hover:border-purple-300",
 	},
 ];
 
@@ -157,8 +155,8 @@ export default function MyPage() {
 							key={stat.label}
 							className={`bg-white rounded-xl p-6 border border-gray-200 ${stat.hoverBorder} hover:shadow-lg hover:-translate-y-1 transition-all`}>
 							<div
-								className={`w-12 h-12 bg-gradient-to-br ${stat.gradientFrom} ${stat.gradientTo} rounded-xl flex items-center justify-center mb-4`}>
-								<stat.icon className="w-6 h-6 text-white" />
+								className={`w-12 h-12 ${stat.bgColor} rounded-xl flex items-center justify-center mb-4`}>
+								<stat.icon className={`w-7 h-7 ${stat.iconColor} stroke-2`} />
 							</div>
 							<p className="text-3xl font-bold text-blue-950 mb-1">
 								{stat.count}
