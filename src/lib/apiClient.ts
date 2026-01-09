@@ -39,7 +39,34 @@ export default async function requestJSON<T>(
 
 	const res = await fetch(url, { ...rest, headers });
 
-	const body = await res.json();
+	if (res.status === 204 || res.headers.get("content-length") === "0") {
+		if (!res.ok) {
+			throw makeError(
+				res.status,
+				statusMessage[res.status as AppErrorCode] || `Http Error: ${res.status}`
+			);
+		}
+		return null as T;
+	}
+
+	const text = await res.text();
+
+	if (!text || text.trim().length === 0) {
+		if (!res.ok) {
+			throw makeError(
+				res.status,
+				statusMessage[res.status as AppErrorCode] || `Http Error: ${res.status}`
+			);
+		}
+		return null as T;
+	}
+
+	let body;
+	try {
+		body = JSON.parse(text);
+	} catch {
+		throw new Error(`Failed to parse JSON response: ${text}`);
+	}
 
 	if (!res.ok) {
 		switch (res.status) {

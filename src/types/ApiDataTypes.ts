@@ -93,6 +93,7 @@ export interface reviewList {
 	writerName: string;
 	writerProfileImageUrl: string;
 	content: string;
+	star: number;
 	likeStatus: boolean;
 	likeCount: number;
 	createdAt: string;
