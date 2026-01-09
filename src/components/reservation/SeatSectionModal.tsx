@@ -67,6 +67,7 @@ export default function SeatSectionModal({
 					</div>
 					<button
 						type="button"
+						aria-label="닫기"
 						onClick={onClose}
 						className="w-10 h-10 rounded-lg bg-white/20 hover:bg-white/30 transition-colors flex items-center justify-center">
 						<svg
