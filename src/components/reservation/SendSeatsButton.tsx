@@ -48,7 +48,7 @@ export default function SendSeatsButton({
 	return (
 		<button
 			type="button"
-			className="w-full rounded-lg border border-blue-200 bg-blue-50 py-3 text-base font-bold text-gray-800 hover:bg-gray-300"
+			className="w-full rounded-lg border border-blue-200 bg-blue-50 py-2 text-base font-bold text-gray-800 hover:bg-gray-300"
 			onClick={handleSubmit}
 			data-testid="send-seats-button"
 			/** 단위 테스트하기 위해, 임시로 생성 & 추후 코드 구성할 때, window 객체 활용 */

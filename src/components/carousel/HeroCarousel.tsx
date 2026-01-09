@@ -5,7 +5,6 @@ type Item = {
 	id: number;
 	description: string;
 	button: string;
-	backgroundColor: string;
 	path: string;
 	image: string;
 };
@@ -13,46 +12,45 @@ type Item = {
 const items: Item[] = [
 	{
 		id: 1,
-		description: "웃음이 빵빵! 터지는 코미디 공연들",
-		button: "코미디 보러가기",
-		backgroundColor:
-			"bg-gradient-to-r from-amber-400 via-amber-500 to-orange-500",
-		path: "/performances?type=comedy",
-		image: "/icons/main/comedy.svg",
+		description: "무대를 채우는 라이브의 열기",
+		button: "콘서트 보러가기",
+		path: "/performances?type=concert",
+		image: "/icons/main/concert.png",
 	},
 	{
 		id: 2,
-		description: "심장 쫄깃한 공포의 순간을 느껴보세요",
-		button: "호러 보러가기",
-		backgroundColor: "bg-gradient-to-b from-neutral-600 via-zinc-900 to-black",
-		path: "/performances?type=horror",
-		image: "/icons/main/horror.svg",
+		description: "이야기와 음악이 만나는 순간",
+		button: "뮤지컬 보러가기",
+		path: "/performances?type=musical",
+		image: "/icons/main/musical.png",
 	},
 	{
 		id: 3,
-		description: "두근거리는 설렘, 오늘은 로맨스 어때요?",
-		button: "로맨스 보러가기",
-		backgroundColor:
-			"bg-gradient-to-r from-rose-400 via-pink-500 to-fuchsia-300",
-		path: "/performances?type=romance",
-		image: "/icons/main/romance.svg",
+		description: "아이들의 상상이\n무대가 되는 시간",
+		button: "어린이극 보러가기",
+		path: "/performances?type=children_theater",
+		image: "/icons/main/children_theater.png",
 	},
 	{
 		id: 4,
-		description: "긴장감 폭발! 손에 땀나는 스릴러",
-		button: "스릴러 보러가기",
-		backgroundColor:
-			"bg-gradient-to-br from-slate-900 via-slate-800 to-stone-900",
-		path: "/performances?type=thriller",
-		image: "/icons/main/thriller.svg",
+		description: "몸으로 그려내는 예술",
+		button: "무용 보러가기",
+		path: "/performances?type=dance",
+		image: "/icons/main/dance.png",
 	},
 	{
 		id: 5,
-		description: "현실보다 더 깊이 있는 감동을 만나는 시간",
-		button: "다큐멘터리 보러가기",
-		backgroundColor: "bg-gradient-to-r from-teal-700 via-cyan-700 to-sky-700",
-		path: "/performances?type=documentary",
-		image: "/icons/main/documentary.svg",
+		description: "대사와 감정으로\n완성되는 무대",
+		button: "연극 보러가기",
+		path: "/performances?type=play",
+		image: "/icons/main/play.png",
+	},
+	{
+		id: 6,
+		description: "클래식이 울려 퍼지는 밤",
+		button: "오페라 보러가기",
+		path: "/performances?type=opera",
+		image: "/icons/main/opera.png",
 	},
 ];
 
@@ -68,83 +66,101 @@ export default function HeroCarousel() {
 	}, []);
 
 	const goToSlide = (index: number) => setCurrentSlide(index);
-	const goToPrevious = () =>
-		setCurrentSlide((prev) => (prev - 1 + items.length) % items.length);
-	const goToNext = () => setCurrentSlide((prev) => (prev + 1) % items.length);
 
 	return (
-		<div className="relative overflow-hidden bg-gray-900">
-			<div className="relative h-[400px]">
-				{items.map((item, index) => (
-					<div
-						key={item.id}
-						className={`absolute inset-0 transition-opacity duration-500 ${
-							index === currentSlide ? "opacity-100" : "opacity-0"
-						}`}>
+		<div className="relative overflow-hidden">
+			<div className="relative aspect-[4.5/2]">
+				{items.map((item, index) => {
+					let position = "translate-x-full";
+					if (index === currentSlide) {
+						position = "translate-x-0";
+					} else if (index < currentSlide) {
+						position = "-translate-x-full";
+					}
+
+					return (
 						<div
-							className={`relative flex h-full items-center overflow-hidden ${item.backgroundColor}`}>
-							<div className="container mx-auto px-4">
-								<div className="max-w-2xl text-white">
-									<p className="mb-5 text-2xl sm:text-4xl">
-										{item.description}
-									</p>
-									<p className="mb-5">올해의 대작들, 지금 바로 만나보세요</p>
-									<div className="flex gap-4">
-										<Link
-											to={item.path}
-											className="rounded-lg bg-[#FBFBFB] px-6 py-3 text-base text-gray-900 transition-colors hover:bg-white">
-											{item.button}
-										</Link>
-										<button
-											type="button"
-											disabled
-											className="rounded-lg border border-white/60 px-6 py-3 text-base text-white transition-colors hover:bg-white/10">
-											상세정보
-										</button>
+							key={item.id}
+							className={`absolute inset-0 transition-transform duration-500 ease-out ${position}`}>
+							{/* 배경 이미지 */}
+							<div className="absolute inset-0">
+								<img
+									src={item.image}
+									alt=""
+									className="w-full h-full object-cover"
+									loading="lazy"
+								/>
+								{/* 어두운 오버레이 */}
+								<div className="absolute inset-0 bg-black/40" />
+							</div>
+
+							{/* 메인 컨텐츠 */}
+							<div className="relative flex h-full items-center">
+								<div className="container mx-auto px-6 md:px-12 lg:px-16">
+									<div className="grid md:grid-cols-2 gap-12 items-center">
+										{/* 텍스트 영역 */}
+										<div className="space-y-6 md:space-y-8">
+											<div className="space-y-4">
+												<h2 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white leading-tight drop-shadow-lg whitespace-pre-line">
+													{item.description}
+												</h2>
+												<p className="text-lg md:text-xl text-white/90 drop-shadow">
+													올해의 대작들, 지금 바로 만나보세요
+												</p>
+											</div>
+
+											{/* 버튼 */}
+											<div className="flex flex-wrap gap-3">
+												<Link
+													to={item.path}
+													className="px-8 py-3.5 bg-white text-gray-900 rounded-lg font-semibold text-base hover:bg-gray-100 transition-colors shadow-sm">
+													{item.button}
+												</Link>
+											</div>
+										</div>
 									</div>
 								</div>
 							</div>
-							<img
-								src={item.image}
-								alt={item.description}
-								className="pointer-events-none absolute right-8 bottom-6 h-40 w-40 object-contain sm:right-16 sm:bottom-10 sm:h-48 sm:w-48"
-								loading="lazy"
-							/>
 						</div>
-					</div>
-				))}
+					);
+				})}
 			</div>
 
-			<button
-				type="button"
-				onClick={goToPrevious}
-				aria-label="이전 배너"
-				className="absolute left-4 top-1/2 z-10 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-white/80 text-2xl font-bold text-gray-800 shadow-lg transition-all hover:scale-110 hover:bg-white">
-				‹
-			</button>
-			<button
-				type="button"
-				onClick={goToNext}
-				aria-label="다음 배너"
-				className="absolute right-4 top-1/2 z-10 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-white/80 text-2xl font-bold text-gray-800 shadow-lg transition-all hover:scale-110 hover:bg-white">
-				›
-			</button>
+			{/* 썸네일 네비게이션 인디케이터 - PC */}
+			<div className="hidden md:block absolute bottom-6 left-0 right-0 z-10">
+				<div className="container mx-auto px-6 md:px-12 lg:px-16">
+					<div className="flex gap-4">
+						{items.map((item, index) => (
+							<button
+								key={item.id}
+								type="button"
+								onClick={() => goToSlide(index)}
+								aria-label={`${index + 1}번째 배너로 이동`}
+								className={`relative rounded-lg overflow-hidden transition-all ${
+									index === currentSlide
+										? "w-16 h-12 ring-2 ring-white"
+										: "w-12 h-10 opacity-60 hover:opacity-100"
+								}`}>
+								<img
+									src={item.image}
+									alt={item.description}
+									className="w-full h-full object-cover"
+								/>
+								{index === currentSlide && (
+									<div className="absolute inset-0 bg-white/10" />
+								)}
+							</button>
+						))}
+					</div>
+				</div>
+			</div>
 
-			<div className="absolute bottom-6 left-1/2 z-10 -translate-x-1/2">
-				<div className="flex gap-2">
-					{items.map((item, index) => (
-						<button
-							key={item.id}
-							type="button"
-							onClick={() => goToSlide(index)}
-							aria-label={`${index + 1}번째 배너로 이동`}
-							className={`rounded-full transition-all ${
-								index === currentSlide
-									? "h-2 w-8 bg-white"
-									: "h-2 w-2 bg-white/50"
-							}`}
-						/>
-					))}
+			{/* 페이지 인디케이터 - Mobile */}
+			<div className="md:hidden absolute bottom-6 right-6 z-10">
+				<div className="bg-white/10 backdrop-blur-sm rounded-lg px-2 py-1">
+					<span className="text-white text-sm">
+						{currentSlide + 1} / {items.length}
+					</span>
 				</div>
 			</div>
 		</div>

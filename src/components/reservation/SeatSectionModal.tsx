@@ -47,23 +47,82 @@ export default function SeatSectionModal({
 			onKeyDown={(e) => {
 				if (e.key === "Escape") onClose();
 			}}
-			className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center p-4"
+			className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4"
 			onMouseDown={(e) => {
 				if (e.target === e.currentTarget) onClose();
 			}}>
-			<div className="w-full max-w-4xl rounded-2xl bg-white p-4 shadow-2xl">
-				<div className="flex items-center justify-between border-b pb-3">
-					<h2 className="text-lg">Section {section}</h2>
+			<div className="w-full max-w-5xl rounded-2xl bg-white shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+				{/* 헤더 */}
+				<div className="flex items-center justify-between bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-4 text-white">
+					<div className="flex items-center gap-3">
+						<div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
+							<span className="text-2xl font-bold">{section}</span>
+						</div>
+						<div>
+							<h2 className="text-xl font-bold">Section {section}</h2>
+							<p className="text-sm text-blue-100">
+								원하시는 좌석을 선택해주세요
+							</p>
+						</div>
+					</div>
 					<button
 						type="button"
 						onClick={onClose}
-						className="rounded-md border px-3 py-1 text-sm">
-						닫기
+						className="w-10 h-10 rounded-lg bg-white/20 hover:bg-white/30 transition-colors flex items-center justify-center">
+						<svg
+							className="w-6 h-6"
+							fill="none"
+							stroke="currentColor"
+							viewBox="0 0 24 24">
+							<path
+								strokeLinecap="round"
+								strokeLinejoin="round"
+								strokeWidth={2}
+								d="M6 18L18 6M6 6l12 12"
+							/>
+						</svg>
 					</button>
 				</div>
 
-				<div className="mt-4 justify-center inline-grid gap-1 [grid-template-columns:repeat(20,2rem)] [grid-auto-rows:2rem]">
-					{seats.map(renderSeat)}
+				{/* 범례 */}
+				<div className="flex items-center justify-center gap-6 px-6 py-4 bg-gray-50 border-b border-gray-200">
+					<div className="flex items-center gap-2">
+						<div className="w-4 h-4 bg-gray-300 rounded" />
+						<span className="text-sm text-gray-700 font-medium">선택 가능</span>
+					</div>
+					<div className="flex items-center gap-2">
+						<div className="w-4 h-4 bg-red-600 rounded" />
+						<span className="text-sm text-gray-700 font-medium">선택 불가</span>
+					</div>
+					<div className="flex items-center gap-2">
+						<div className="w-4 h-4 bg-green-600 rounded" />
+						<span className="text-sm text-gray-700 font-medium">선택됨</span>
+					</div>
+				</div>
+
+				{/* 좌석 그리드 */}
+				<div className="p-6 overflow-auto max-h-[60vh]">
+					<div className="flex justify-center">
+						<div className="inline-grid gap-2 [grid-template-columns:repeat(20,2.5rem)] [grid-auto-rows:2.5rem]">
+							{seats.map(renderSeat)}
+						</div>
+					</div>
+				</div>
+
+				{/* 푸터 */}
+				<div className="flex items-center justify-between px-6 py-4 bg-gray-50 border-t border-gray-200">
+					<p className="text-sm text-gray-600">
+						<span className="font-semibold text-gray-900">
+							{selectedSeatIds.length}석
+						</span>{" "}
+						선택됨
+					</p>
+					<button
+						type="button"
+						onClick={onClose}
+						className="px-6 py-2.5 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors shadow-md hover:shadow-lg">
+						확인
+					</button>
 				</div>
 			</div>
 		</div>

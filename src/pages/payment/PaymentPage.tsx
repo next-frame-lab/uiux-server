@@ -30,12 +30,21 @@ export default function PaymentPage() {
 	const { reservationId, totalAmount, performance } = reservation.data;
 
 	return (
-		<main className="bg-[#FBFBFB] py-5">
-			<div className="max-w-7xl mx-auto py-40 flex flex-col items-center gap-y-6">
-				<h1 className="text-center text-5xl font-bold pb-2 w-full">결제</h1>
+		<main className="min-h-screen bg-gradient-to-b from-gray-50 to-white py-12">
+			<div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+				{/* 헤더 */}
+				<div className="text-center mb-8">
+					<h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-3">
+						결제하기
+					</h1>
+					<p className="text-gray-600">
+						예매 정보를 확인하고 결제를 진행해주세요
+					</p>
+				</div>
 
-				<div className="flex flex-col w-full ">
+				<div className="space-y-6">
 					<PayInformation reservation={reservation} />
+
 					{/* 결제 버튼 */}
 					<TossPaymentCheckout
 						reservationId={reservationId}

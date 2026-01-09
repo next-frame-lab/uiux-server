@@ -31,23 +31,34 @@ describe("공연 목록 상세 페이지 - 정보 렌더링", () => {
 	it("공연 정보를 렌더링한다.", () => {
 		renderWithProviders(<PerformanceInfo performance={performanceDetail} />);
 
+		// 공연명
 		expect(screen.getByText(performanceDetail.data.name)).toBeInTheDocument();
+
+		// 평점 (분리된 요소로 표시됨)
 		expect(
-			screen.getByText(`평점 : ${performanceDetail.data.averageStar}점`)
+			screen.getByText(performanceDetail.data.averageStar.toString())
 		).toBeInTheDocument();
-		expect(
-			screen.getByText(`타입 : ${performanceDetail.data.type}`)
-		).toBeInTheDocument();
-		expect(
-			screen.getByText(`장르 : ${performanceDetail.data.genre}`)
-		).toBeInTheDocument();
-		expect(
-			screen.getByText(`공연 시간 : ${performanceDetail.data.runningTime}분`)
-		).toBeInTheDocument();
+
+		// 타입과 장르 (하나의 텍스트로 합쳐짐)
 		expect(
 			screen.getByText(
-				`장소 : ${performanceDetail.data.stadium.name} ${performanceDetail.data.stadium.address}`
+				`${performanceDetail.data.type} · ${performanceDetail.data.genre}`
 			)
+		).toBeInTheDocument();
+
+		// 공연 시간
+		expect(
+			screen.getByText(`${performanceDetail.data.runningTime}분`, {
+				exact: false,
+			})
+		).toBeInTheDocument();
+
+		// 장소 (이름과 주소가 분리됨)
+		expect(
+			screen.getByText(performanceDetail.data.stadium.name)
+		).toBeInTheDocument();
+		expect(
+			screen.getByText(performanceDetail.data.stadium.address)
 		).toBeInTheDocument();
 	});
 
@@ -56,8 +67,10 @@ describe("공연 목록 상세 페이지 - 정보 렌더링", () => {
 		renderWithProviders(<PerformanceInfo performance={performanceDetail} />);
 
 		seatSectionPrices.forEach((seat) => {
+			// "A석"과 "120,000원"이 분리된 요소로 표시됨
+			expect(screen.getByText(`${seat.section}석`)).toBeInTheDocument();
 			expect(
-				screen.getByText(`${seat.section}석 : ${seat.price.toLocaleString()}원`)
+				screen.getByText(`${seat.price.toLocaleString()}원`)
 			).toBeInTheDocument();
 		});
 	});

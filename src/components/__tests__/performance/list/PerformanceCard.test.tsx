@@ -51,8 +51,9 @@ describe("공연 카드 목록 조회", () => {
 		render(<PerformanceCard performances={mockList} />);
 
 		const first = mockList[0];
-		const card = screen.getAllByTestId("performanceId")[0];
-		fireEvent.click(card);
+
+		const buttons = screen.getAllByRole("button", { name: "예매하기" });
+		fireEvent.click(buttons[0]);
 
 		expect(navigateMock).toHaveBeenCalledTimes(1);
 		expect(navigateMock).toHaveBeenCalledWith(`/performances/${first.id}`);

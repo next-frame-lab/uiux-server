@@ -1,5 +1,6 @@
 import { FaGithub, FaTwitter, FaLinkedin, FaEnvelope } from "react-icons/fa";
 import { ArrowUpIcon } from "@heroicons/react/24/solid";
+import { Link } from "react-router-dom";
 
 export default function Footer() {
 	const scrollToTop = () => {
@@ -57,14 +58,14 @@ export default function Footer() {
 						<h3 className="font-semibold text-gray-900 mb-4">회사</h3>
 						<ul className="space-y-3 text-sm text-gray-500">
 							<li>
-								<a href="/" className="hover:text-blue-600">
+								<Link to="/about" className="hover:text-blue-600">
 									회사 소개
-								</a>
+								</Link>
 							</li>
 							<li>
-								<a href="/" className="hover:text-blue-600">
+								<Link to="/about#team" className="hover:text-blue-600">
 									팀
-								</a>
+								</Link>
 							</li>
 						</ul>
 					</div>
