@@ -79,15 +79,42 @@ export default function TossPaymentCheckout({
 	const debounceHandlePayment = Debouncing(requestPayment, 1000);
 
 	return (
-		<div>
-			<div className=" mt-[30px] mx-auto text-[#333d4b] flex-col">
-				<button
-					type="button"
-					className="w-full mt-24 rounded-lg bg-[#3182f6] py-3 text-lg font-bold text-shadow-black hover:bg-[#1b64da] text-[#f9fafb]"
-					onClick={() => debounceHandlePayment()}>
-					결제하기
-				</button>
-			</div>
+		<div className="mt-6">
+			<button
+				type="button"
+				onClick={() => debounceHandlePayment()}
+				className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold text-lg py-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-3">
+				<svg
+					className="w-6 h-6"
+					fill="none"
+					stroke="currentColor"
+					viewBox="0 0 24 24">
+					<path
+						strokeLinecap="round"
+						strokeLinejoin="round"
+						strokeWidth={2}
+						d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"
+					/>
+				</svg>
+				<span>결제하기</span>
+				<svg
+					className="w-5 h-5"
+					fill="none"
+					stroke="currentColor"
+					viewBox="0 0 24 24">
+					<path
+						strokeLinecap="round"
+						strokeLinejoin="round"
+						strokeWidth={2}
+						d="M9 5l7 7-7 7"
+					/>
+				</svg>
+			</button>
+
+			{/* 안내 문구 */}
+			<p className="text-center text-sm text-gray-500 mt-4">
+				결제 정보를 확인하신 후 결제 버튼을 눌러주세요
+			</p>
 		</div>
 	);
 }

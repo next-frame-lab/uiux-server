@@ -11,7 +11,7 @@ jest.mock("../../../../utils/StarRating.ts", () => ({
 
 describe("공연 목록 상세 페이지 - 별점", () => {
 	it("별점 버튼으로 5개가 렌더링된다.", () => {
-		render(<ReviewRating onChange={() => {}} />);
+		render(<ReviewRating onChange={() => {}} initialValue={0} />);
 
 		const buttons = screen.getAllByRole("button");
 		expect(buttons).toHaveLength(5);
@@ -21,7 +21,7 @@ describe("공연 목록 상세 페이지 - 별점", () => {
 		(getStarValueFromClick as jest.Mock).mockReturnValue(2.5);
 
 		const handleChange = jest.fn();
-		render(<ReviewRating onChange={handleChange} />);
+		render(<ReviewRating onChange={handleChange} initialValue={0} />);
 
 		const buttons = screen.getAllByRole("button");
 		fireEvent.click(buttons[0]);
@@ -36,7 +36,7 @@ describe("공연 목록 상세 페이지 - 별점", () => {
 
 		const handleChange = jest.fn();
 
-		render(<ReviewRating onChange={handleChange} />);
+		render(<ReviewRating onChange={handleChange} initialValue={0} />);
 
 		const [b0, b1, b2] = screen.getAllByRole("button");
 		fireEvent.click(b0);

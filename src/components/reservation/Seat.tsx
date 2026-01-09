@@ -27,20 +27,20 @@ export default function Seat({
 		}
 	};
 
-	let seatColor = "bg-gray-100 hover:bg-gray-200";
+	let seatColor = "bg-gray-300 hover:bg-gray-400 cursor-pointer";
 	if (disabled) {
-		seatColor =
-			"bg-gray-300 text-gray-400 cursor-not-allowed opacity-60 pointer-events-none";
+		seatColor = "bg-red-600 cursor-not-allowed";
 	} else if (isSelected) {
-		seatColor = "bg-gray-600 text-white";
+		seatColor = "bg-green-600 hover:bg-green-700 cursor-pointer";
 	}
+
 	return (
 		<div
 			role="button"
 			tabIndex={disabled ? -1 : 0}
 			onKeyDown={handleKeyDown}
 			onClick={handleClick}
-			className={` w-8 h-8 rounded ${seatColor} `}
+			className={`w-8 h-8 rounded transition-colors ${seatColor}`}
 			style={{
 				left: `${(column - 1) * 2.5}rem`,
 				top: `${(row - 1) * 2.5}rem`,

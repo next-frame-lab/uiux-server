@@ -1,3 +1,5 @@
+import { useLocation } from "react-router-dom";
+import { useEffect } from "react";
 import Header from "../../components/layout/Header.tsx";
 import Footer from "../../components/layout/Footer.tsx";
 
@@ -44,11 +46,26 @@ const teamMembers = [
 			"메인 페이지 공연 목록 API 연동",
 			"카카오 로그인/회원가입 OAuth 구현",
 			"Recoil 상태 관리를 통한 토큰 관리",
+			"Zustand 라이브러리 도입 및 마이그레이션",
 		],
 	},
 ];
 
 export default function AboutPage() {
+	const location = useLocation();
+
+	useEffect(() => {
+		// 해시가 있으면 해당 요소로 스크롤
+		if (location.hash) {
+			const element = document.querySelector(location.hash);
+			if (element) {
+				element.scrollIntoView({ behavior: "smooth" });
+			}
+		} else {
+			// 해시가 없으면 페이지 상단으로
+			window.scrollTo(0, 0);
+		}
+	}, [location]);
 	return (
 		<div className="min-h-screen bg-[#FBFBFB] flex flex-col">
 			<Header />
@@ -75,7 +92,7 @@ export default function AboutPage() {
 					</div>
 				</section>
 
-				<section className="py-16 md:py-24 mb-16 md:mb-24">
+				<section id="team" className="py-16 md:py-24 mb-16 md:mb-24">
 					<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 						<div className="text-center mb-16">
 							<h2 className="text-3xl md:text-4xl font-bold text-blue-950 mb-4">

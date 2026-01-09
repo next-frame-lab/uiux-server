@@ -24,7 +24,7 @@ describe("SeatSelector 컴포넌트", () => {
 				screen.getByRole("button", {
 					name: new RegExp(`SECTION\\s*${sec}`, "i"),
 				})
-			).toHaveTextContent(/100 seats/i);
+			).toHaveTextContent(/100석 남음/i);
 		});
 	});
 
@@ -72,7 +72,7 @@ describe("SeatSelector 컴포넌트", () => {
 		const seatsInModal = screen.getAllByRole("button", { name: /^seat A$/i });
 
 		const btn = seatsInModal[2];
-		expect(btn).toHaveClass("bg-gray-600");
-		expect(btn).toHaveClass("text-white");
+		expect(btn).toHaveClass("bg-green-600");
+		expect(btn).toHaveClass("hover:bg-green-700");
 	});
 });

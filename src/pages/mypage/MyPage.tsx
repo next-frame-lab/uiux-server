@@ -6,15 +6,21 @@ import {
 } from "@heroicons/react/24/solid";
 import { FilmIcon, HeartIcon, StarIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
-import { useRecoilValue } from "recoil";
-import { authState } from "../../recoil/auth.ts";
+import { useAuthState } from "../../store/authStore.ts";
 import Header from "../../components/layout/Header.tsx";
 import Footer from "../../components/layout/Footer.tsx";
 
 const KEYWORDS = [
-	{ id: "romance", label: "로맨스", path: "/performances?type=romance" },
-	{ id: "comedy", label: "코미디", path: "/performances?type=comedy" },
-	{ id: "thriller", label: "스릴러", path: "/performances?type=thriller" },
+	{ id: "concert", label: "콘서트", path: "/performances?type=concert" },
+	{ id: "musical", label: "뮤지컬", path: "/performances?type=musical" },
+	{
+		id: "children_theater",
+		label: "어린이극",
+		path: "/performances?type=children_theater",
+	},
+	{ id: "dance", label: "무용", path: "/performances?type=dance" },
+	{ id: "play", label: "연극", path: "/performances?type=play" },
+	{ id: "opera", label: "오페라", path: "/performances?type=opera" },
 ];
 
 const STATS = [
@@ -45,7 +51,7 @@ const STATS = [
 ];
 
 export default function MyPage() {
-	const { user } = useRecoilValue(authState);
+	const { user } = useAuthState();
 
 	if (!user) {
 		return (

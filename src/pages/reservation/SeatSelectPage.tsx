@@ -139,58 +139,120 @@ export default function SeatSelectPage() {
 	}
 
 	return (
-		<main className="bg-[#FBFBFB]">
+		<main className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
 			{ready && (
-				<div className="mx-auto max-w-7xl px-8 py-12">
-					<div className="flex gap-x-16">
-						<div className="flex-1">
-							<h1 className="text-4xl font-bold text-gray-900">
-								{performanceName}
-							</h1>
-							<div className="h-full flex flex-col">
-								<div className="flex flex-row justify-between text-center items-center text-2xl">
-									<h2 className="mt-2 font-semibold text-gray-700">
+				<div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+					<div className="grid lg:grid-cols-[1fr_380px] gap-6 lg:gap-8">
+						{/* 좌석 선택 영역 */}
+						<div className="space-y-6">
+							{/* 제목 */}
+							<div className="bg-white rounded-2xl shadow-lg p-6">
+								<h1 className="text-3xl md:text-4xl font-bold text-gray-900">
+									{performanceName}
+								</h1>
+							</div>
+
+							{/* 좌석맵 */}
+							<div className="bg-white rounded-2xl shadow-lg p-6">
+								<div className="flex items-center justify-between mb-6">
+									<h2 className="text-2xl font-bold text-gray-900">
 										좌석 선택
 									</h2>
-								</div>
-								<div className="w-full bg-gray-600 text-center border-none rounded-sm p-2 mb-4 mt-4">
-									SCREEN
+									<div className="flex items-center gap-4 text-sm">
+										<div className="flex items-center gap-2">
+											<div className="w-4 h-4 bg-gray-300 rounded" />
+											<span className="text-gray-600">선택 가능</span>
+										</div>
+										<div className="flex items-center gap-2">
+											<div className="w-4 h-4 bg-red-600 rounded" />
+											<span className="text-gray-600">선택 불가</span>
+										</div>
+										<div className="flex items-center gap-2">
+											<div className="w-4 h-4 bg-green-600 rounded" />
+											<span className="text-gray-600">선택됨</span>
+										</div>
+									</div>
 								</div>
 
-								{/* 좌석 선택 UI가 들어갈 빈 칸 */}
+								{/* SCREEN */}
+								<div className="relative mb-8">
+									<div className="w-full bg-gradient-to-b from-gray-800 to-gray-600 text-white text-center rounded-lg p-4 shadow-xl">
+										<div className="font-bold text-lg tracking-widest">
+											SCREEN
+										</div>
+									</div>
+									<div className="absolute -bottom-2 left-0 right-0 h-2 bg-gradient-to-b from-gray-400/50 to-transparent blur-sm" />
+								</div>
+
+								{/* 좌석 선택 UI */}
 								{seatDataResponse && (
-									<SeatSelector
-										seatList={CombineSeats}
-										selectedSeatIds={selectedSeatIds}
-										onSelect={handleSelectSeat}
-									/>
+									<div className="overflow-x-auto">
+										<SeatSelector
+											seatList={CombineSeats}
+											selectedSeatIds={selectedSeatIds}
+											onSelect={handleSelectSeat}
+										/>
+									</div>
 								)}
 							</div>
 						</div>
 
 						{/* 오른쪽 예약 패널 */}
-						<div className="w-[380px] flex-shrink-0 rounded-lg bg-gray-50 p-6">
-							{/* 공연 일정 & 관람 선택 시간 & 좌석 가격 안내 */}
-							<ReservationInfo
-								performanceSchedules={performanceSchedules}
-								scheduleId={scheduleId}
-								seatPrices={seatPricesList}
-							/>
+						<div className="lg:sticky lg:top-28 lg:self-start">
+							<div className="bg-white rounded-2xl shadow-lg p-4 space-y-4">
+								{/* 공연 일정 & 관람 선택 시간 & 좌석 가격 안내 */}
+								<ReservationInfo
+									performanceSchedules={performanceSchedules}
+									scheduleId={scheduleId}
+									seatPrices={seatPricesList}
+								/>
 
-							<div className="mt-8 border-t border-gray-200 pt-6 text-sm text-gray-600">
-								총 가격:{" "}
-								<span className="text-lg text-black font-semibold">
-									{totalAmount.toLocaleString()}원
-								</span>
-							</div>
-							{/* 결제하기 버튼 */}
-							<div className="mt-8">
+								{/* 총 가격 */}
+								<div className="border-t border-gray-200 pt-4">
+									<div className="flex items-center justify-between">
+										<span className="text-lg font-semibold text-gray-700">
+											총 결제금액
+										</span>
+										<div className="text-right">
+											<div className="text-3xl font-bold text-blue-600">
+												{totalAmount.toLocaleString()}
+												<span className="text-lg text-gray-600 ml-1">원</span>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								{/* 결제하기 버튼 */}
 								<SendSeatsButton
 									performanceId={performanceId}
 									scheduleId={scheduleId}
 									seatIds={selectedSeatIds}
 									totalAmount={totalAmount}
 								/>
+							</div>
+
+							{/* 안내 문구 */}
+							<div className="mt-4 bg-blue-50 rounded-xl p-4 border border-blue-100">
+								<div className="flex items-start gap-3">
+									<svg
+										className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0"
+										fill="currentColor"
+										viewBox="0 0 20 20">
+										<path
+											fillRule="evenodd"
+											d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+											clipRule="evenodd"
+										/>
+									</svg>
+									<div className="text-sm text-blue-900 space-y-1">
+										<p className="font-semibold">예매 안내</p>
+										<ul className="list-disc list-inside space-y-1 text-blue-800">
+											<li>최대 4석까지 선택 가능합니다</li>
+											<li>결제 후 취소/변경이 불가합니다</li>
+											<li>공연 시작 1시간 전까지 입장하세요</li>
+										</ul>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>

@@ -1,5 +1,5 @@
 // 로그인, 정보 조회를 위한 API 호출 함수 정의
-import type { User } from "../recoil/auth.ts";
+import type { User } from "../store/authStore";
 import { authedJSON, publicJSON } from "../lib/apiClient.ts";
 import { LoginResponse } from "../types/ApiDataTypes.ts";
 
