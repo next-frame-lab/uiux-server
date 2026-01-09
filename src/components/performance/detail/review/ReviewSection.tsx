@@ -1,7 +1,7 @@
 import ReviewList from "./ReviewList.tsx";
 import ReviewForm from "./ReviewForm.tsx";
 import useReviews from "../../../../hooks/useReviews.ts";
-import { AppErrorCode, statusMessage } from "../../../../lib/apiClient.ts";
+import { AppErrorCode } from "../../../../lib/apiClient.ts";
 
 interface ReviewSectionProps {
 	performanceId: string;
@@ -36,7 +36,7 @@ export default function ReviewSection({
 				<div className="w-full rounded-xl bg-red-50 border border-red-200 shadow-md p-6 mb-6">
 					<p className="text-red-600 text-sm font-medium">
 						{code
-							? `리뷰를 불러오지 못했습니다. (${statusMessage[code]})`
+							? `리뷰를 불러오지 못했습니다.`
 							: "리뷰를 불러오는 도중 오류가 발생했습니다."}
 					</p>
 					<button

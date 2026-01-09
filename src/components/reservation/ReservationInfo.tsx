@@ -27,7 +27,7 @@ export default function ReservationInfo({
 				<h3 className="text-lg font-bold">공연 일정</h3>
 				<ScheduleCalendar selectedSchedule={schedule} />
 			</section>
-			<section className="mt-8 border-t border-gray-200 pt-6">
+			<section className="mt-8 border-t border-gray-200 pt-4">
 				<h3 className="text-lg font-bold">관람 선택 시간</h3>
 				<div className="mt-4">
 					<div className="flex w-full items-center gap-x-3 rounded-lg border border-blue-200 bg-blue-50 p-3 text-left">
@@ -40,7 +40,7 @@ export default function ReservationInfo({
 					</div>
 				</div>
 			</section>
-			<section className="mt-8 border-t border-gray-200 pt-6">
+			<section className="mt-8 border-t border-gray-200 pt-4">
 				<h3 className="text-lg font-bold">좌석 가격 안내</h3>
 				<div className="mt-4 grid grid-cols-2 gap-4">
 					{seatPrices?.map((seat) => (
