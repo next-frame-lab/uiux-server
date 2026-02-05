@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import authApi from "../../api/auth.ts";
-import { useAuthActions } from "../../store/authStore";
+import { useAuthActions } from "../../store/authStore.ts";
 import getUserIdFromToken from "../../utils/auth.ts";
 
 export default function KakaoRedirectPage() {

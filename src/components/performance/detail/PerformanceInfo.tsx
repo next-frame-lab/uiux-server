@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { PerformanceDetailData } from "../../../types/ApiDataTypes.ts";
 import ReviewSection from "./review/ReviewSection.tsx";
-import { useUser } from "../../../store/authStore";
+import { useUser } from "../../../store/authStore.ts";
 import scheduleRange from "../../../utils/ScheduleRange.ts";
 
 interface Props {
