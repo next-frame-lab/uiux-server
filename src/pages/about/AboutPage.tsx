@@ -46,6 +46,7 @@ const teamMembers = [
 			"메인 페이지 공연 목록 API 연동",
 			"카카오 로그인/회원가입 OAuth 구현",
 			"Recoil 상태 관리를 통한 토큰 관리",
+			"Zustand 라이브러리 도입 및 마이그레이션",
 		],
 	},
 ];

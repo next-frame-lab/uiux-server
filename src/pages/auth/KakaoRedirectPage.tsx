@@ -1,15 +1,14 @@
 import { useEffect, useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
-import { useSetRecoilState } from "recoil";
 import authApi from "../../api/auth.ts";
-import { userState } from "../../recoil/auth.ts";
+import { useAuthActions } from "../../store/authStore";
 import getUserIdFromToken from "../../utils/auth.ts";
 
 export default function KakaoRedirectPage() {
 	const [searchParams] = useSearchParams();
 	const navigate = useNavigate();
 
-	const setUser = useSetRecoilState(userState);
+	const { setUser } = useAuthActions();
 
 	const [isLoading, setIsLoading] = useState(true);
 

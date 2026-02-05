@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useRecoilValue } from "recoil";
 import { PerformanceDetailData } from "../../../types/ApiDataTypes.ts";
 import ReviewSection from "./review/ReviewSection.tsx";
-import { authState } from "../../../recoil/auth.ts";
+import { useUser } from "../../../store/authStore";
 import scheduleRange from "../../../utils/ScheduleRange.ts";
 
 interface Props {
@@ -15,7 +14,7 @@ export default function PerformanceInfo({ performance }: Props) {
 	const location = useLocation();
 	const [selectedScheduleId, setSelectedScheduleId] = useState<string>("");
 
-	const { user } = useRecoilValue(authState);
+	const user = useUser();
 
 	const token = localStorage.getItem("accessToken");
 	const isAuthenticated = !!token;
