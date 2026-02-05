@@ -66,24 +66,24 @@ export const useAuthStore = create(
 // 재렌더링 최적화를 위한 커스텀 훅
 export const useUser = () => useAuthStore((state) => state.user);
 
-export const useIsLoggedIn = () => {
-	const user = useAuthStore((state) => state.user);
-	const accessToken = localStorage.getItem("accessToken");
-	return !!(accessToken && user);
-};
+export const useIsLoggedIn = () =>
+	useAuthStore(
+		(state) => !!(localStorage.getItem("accessToken") && state.user)
+	);
 
 export const useIsKakaoSdkReady = () =>
 	useAuthStore((state) => state.isKakaoSdkReady);
 
-export const useAuthState = () => {
-	const user = useAuthStore((state) => state.user);
-	const accessToken = localStorage.getItem("accessToken");
-
-	if (accessToken && user) {
-		return { isLoggedIn: true, user };
-	}
-	return { isLoggedIn: false, user: null };
-};
+export const useAuthState = () =>
+	useAuthStore(
+		useShallow((state) => {
+			const isLoggedIn = !!(localStorage.getItem("accessToken") && state.user);
+			return {
+				isLoggedIn,
+				user: isLoggedIn ? state.user : null,
+			};
+		})
+	);
 
 export const useAuthActions = () =>
 	useAuthStore(
