@@ -1,6 +1,6 @@
 // 로그아웃 함수 커스텀 훅
 import { useNavigate } from "react-router-dom";
-import { useAuthState, useAuthActions } from "../store/authStore";
+import { useAuthState, useAuthActions } from "../store/authStore.ts";
 
 export default function useAuth() {
 	const { isLoggedIn, user } = useAuthState();

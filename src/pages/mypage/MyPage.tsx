@@ -6,7 +6,7 @@ import {
 } from "@heroicons/react/24/solid";
 import { FilmIcon, HeartIcon, StarIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
-import { useAuthState } from "../../store/authStore";
+import { useAuthState } from "../../store/authStore.ts";
 import Header from "../../components/layout/Header.tsx";
 import Footer from "../../components/layout/Footer.tsx";
 
