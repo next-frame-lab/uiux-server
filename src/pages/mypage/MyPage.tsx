@@ -6,8 +6,7 @@ import {
 } from "@heroicons/react/24/solid";
 import { FilmIcon, HeartIcon, StarIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
-import { useRecoilValue } from "recoil";
-import { authState } from "../../recoil/auth.ts";
+import { useAuthState } from "../../store/authStore";
 import Header from "../../components/layout/Header.tsx";
 import Footer from "../../components/layout/Footer.tsx";
 
@@ -52,7 +51,7 @@ const STATS = [
 ];
 
 export default function MyPage() {
-	const { user } = useRecoilValue(authState);
+	const { user } = useAuthState();
 
 	if (!user) {
 		return (
