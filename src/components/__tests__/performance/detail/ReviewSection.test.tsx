@@ -28,6 +28,7 @@ describe("ReviewSection", () => {
 	it("로딩 상태라면, '리뷰를 불러오는 중입니다...'을 보여준다.", () => {
 		mockedUseReviews.mockReturnValue({
 			status: "loading",
+			reviews: [],
 		});
 		render(
 			<ReviewSection
@@ -44,6 +45,7 @@ describe("ReviewSection", () => {
 		mockedUseReviews.mockReturnValue({
 			status: "error",
 			error: {},
+			reviews: [],
 		});
 		render(
 			<ReviewSection
@@ -65,6 +67,7 @@ describe("ReviewSection", () => {
 			onEdit: jest.fn(),
 			onSubmit: jest.fn(),
 			onDelete: jest.fn(),
+			onLikeToggle: jest.fn(),
 		});
 
 		render(
@@ -78,13 +81,14 @@ describe("ReviewSection", () => {
 		expect(screen.getByTestId("review-list")).toBeInTheDocument();
 	});
 
-	it("로그인 상태라면, ReviewForm이 렌더링된다.", () => {
+	it("로그인 상태이고 아직 리뷰를 작성하지 않았다면, ReviewForm이 렌더링된다.", () => {
 		mockedUseReviews.mockReturnValue({
 			status: "success",
 			reviews: [],
 			onEdit: jest.fn(),
 			onSubmit: jest.fn(),
 			onDelete: jest.fn(),
+			onLikeToggle: jest.fn(), // ✅ 추가
 		});
 		render(
 			<ReviewSection
@@ -97,6 +101,32 @@ describe("ReviewSection", () => {
 		expect(screen.getByTestId("review-form")).toBeInTheDocument();
 	});
 
+	it("로그인 상태이지만 이미 리뷰를 작성했다면, 안내 메시지가 표시되고 ReviewForm은 보이지 않는다.", () => {
+		mockedUseReviews.mockReturnValue({
+			status: "success",
+			reviews: [
+				{
+					...performanceReviewData.data.reviews[0],
+					writerName: "me-123",
+				},
+			],
+			onEdit: jest.fn(),
+			onSubmit: jest.fn(),
+			onDelete: jest.fn(),
+			onLikeToggle: jest.fn(),
+		});
+		render(
+			<ReviewSection
+				performanceId="mock-1"
+				currentUserName="me-123"
+				isAuthenticated
+				onRequireLogin={jest.fn()}
+			/>
+		);
+		expect(screen.getByTestId("review-list")).toBeInTheDocument();
+		expect(screen.queryByTestId("review-form")).not.toBeInTheDocument();
+	});
+
 	it("비로그인 상태면 로그인 유도 UI가 보이며, ReviewForm은 보이지 않는다.", () => {
 		mockedUseReviews.mockReturnValue({
 			status: "success",
@@ -104,6 +134,7 @@ describe("ReviewSection", () => {
 			onEdit: jest.fn(),
 			onSubmit: jest.fn(),
 			onDelete: jest.fn(),
+			onLikeToggle: jest.fn(),
 		});
 		render(
 			<ReviewSection
@@ -114,9 +145,7 @@ describe("ReviewSection", () => {
 			/>
 		);
 		expect(
-			screen.getByText(
-				"해당 리뷰 작성 폼을 사용하기 위해서는 로그인이 필요합니다."
-			)
+			screen.getByText(/리뷰를 작성하려면 로그인이 필요합니다/i)
 		).toBeInTheDocument();
 		expect(
 			screen.getByRole("button", { name: "로그인하기" })
