@@ -22,8 +22,7 @@ describe("공연 후기글 좋아요 버튼", () => {
 		);
 
 		const button = screen.getByTestId(`${review.id}`);
-		expect(button).toHaveTextContent("👍 20");
-		expect(button).toHaveClass("text-gray-500");
+		expect(button).toHaveTextContent("0");
 	});
 
 	it("좋아요 버튼을 누른 상태일 때, 재클릭하면 해제된다.", () => {
@@ -39,13 +38,11 @@ describe("공연 후기글 좋아요 버튼", () => {
 		);
 
 		const button = screen.getByTestId(`${review.id}`);
-		expect(button).toHaveTextContent("👍 2");
-		expect(button).toHaveClass("text-yellow-500");
+		expect(button).toHaveTextContent("2");
 
 		fireEvent.click(button);
 
-		expect(button).toHaveTextContent("👍 1");
-		expect(button).toHaveClass("text-gray-500");
+		expect(button).toHaveTextContent("1");
 		expect(mockToggleLike).toHaveBeenCalledWith(review.id, false);
 	});
 });

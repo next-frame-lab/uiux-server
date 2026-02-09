@@ -18,10 +18,12 @@ jest.mock("../../../performance/detail/review/ReviewRating.tsx", () => ({
 }));
 
 describe("ReviewForm 컴포넌트(후기 작성 컴포넌트)", () => {
-	it("textarea에 입력 & 별점까지 선택하면 , 버튼이 활성화된다.", () => {
+	it("textarea에 입력 & 별점까지 선택하면, 버튼이 활성화된다.", () => {
 		render(<ReviewForm onSubmit={jest.fn()} />);
-		const textarea = screen.getByPlaceholderText("후기를 작성해주세요.");
-		const submitBtn = screen.getByRole("button", { name: "작성" });
+		const textarea = screen.getByPlaceholderText(
+			/이 공연에 대한 솔직한 후기를 남겨주세요/i // ✅ placeholder 텍스트 변경
+		);
+		const submitBtn = screen.getByRole("button", { name: /리뷰 등록하기/i }); // ✅ 버튼 텍스트 변경
 
 		fireEvent.change(textarea, { target: { value: "멋진 공연이였어요." } });
 		expect(textarea).toHaveValue("멋진 공연이였어요.");
@@ -35,20 +37,24 @@ describe("ReviewForm 컴포넌트(후기 작성 컴포넌트)", () => {
 		const handleSubmit = jest.fn();
 		render(<ReviewForm onSubmit={handleSubmit} />);
 
-		const textarea = screen.getByPlaceholderText("후기를 작성해주세요.");
-		const submitBtn = screen.getByRole("button", { name: "작성" });
+		const textarea = screen.getByPlaceholderText(
+			/이 공연에 대한 솔직한 후기를 남겨주세요/i // ✅ placeholder 텍스트 변경
+		);
+		const submitBtn = screen.getByRole("button", { name: /리뷰 등록하기/i }); // ✅ 버튼 텍스트 변경
 
 		fireEvent.click(screen.getByTestId("set-star"));
-		fireEvent.change(textarea, { target: { value: " " } });
+		fireEvent.change(textarea, { target: { value: "   " } });
 		expect(submitBtn).toBeDisabled();
 	});
 
 	it("유효한 내용 + 별점 선택 시, onSubmit이 호출되고, textarea는 비워지며 버튼은 비활성화된다.", async () => {
-		const handleSubmit = jest.fn();
+		const handleSubmit = jest.fn().mockResolvedValue(undefined); // ✅ async 함수로 mock
 		render(<ReviewForm onSubmit={handleSubmit} />);
 
-		const textarea = screen.getByPlaceholderText("후기를 작성해주세요.");
-		const submitBtn = screen.getByRole("button", { name: "작성" });
+		const textarea = screen.getByPlaceholderText(
+			/이 공연에 대한 솔직한 후기를 남겨주세요/i // ✅ placeholder 텍스트 변경
+		);
+		const submitBtn = screen.getByRole("button", { name: /리뷰 등록하기/i }); // ✅ 버튼 텍스트 변경
 
 		fireEvent.click(screen.getByTestId("set-star"));
 		fireEvent.change(textarea, { target: { value: "멋진 공연이였어요." } });
