@@ -54,7 +54,6 @@ export default function useReviews(id: string) {
 				await fetchDeleteReview(reviewId);
 				queryClient.invalidateQueries({ queryKey: ["performanceReviews", id] });
 			} catch {
-				// ✅ error -> err로 변경
 				throw new Error("리뷰 삭제 중 오류가 발생했습니다.");
 			}
 		},

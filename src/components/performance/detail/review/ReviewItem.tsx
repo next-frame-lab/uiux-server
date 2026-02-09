@@ -30,12 +30,12 @@ export default function ReviewItem({
 	const [editedStar, setEditedStar] = useState(review.star);
 	const [showDeleteModal, setShowDeleteModal] = useState(false);
 
-	const handleSave = (e: FormEvent) => {
+	const handleSave = async (e: FormEvent) => {
 		e.preventDefault();
 		if (!editedContent.trim()) return;
 
 		try {
-			onUpdate(review.id, editedContent, editedStar);
+			await onUpdate(review.id, editedContent, editedStar);
 			setIsEditing(false);
 		} catch (err) {
 			if (err instanceof Error) {

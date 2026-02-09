@@ -10,7 +10,7 @@ export default function ReviewForm({ onSubmit }: ReviewFormProps) {
 	const [star, setStar] = useState(0);
 	const [isSubmitting, setIsSubmitting] = useState(false);
 
-	const handleSubmit = (e: FormEvent) => {
+	const handleSubmit = async (e: FormEvent) => {
 		e.preventDefault();
 
 		if (!content.trim()) {
@@ -26,7 +26,7 @@ export default function ReviewForm({ onSubmit }: ReviewFormProps) {
 		setIsSubmitting(true);
 
 		try {
-			onSubmit(content.trim(), star);
+			await onSubmit(content.trim(), star);
 			setContent("");
 			setStar(0);
 		} catch (error) {
