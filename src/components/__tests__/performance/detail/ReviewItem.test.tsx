@@ -3,7 +3,7 @@ import ReviewItem from "../../../performance/detail/review/ReviewItem.tsx";
 import performanceReview from "../../../__mocks__/performanceReviewData.ts";
 
 // DeleteConfirmModal 모킹
-jest.mock("../../../performance/detail/review/DeleteConfirmModal.tsx", () => ({
+jest.mock("../../../common/DeleteConfirmModal.tsx", () => ({
 	__esModule: true,
 	default: function MockDeleteModal({
 		isOpen,

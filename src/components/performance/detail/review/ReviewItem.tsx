@@ -4,7 +4,7 @@ import { reviewList } from "../../../../types/ApiDataTypes.ts";
 import ReviewLikeButton from "./ReviewLikeButton.tsx";
 import fetchReviewLikes from "../../../../api/ReviewLikes.ts";
 import ReviewRating from "./ReviewRating.tsx";
-import DeleteConfirmModal from "./DeleteConfirmModal.tsx";
+import DeleteConfirmModal from "../../../common/DeleteConfirmModal.tsx";
 
 interface ReviewItemProps {
 	review: reviewList;
