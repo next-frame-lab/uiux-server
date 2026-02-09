@@ -26,14 +26,19 @@ const fetchPostReview = async (id: string, content: string, star: number) => {
 	});
 };
 
-const fetchPatchReview = async (reviewId: string, content: string) => {
+const fetchPatchReview = async (
+	reviewId: string,
+	content: string,
+	star: number
+) => {
 	return authedJSON(`${apiUrl}/api/v1/reviews/${reviewId}`, {
 		method: "PATCH",
 		headers: {
 			"Content-Type": "application/json",
 			accept: "application/json",
 		},
-		body: JSON.stringify({ content }),
+		credentials: "include",
+		body: JSON.stringify({ content, star }),
 	});
 };
 

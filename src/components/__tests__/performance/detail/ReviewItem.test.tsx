@@ -15,6 +15,7 @@ describe("ReviewItem 컴포넌트", () => {
 				onRequireLogin={() => {}}
 				onUpdate={jest.fn()}
 				onDelete={jest.fn()}
+				onLikeToggle={jest.fn()}
 			/>
 		);
 
@@ -33,6 +34,7 @@ describe("ReviewItem 컴포넌트", () => {
 				onRequireLogin={() => {}}
 				onUpdate={jest.fn()}
 				onDelete={jest.fn()}
+				onLikeToggle={jest.fn()}
 			/>
 		);
 
@@ -48,6 +50,7 @@ describe("ReviewItem 컴포넌트", () => {
 				onRequireLogin={() => {}}
 				onUpdate={jest.fn()}
 				onDelete={jest.fn()}
+				onLikeToggle={jest.fn()}
 			/>
 		);
 
@@ -63,6 +66,7 @@ describe("ReviewItem 컴포넌트", () => {
 				onRequireLogin={() => {}}
 				onUpdate={jest.fn()}
 				onDelete={jest.fn()}
+				onLikeToggle={jest.fn()}
 			/>
 		);
 
@@ -83,6 +87,7 @@ describe("ReviewItem 컴포넌트", () => {
 				onRequireLogin={() => {}}
 				onUpdate={handleUpdate}
 				onDelete={jest.fn()}
+				onLikeToggle={jest.fn()}
 			/>
 		);
 
@@ -106,6 +111,7 @@ describe("ReviewItem 컴포넌트", () => {
 				onRequireLogin={() => {}}
 				onUpdate={jest.fn()}
 				onDelete={handleDelete}
+				onLikeToggle={jest.fn()}
 			/>
 		);
 
