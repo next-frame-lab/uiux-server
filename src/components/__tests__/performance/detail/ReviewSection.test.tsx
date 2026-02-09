@@ -32,7 +32,7 @@ describe("ReviewSection", () => {
 		render(
 			<ReviewSection
 				performanceId="mock-1"
-				currentUserId="me-123"
+				currentUserName="me-123"
 				isAuthenticated
 				onRequireLogin={jest.fn()}
 			/>
@@ -48,7 +48,7 @@ describe("ReviewSection", () => {
 		render(
 			<ReviewSection
 				performanceId="mock-1"
-				currentUserId="me-123"
+				currentUserName="me-123"
 				isAuthenticated
 				onRequireLogin={jest.fn()}
 			/>
@@ -70,7 +70,7 @@ describe("ReviewSection", () => {
 		render(
 			<ReviewSection
 				performanceId="mock-1"
-				currentUserId="me-123"
+				currentUserName="me-123"
 				isAuthenticated
 				onRequireLogin={jest.fn()}
 			/>
@@ -89,7 +89,7 @@ describe("ReviewSection", () => {
 		render(
 			<ReviewSection
 				performanceId="mock-1"
-				currentUserId="me-123"
+				currentUserName="me-123"
 				isAuthenticated
 				onRequireLogin={jest.fn()}
 			/>
@@ -108,7 +108,7 @@ describe("ReviewSection", () => {
 		render(
 			<ReviewSection
 				performanceId="mock-1"
-				currentUserId="me-123"
+				currentUserName="me-123"
 				isAuthenticated={false}
 				onRequireLogin={jest.fn()}
 			/>

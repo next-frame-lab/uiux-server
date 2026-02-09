@@ -253,7 +253,7 @@ export default function PerformanceInfo({ performance }: Props) {
 						{/* 리뷰 */}
 						<ReviewSection
 							performanceId={performance.data.id}
-							currentUserId={user?.id || ""}
+							currentUserName={user?.name || ""}
 							isAuthenticated={isAuthenticated}
 							onRequireLogin={onRequireLogin}
 						/>

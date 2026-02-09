@@ -10,11 +10,12 @@ describe("ReviewList 컴포넌트", () => {
 		render(
 			<ReviewList
 				reviews={mockReviews}
-				currentUserId="c8d1e2a7-4a5b-437b-9d90-7b1a2c3f1239"
+				currentUserName="name"
 				isAuthenticated={false}
 				onRequireLogin={() => {}}
 				onEdit={jest.fn()}
 				onDelete={jest.fn()}
+				onLikeToggle={jest.fn()}
 			/>
 		);
 
@@ -28,11 +29,12 @@ describe("ReviewList 컴포넌트", () => {
 		const { container } = render(
 			<ReviewList
 				reviews={[]}
-				currentUserId="other-user-id"
+				currentUserName="name-2"
 				isAuthenticated={false}
 				onRequireLogin={() => {}}
 				onEdit={jest.fn()}
 				onDelete={jest.fn()}
+				onLikeToggle={jest.fn()}
 			/>
 		);
 
