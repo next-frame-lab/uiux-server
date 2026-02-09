@@ -10,11 +10,13 @@ export default function ReviewForm({ onSubmit }: ReviewFormProps) {
 	const [star, setStar] = useState(0);
 	const [isSubmitting, setIsSubmitting] = useState(false);
 
+	const isValid = content.trim().length >= 10 && star > 0;
+
 	const handleSubmit = async (e: FormEvent) => {
 		e.preventDefault();
 
-		if (!content.trim()) {
-			alert("리뷰 내용을 입력해주세요.");
+		if (content.trim().length < 10) {
+			alert("리뷰는 최소 10글자 이상 작성해주세요.");
 			return;
 		}
 
@@ -100,7 +102,7 @@ export default function ReviewForm({ onSubmit }: ReviewFormProps) {
 				<div className="flex flex-col sm:flex-row gap-2 sm:gap-3 pt-2">
 					<button
 						type="submit"
-						disabled={isSubmitting || !content.trim() || star === 0}
+						disabled={isSubmitting || !isValid}
 						className="w-full sm:flex-1 px-5 sm:px-6 py-3 sm:py-3.5 rounded-lg sm:rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white text-sm sm:text-base font-bold hover:from-blue-700 hover:to-indigo-700 disabled:from-gray-300 disabled:to-gray-400 disabled:cursor-not-allowed transition-all shadow-lg hover:shadow-xl disabled:shadow-none transform hover:scale-[1.02] active:scale-[0.98] disabled:transform-none">
 						{isSubmitting ? (
 							<span className="flex items-center justify-center gap-2">
