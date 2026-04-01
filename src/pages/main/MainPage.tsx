@@ -1,17 +1,16 @@
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import HeroCarousel from "../../components/carousel/HeroCarousel.tsx";
-import Header from "../../components/layout/Header.tsx";
-import Footer from "../../components/layout/Footer.tsx";
 import Category from "../../components/layout/Category.tsx";
 import { PerformanceListItem } from "../../types/ApiDataTypes.ts";
-import fetchPopularPerformances from "../../api/popularPerformance.ts";
+import fetchPopularPerformances from "../../api/performance/popularPerformance.ts";
+import { performanceKeys } from "../../api/queryKeys.ts";
 
 export default function MainPage() {
 	const navigate = useNavigate();
 
 	const { data, isLoading, isError, error } = useQuery({
-		queryKey: ["popularPerformances"],
+		queryKey: performanceKeys.popular(),
 		queryFn: () => fetchPopularPerformances(),
 		staleTime: 1000 * 60,
 	});
@@ -24,8 +23,7 @@ export default function MainPage() {
 	const performances: PerformanceListItem[] = data?.data.performances ?? [];
 
 	return (
-		<main className="bg-[#FBFBFB]">
-			<Header />
+		<>
 			<HeroCarousel />
 			<Category />
 			<div className="max-w-7xl mx-auto mb-6 px-4 md:px-6">
@@ -141,7 +139,6 @@ export default function MainPage() {
 					))}
 				</div>
 			</div>
-			<Footer />
-		</main>
+		</>
 	);
 }

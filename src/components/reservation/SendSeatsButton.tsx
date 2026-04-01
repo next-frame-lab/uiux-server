@@ -4,7 +4,7 @@ import {
 	ReservationRequest,
 	ReservationResponse,
 } from "../../types/ApiDataTypes.ts";
-import fetchPostReservation from "../../api/reservation.ts";
+import fetchPostReservation from "../../api/reservation/reservation.ts";
 
 interface SendSeatsButtonProps {
 	performanceId: string;

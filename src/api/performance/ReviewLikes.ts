@@ -1,4 +1,4 @@
-import { authedJSON } from "../lib/apiClient.ts";
+import { authedJSON } from "../../lib/apiClient.ts";
 
 const apiUrl = process.env.BACKEND_SRT_API;
 

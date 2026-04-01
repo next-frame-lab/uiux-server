@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import Header from "../../components/layout/Header.tsx";
-import Footer from "../../components/layout/Footer.tsx";
-import fetchConfirmPayment from "../../api/confirmPayment.ts";
+import fetchConfirmPayment from "../../api/payment/confirmPayment.ts";
 
 type PaymentData = {
 	reservationId: string;
@@ -65,51 +63,40 @@ export default function SuccessPage() {
 		confirmPayment();
 	}, [searchParams, navigate]);
 
-	return (
-		<div>
-			<Header />
+	return paymentData ? (
+		<main className="bg-[#FBFBFB]">
+			<div className="mx-auto flex max-w-2xl flex-col items-center gap-y-6">
+				<div className="max-w-7xl mx-auto py-40">
+					<h1 className="text-center text-5xl font-bold pb-28">결제 성공!</h1>
 
-			{paymentData ? (
-				<main className="bg-[#FBFBFB]">
-					<div className="mx-auto flex max-w-2xl flex-col items-center gap-y-6">
-						<div className="max-w-7xl mx-auto py-40">
-							<h1 className="text-center text-5xl font-bold pb-28">
-								결제 성공!
-							</h1>
+					<h2 className="text-center text-xl pb-10">
+						결제 완료되었습니다! 마이 페이지나 이메일을 통해 QR코드를 확인할 수
+						있습니다.
+					</h2>
 
-							<h2 className="text-center text-xl pb-10">
-								결제 완료되었습니다! 마이 페이지나 이메일을 통해 QR코드를 확인할
-								수 있습니다.
-							</h2>
-
-							{/* 확인 버튼 */}
-							<div className="py-20">
-								<button
-									type="button"
-									onClick={() => navigate("/mypage")}
-									className="w-full rounded-lg bg-gray-200 py-3 text-lg font-bold text-shadow-black hover:bg-blue-200">
-									확인하기
-								</button>
-							</div>
-						</div>
+					{/* 확인 버튼 */}
+					<div className="py-20">
+						<button
+							type="button"
+							onClick={() => navigate("/mypage")}
+							className="w-full rounded-lg bg-gray-200 py-3 text-lg font-bold text-shadow-black hover:bg-blue-200">
+							확인하기
+						</button>
 					</div>
-				</main>
-			) : (
-				<main className="bg-[#FBFBFB]">
-					<div className="mx-auto flex max-w-2xl flex-col items-center gap-y-6">
-						<div className="max-w-7xl mx-auto py-40">
-							<h1 className="text-center text-5xl font-bold pb-28">
-								승인 요청 중...
-							</h1>
+				</div>
+			</div>
+		</main>
+	) : (
+		<main className="bg-[#FBFBFB]">
+			<div className="mx-auto flex max-w-2xl flex-col items-center gap-y-6">
+				<div className="max-w-7xl mx-auto py-40">
+					<h1 className="text-center text-5xl font-bold pb-28">
+						승인 요청 중...
+					</h1>
 
-							<h2 className="text-center text-xl pb-10">
-								잠시만 기다려주세요.
-							</h2>
-						</div>
-					</div>
-				</main>
-			)}
-			<Footer />
-		</div>
+					<h2 className="text-center text-xl pb-10">잠시만 기다려주세요.</h2>
+				</div>
+			</div>
+		</main>
 	);
 }

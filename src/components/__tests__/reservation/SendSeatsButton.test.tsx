@@ -4,7 +4,7 @@ import sendSeatsData from "../../__mocks__/sendSeatsData.ts";
 import SendSeatsButton from "../../reservation/SendSeatsButton.tsx";
 import useElapsedTime from "../../../hooks/useElapsedTime.ts";
 import "@testing-library/jest-dom";
-import fetchPostReservation from "../../../api/reservation.ts";
+import fetchPostReservation from "../../../api/reservation/reservation.ts";
 
 // useNavigate mocking
 const navigateMock = jest.fn();
