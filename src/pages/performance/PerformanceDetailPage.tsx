@@ -1,13 +1,12 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useMemo, useState } from "react";
-import Header from "../../components/layout/Header.tsx";
-import Footer from "../../components/layout/Footer.tsx";
-import fetchPerformanceDetail from "../../api/performanceDetail.ts";
+import fetchPerformanceDetail from "../../api/performance/performanceDetail.ts";
 import PerformanceInfo from "../../components/performance/detail/PerformanceInfo.tsx";
 import { PerformanceDetailData } from "../../types/ApiDataTypes.ts";
 import { ApiError } from "../../lib/apiClient.ts";
 import AdultVerificationModal from "../../components/common/AdultVerificationModal.tsx";
+import { performanceKeys } from "../../api/queryKeys.ts";
 
 export default function PerformanceDetailPage() {
 	const { id } = useParams();
@@ -34,7 +33,7 @@ export default function PerformanceDetailPage() {
 	);
 
 	const { data, status } = useQuery<PerformanceDetailData, ApiError>({
-		queryKey: ["performanceDetail", id],
+		queryKey: performanceKeys.detail(id as string),
 		queryFn: () => fetchPerformanceDetail(id as string),
 		enabled,
 		retry: 0,
@@ -67,20 +66,16 @@ export default function PerformanceDetailPage() {
 	const handleClose = () => navigate(-1);
 
 	return (
-		<div>
-			<Header />
-			<main className="bg-[#FBFBFB]">
-				{adult && !confirmed && (
-					<AdultVerificationModal
-						isOpen
-						onClose={handleClose}
-						onConfirm={handleConfirm}
-					/>
-				)}
-				{status === "loading" && <p>로딩 중</p>}
-				{data && confirmed && <PerformanceInfo performance={data} />}
-			</main>
-			<Footer />
-		</div>
+		<>
+			{adult && !confirmed && (
+				<AdultVerificationModal
+					isOpen
+					onClose={handleClose}
+					onConfirm={handleConfirm}
+				/>
+			)}
+			{status === "loading" && <p>로딩 중</p>}
+			{data && confirmed && <PerformanceInfo performance={data} />}
+		</>
 	);
 }

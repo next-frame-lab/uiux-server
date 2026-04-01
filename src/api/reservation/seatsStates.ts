@@ -1,5 +1,5 @@
-import { seatStateData } from "../types/ApiDataTypes.ts";
-import { authedJSON } from "../lib/apiClient.ts";
+import { seatStateData } from "../../types/ApiDataTypes.ts";
+import { authedJSON } from "../../lib/apiClient.ts";
 
 type Raw = { code: string; data: { seats: seatStateData[] } };
 

@@ -1,5 +1,3 @@
-import Footer from "../../components/layout/Footer.tsx";
-import Header from "../../components/layout/Header.tsx";
 import usePerformances from "../../hooks/usePerformances.ts";
 import InfiniteScroll from "../../components/ui/InfiniteScroll.tsx";
 import { AppErrorCode, statusMessage } from "../../lib/apiClient.ts";
@@ -30,24 +28,20 @@ export default function PerformancePage() {
 		data?.pages.flatMap((page) => page.data.performances) ?? [];
 
 	return (
-		<div>
-			<main className="bg-[#FBFBFB]">
-				<Header />
-				<Category />
-				<div className="max-w-7xl mx-auto py-16 px-4 md:px-6">
-					<h1 className="text-3xl text-blue-950 mb-8">공연 목록</h1>
-					<InfiniteScroll
-						hasMore={!!hasNextPage}
-						onFetchNext={fetchNextPage}
-						delay={1000}>
-						<PerformanceCard performances={performances} />
-					</InfiniteScroll>
-					{isFetchingNextPage && (
-						<p className="text-center py-4">더 많은 공연을 불러오는 중...</p>
-					)}
-				</div>
-				<Footer />
-			</main>
-		</div>
+		<>
+			<Category />
+			<div className="max-w-7xl mx-auto py-16 px-4 md:px-6">
+				<h1 className="text-3xl text-blue-950 mb-8">공연 목록</h1>
+				<InfiniteScroll
+					hasMore={!!hasNextPage}
+					onFetchNext={fetchNextPage}
+					delay={1000}>
+					<PerformanceCard performances={performances} />
+				</InfiniteScroll>
+				{isFetchingNextPage && (
+					<p className="text-center py-4">더 많은 공연을 불러오는 중...</p>
+				)}
+			</div>
+		</>
 	);
 }

@@ -2,7 +2,7 @@ import { FaRegStar, FaStar, FaStarHalfAlt } from "react-icons/fa";
 import { FormEvent, useState } from "react";
 import { reviewList } from "../../../../types/ApiDataTypes.ts";
 import ReviewLikeButton from "./ReviewLikeButton.tsx";
-import fetchReviewLikes from "../../../../api/ReviewLikes.ts";
+import fetchReviewLikes from "../../../../api/performance/ReviewLikes.ts";
 import ReviewRating from "./ReviewRating.tsx";
 import DeleteConfirmModal from "../../../common/DeleteConfirmModal.tsx";
 

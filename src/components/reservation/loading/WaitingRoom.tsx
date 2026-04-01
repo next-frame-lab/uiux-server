@@ -1,8 +1,9 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
-import fetchSeats from "../../../api/seats.ts";
+import fetchSeats from "../../../api/reservation/seats.ts";
 import Countdown from "./Countdown.tsx";
-import fetchSeatsStates from "../../../api/seatsStates.ts";
+import fetchSeatsStates from "../../../api/reservation/seatsStates.ts";
+import { seatKeys } from "../../../api/queryKeys.ts";
 
 interface WaitingRoomProps {
 	stadiumId: string;
@@ -27,13 +28,13 @@ export default function WaitingRoom({
 
 			await Promise.all([
 				qc.prefetchQuery({
-					queryKey: ["seats", scheduleId],
+					queryKey: seatKeys.definitions(stadiumId),
 					queryFn: () => fetchSeats(stadiumId),
 					staleTime: 15 * 60 * 1000,
 					cacheTime: 30 * 60 * 1000,
 				}),
 				qc.prefetchQuery({
-					queryKey: ["seatStatus", scheduleId],
+					queryKey: seatKeys.states(scheduleId),
 					queryFn: () => fetchSeatsStates(scheduleId),
 					staleTime: 60 * 1000,
 					cacheTime: 30 * 60 * 1000,

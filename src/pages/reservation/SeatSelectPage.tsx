@@ -1,4 +1,4 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { useEffect, useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import {
@@ -9,27 +9,19 @@ import {
 } from "../../types/ApiDataTypes.ts";
 import useSeatReservation from "../../hooks/useSeatReservation.ts";
 import SeatSelector from "../../components/reservation/SeatSelector.tsx";
-import fetchSeats from "../../api/seats.ts";
+import fetchSeats from "../../api/reservation/seats.ts";
 import ReservationInfo from "../../components/reservation/ReservationInfo.tsx";
 import WaitingRoom from "../../components/reservation/loading/WaitingRoom.tsx";
 import CombineSeatsWithState from "../../utils/CombineSeatsWithState.ts";
 import calculateTotalPrice from "../../utils/CalculatePrice.ts";
 import SendSeatsButton from "../../components/reservation/SendSeatsButton.tsx";
-import fetchSeatsStates from "../../api/seatsStates.ts";
+import fetchSeatsStates from "../../api/reservation/seatsStates.ts";
 import { ApiError } from "../../lib/apiClient.ts";
+import { seatKeys } from "../../api/queryKeys.ts";
 
 export default function SeatSelectPage() {
 	const { selectedSeats, selectedSeatIds, toggleSeat, resetSelection } =
 		useSeatReservation();
-
-	const navigate = useNavigate();
-
-	useEffect(() => {
-		const token = localStorage.getItem("accessToken");
-		if (!token) {
-			navigate("/login");
-		}
-	}, [navigate]);
 
 	// 시간 조절
 	const [elapsedTime, setElapsedTime] = useState<number | null>(null);
@@ -72,7 +64,7 @@ export default function SeatSelectPage() {
 		selectSeatsData,
 		ApiError
 	>({
-		queryKey: ["selectSeats", stadiumId],
+		queryKey: seatKeys.definitions(stadiumId),
 		queryFn: async () => fetchSeats(stadiumId),
 		enabled: !!stadiumId,
 		staleTime: Infinity,
@@ -83,7 +75,7 @@ export default function SeatSelectPage() {
 		seatStateData[],
 		ApiError
 	>({
-		queryKey: ["seatsState", scheduleId],
+		queryKey: seatKeys.states(scheduleId),
 		queryFn: () => fetchSeatsStates(scheduleId),
 		enabled: !!scheduleId,
 		refetchOnWindowFocus: true,

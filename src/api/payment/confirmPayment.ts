@@ -1,5 +1,5 @@
-import { authedJSON } from "../lib/apiClient.ts";
-import { ConfirmPaymentResponse } from "../types/ApiDataTypes.ts";
+import { authedJSON } from "../../lib/apiClient.ts";
+import { ConfirmPaymentResponse } from "../../types/ApiDataTypes.ts";
 
 const apiUrl = process.env.BACKEND_PAYMENT_API;
 

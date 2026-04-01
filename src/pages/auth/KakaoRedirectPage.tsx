@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
-import authApi from "../../api/auth.ts";
+import authApi from "../../api/auth/auth.ts";
 import { useAuthActions } from "../../store/authStore.ts";
 import getUserIdFromToken from "../../utils/auth.ts";
 

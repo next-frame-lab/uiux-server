@@ -5,14 +5,15 @@ import {
 	fetchGetReview,
 	fetchPatchReview,
 	fetchPostReview,
-} from "../api/performanceReview.ts";
+} from "../api/performance/performanceReview.ts";
 import { ApiError } from "../lib/apiClient.ts";
+import { reviewKeys } from "../api/queryKeys.ts";
 
 export default function useReviews(id: string) {
 	const queryClient = useQueryClient();
 
 	const { data, status, error } = useQuery<reviewData, ApiError>({
-		queryKey: ["performanceReviews", id],
+		queryKey: reviewKeys.list(id),
 		queryFn: () => fetchGetReview(id!),
 		enabled: !!id,
 		useErrorBoundary: false,
@@ -25,7 +26,7 @@ export default function useReviews(id: string) {
 		onSubmit: async (content: string, star: number) => {
 			try {
 				await fetchPostReview(id, content, star);
-				queryClient.invalidateQueries({ queryKey: ["performanceReviews", id] });
+				queryClient.invalidateQueries({ queryKey: reviewKeys.list(id) });
 			} catch (err) {
 				if (err && typeof err === "object" && "status" in err) {
 					const apiError = err as { status: number };
@@ -44,7 +45,7 @@ export default function useReviews(id: string) {
 		onEdit: async (reviewId: string, content: string, star: number) => {
 			try {
 				await fetchPatchReview(reviewId, content, star);
-				queryClient.invalidateQueries({ queryKey: ["performanceReviews", id] });
+				queryClient.invalidateQueries({ queryKey: reviewKeys.list(id) });
 			} catch {
 				throw new Error("리뷰 수정 중 오류가 발생했습니다.");
 			}
@@ -52,13 +53,13 @@ export default function useReviews(id: string) {
 		onDelete: async (reviewId: string) => {
 			try {
 				await fetchDeleteReview(reviewId);
-				queryClient.invalidateQueries({ queryKey: ["performanceReviews", id] });
+				queryClient.invalidateQueries({ queryKey: reviewKeys.list(id) });
 			} catch {
 				throw new Error("리뷰 삭제 중 오류가 발생했습니다.");
 			}
 		},
 		onLikeToggle: () => {
-			queryClient.invalidateQueries({ queryKey: ["performanceReviews", id] });
+			queryClient.invalidateQueries({ queryKey: reviewKeys.list(id) });
 		},
 	};
 }

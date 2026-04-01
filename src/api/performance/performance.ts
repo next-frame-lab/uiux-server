@@ -1,5 +1,5 @@
-import { publicJSON } from "../lib/apiClient.ts";
-import { PerformanceData } from "../types/ApiDataTypes.ts";
+import { publicJSON } from "../../lib/apiClient.ts";
+import { PerformanceData } from "../../types/ApiDataTypes.ts";
 
 const apiUrl = process.env.BACKEND_SRT_API;
 
