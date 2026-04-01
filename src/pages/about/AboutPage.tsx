@@ -1,6 +1,9 @@
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 
+const IMAGE_URL =
+	"https://images.unsplash.com/photo-1515100398104-f7221da41f1b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjaW5lbWElMjB0aGVhdGVyJTIwaW50ZXJpb3J8ZW58MXx8fHwxNzY1Mjg1NDMwfDA&ixlib=rb-4.1.0&q=80&w=1080";
+
 const teamMembers = [
 	{
 		name: "김민서",
@@ -68,7 +71,10 @@ export default function AboutPage() {
 		<>
 			<section className="relative bg-blue-400 py-20 md:py-32 overflow-hidden mb-16 md:mb-24">
 				<div className="absolute inset-0 opacity-20">
-					<div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1515100398104-f7221da41f1b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjaW5lbWElMjB0aGVhdGVyJTIwaW50ZXJpb3J8ZW58MXx8fHwxNzY1Mjg1NDMwfDA&ixlib=rb-4.1.0&q=80&w=1080')] bg-cover bg-center" />
+					<div
+						className="absolute inset-0 bg-cover bg-center"
+						style={{ backgroundImage: `url(${IMAGE_URL})` }}
+					/>
 				</div>
 				<div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
 					<div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 mb-6">

@@ -8,7 +8,7 @@ export default function FailPage() {
 	};
 
 	return (
-		<main className="min-h-screen bg-gradient-to-b from-gray-50 to-white flex items-center justify-center py-12 px-4">
+		<div className="min-h-screen bg-gradient-to-b from-gray-50 to-white flex items-center justify-center py-12 px-4">
 			<div className="max-w-2xl w-full">
 				<div className="bg-white rounded-3xl shadow-2xl p-8 md:p-12">
 					{/* 에러 아이콘 */}
@@ -93,6 +93,6 @@ export default function FailPage() {
 					</div>
 				</div>
 			</div>
-		</main>
+		</div>
 	);
 }
