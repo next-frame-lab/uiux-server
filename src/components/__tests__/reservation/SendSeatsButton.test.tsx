@@ -20,7 +20,7 @@ jest.mock("../../../hooks/useElapsedTime.ts", () => ({
 
 const mockedUseElapsedTime = useElapsedTime as jest.Mock;
 
-jest.mock("../../../api/reservation.ts", () => ({
+jest.mock("../../../api/reservation/reservation.ts", () => ({
 	__esModule: true,
 	default: jest.fn().mockReturnValue({ id: "reservation-1" }),
 }));

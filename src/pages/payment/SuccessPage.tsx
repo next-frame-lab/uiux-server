@@ -64,7 +64,7 @@ export default function SuccessPage() {
 	}, [searchParams, navigate]);
 
 	return paymentData ? (
-		<main className="bg-[#FBFBFB]">
+		<div className="bg-[#FBFBFB]">
 			<div className="mx-auto flex max-w-2xl flex-col items-center gap-y-6">
 				<div className="max-w-7xl mx-auto py-40">
 					<h1 className="text-center text-5xl font-bold pb-28">결제 성공!</h1>
@@ -85,9 +85,9 @@ export default function SuccessPage() {
 					</div>
 				</div>
 			</div>
-		</main>
+		</div>
 	) : (
-		<main className="bg-[#FBFBFB]">
+		<div className="bg-[#FBFBFB]">
 			<div className="mx-auto flex max-w-2xl flex-col items-center gap-y-6">
 				<div className="max-w-7xl mx-auto py-40">
 					<h1 className="text-center text-5xl font-bold pb-28">
@@ -97,6 +97,6 @@ export default function SuccessPage() {
 					<h2 className="text-center text-xl pb-10">잠시만 기다려주세요.</h2>
 				</div>
 			</div>
-		</main>
+		</div>
 	);
 }
