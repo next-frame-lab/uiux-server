@@ -3,20 +3,20 @@ import { Link, useLocation } from "react-router-dom";
 
 const categories = [
 	{ id: "all", label: "전체", path: "/performances" },
-	{ id: "CONCERT", label: "콘서트", path: "/performances?type=concert" },
-	{ id: "MUSICAL", label: "뮤지컬", path: "/performances?type=musical" },
+	{ id: "CONCERT", label: "콘서트", path: "/performances?genre=CONCERT" },
+	{ id: "MUSICAL", label: "뮤지컬", path: "/performances?genre=MUSICAL" },
 	{
 		id: "CHILDREN_THEATER",
 		label: "어린이극",
-		path: "/performances?type=children_theater",
+		path: "/performances?genre=CHILDREN_THEATER",
 	},
 	{
 		id: "DANCE",
 		label: "무용",
-		path: "/performances?type=dance",
+		path: "/performances?genre=DANCE",
 	},
-	{ id: "PLAY", label: "연극", path: "/performances?type=play" },
-	{ id: "OPERA", label: "오페라", path: "/performances?type=opera" },
+	{ id: "PLAY", label: "연극", path: "/performances?genre=PLAY" },
+	{ id: "OPERA", label: "오페라", path: "/performances?genre=OPERA" },
 ];
 
 export default function Category() {
@@ -25,8 +25,8 @@ export default function Category() {
 
 	useEffect(() => {
 		const params = new URLSearchParams(location.search);
-		const type = params.get("type");
-		setActiveCategory(type || "all");
+		const genre = params.get("genre");
+		setActiveCategory(genre || "all");
 	}, [location]);
 
 	return (

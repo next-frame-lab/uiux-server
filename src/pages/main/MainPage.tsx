@@ -1,47 +1,75 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
 import HeroCarousel from "../../components/carousel/HeroCarousel.tsx";
-import Category from "../../components/layout/Category.tsx";
-import { PerformanceListItem } from "../../types/ApiDataTypes.ts";
-import fetchPopularPerformances from "../../api/performance/popularPerformance.ts";
-import { performanceKeys } from "../../api/queryKeys.ts";
+import MainCategoryBar from "../../components/main/MainCategoryBar.tsx";
+import usePerformances from "../../hooks/usePerformances.ts";
+
+const categoryGenreMap: Record<string, string | undefined> = {
+	all: undefined,
+	CONCERT: "CONCERT",
+	MUSICAL: "MUSICAL",
+	CHILDREN_THEATER: "CHILDREN_THEATER",
+	DANCE: "DANCE",
+	PLAY: "PLAY",
+	OPERA: "OPERA",
+};
+
+const categoryLabelMap: Record<string, string> = {
+	all: "전체",
+	CONCERT: "콘서트",
+	MUSICAL: "뮤지컬",
+	CHILDREN_THEATER: "어린이극",
+	DANCE: "무용",
+	PLAY: "연극",
+	OPERA: "오페라",
+};
 
 export default function MainPage() {
 	const navigate = useNavigate();
+	const [activeCategory, setActiveCategory] = useState("all");
 
-	const { data, isLoading, isError, error } = useQuery({
-		queryKey: performanceKeys.popular(),
-		queryFn: () => fetchPopularPerformances(),
-		staleTime: 1000 * 60,
-	});
+	const genre = categoryGenreMap[activeCategory];
+	const { data, status } = usePerformances(10, genre);
 
 	const handleClick = (id: string, adultOnly: boolean) => {
 		sessionStorage.setItem("adultOnly", String(adultOnly));
 		navigate(`/performances/${id}`);
 	};
 
-	const performances: PerformanceListItem[] = data?.data.performances ?? [];
+	const performances =
+		data?.pages.flatMap((page) => page.data.performances) ?? [];
+
+	const sectionTitle =
+		activeCategory === "all"
+			? "인기 공연"
+			: `인기 ${categoryLabelMap[activeCategory]}`;
 
 	return (
 		<>
 			<HeroCarousel />
-			<Category />
+			<MainCategoryBar
+				activeCategory={activeCategory}
+				onCategoryChange={setActiveCategory}
+			/>
 			<div className="max-w-7xl mx-auto mb-6 px-4 md:px-6">
 				<h2 className="text-3xl text-blue-950 mt-12 mb-6 md:mt-16 md:mb-8">
-					인기 공연
+					{sectionTitle}
 				</h2>
 
-				{isLoading && (
+				{status === "loading" && (
 					<p className="text-center py-10">공연 목록을 불러오는 중입니다...</p>
 				)}
 
-				{isError && (
+				{status === "error" && (
 					<div className="text-center py-10">
 						<p className="text-red-500 font-semibold">오류가 발생했습니다.</p>
-						<p className="text-gray-600 mt-2">
-							{error instanceof Error ? error.message : "알 수 없는 에러"}
-						</p>
 					</div>
+				)}
+
+				{status === "success" && performances.length === 0 && (
+					<p className="text-center py-10 text-gray-500">
+						해당 카테고리의 인기 공연이 없습니다.
+					</p>
 				)}
 
 				{/* 공연 목록 */}

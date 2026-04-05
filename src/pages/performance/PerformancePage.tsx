@@ -1,3 +1,4 @@
+import { useSearchParams } from "react-router-dom";
 import usePerformances from "../../hooks/usePerformances.ts";
 import InfiniteScroll from "../../components/ui/InfiniteScroll.tsx";
 import { AppErrorCode, statusMessage } from "../../lib/apiClient.ts";
@@ -5,6 +6,9 @@ import Category from "../../components/layout/Category.tsx";
 import PerformanceCard from "../../components/performance/list/PerformanceCard.tsx";
 
 export default function PerformancePage() {
+	const [searchParams] = useSearchParams();
+	const genre = searchParams.get("genre") || undefined;
+
 	const {
 		data,
 		fetchNextPage,
@@ -12,7 +16,7 @@ export default function PerformancePage() {
 		error,
 		isFetchingNextPage,
 		status,
-	} = usePerformances();
+	} = usePerformances(32, genre);
 
 	if (status === "loading") return <p>로딩 중</p>;
 	if (status === "error") {

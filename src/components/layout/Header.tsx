@@ -11,8 +11,19 @@ import {
 	XMarkIcon,
 	MagnifyingGlassIcon,
 	ChevronRightIcon,
+	ChevronDownIcon,
 } from "@heroicons/react/24/solid";
 import useAuth from "../../hooks/useAuth.ts";
+
+const performanceCategories = [
+	{ label: "전체", path: "/performances" },
+	{ label: "콘서트", path: "/performances?genre=CONCERT" },
+	{ label: "뮤지컬", path: "/performances?genre=MUSICAL" },
+	{ label: "어린이극", path: "/performances?genre=CHILDREN_THEATER" },
+	{ label: "무용", path: "/performances?genre=DANCE" },
+	{ label: "연극", path: "/performances?genre=PLAY" },
+	{ label: "오페라", path: "/performances?genre=OPERA" },
+];
 
 export default function Header() {
 	// 모바일 크기에서 햄버거 메뉴 상태를 관리하는 state
@@ -26,11 +37,19 @@ export default function Header() {
 	const { user, logout } = useAuth();
 	// 드롭다운 외부 클릭 감지를 위한 ref를 생성
 	const dropdownRef = useRef<HTMLDivElement>(null);
+	// 카테고리 드롭다운 상태
+	const [isCategoryOpen, setIsCategoryOpen] = useState(false);
+	const categoryRef = useRef<HTMLDivElement>(null);
 
 	// 드롭다운 메뉴 링크 클릭 시 드롭다운를 닫는 헬퍼 함수
 	const handleNavigateWithDropdown = (path: string) => {
 		navigate(path);
 		setIsDropdownOpen(false);
+	};
+
+	const handleNavigateWithCategory = (path: string) => {
+		navigate(path);
+		setIsCategoryOpen(false);
 	};
 
 	// 모바일 크기에서 햄버거 메뉴 링크 클릭 시 메뉴가 자동으로 닫힘
@@ -122,11 +141,18 @@ export default function Header() {
 			) {
 				setIsDropdownOpen(false);
 			}
+			if (
+				categoryRef.current &&
+				!categoryRef.current.contains(event.target as Node)
+			) {
+				setIsCategoryOpen(false);
+			}
 		}
 
 		function handleEscapeKey(event: KeyboardEvent) {
 			if (event.key === "Escape") {
 				setIsDropdownOpen(false);
+				setIsCategoryOpen(false);
 			}
 		}
 
@@ -147,6 +173,16 @@ export default function Header() {
 					<div className="md:hidden absolute left-0">
 						<button type="button" onClick={() => setIsMenuOpen(true)}>
 							<Bars3Icon className="w-6 h-6" />
+						</button>
+					</div>
+
+					{/* 왼쪽: About 버튼 */}
+					<div className="absolute left-0 hidden md:flex items-center">
+						<button
+							type="button"
+							onClick={() => navigate("/about")}
+							className="px-5 py-2 transition-colors text-gray-500 rounded-full hover:bg-gray-200">
+							About
 						</button>
 					</div>
 
@@ -185,13 +221,39 @@ export default function Header() {
 						</div>
 
 						<nav className="hidden md:flex items-center justify-end flex-wrap gap-x-2 gap-y-2 md:gap-x-2">
-							{/* About 버튼 */}
-							<button
-								type="button"
-								onClick={() => navigate("/about")}
-								className="px-5 py-2 transition-colors text-gray-500 rounded-full hover:bg-gray-200">
-								About
-							</button>
+							{/* 공연 카테고리 드롭다운 */}
+							<div className="relative" ref={categoryRef}>
+								<button
+									type="button"
+									onClick={() => setIsCategoryOpen((prev) => !prev)}
+									className="flex items-center gap-1 px-5 py-2 transition-colors text-gray-500 rounded-full hover:bg-gray-200"
+									aria-expanded={isCategoryOpen}
+									aria-haspopup="true">
+									공연
+									<ChevronDownIcon
+										className={`w-4 h-4 transition-transform ${isCategoryOpen ? "rotate-180" : ""}`}
+									/>
+								</button>
+
+								{isCategoryOpen && (
+									<div
+										className="absolute right-0 mt-2 w-44 bg-white rounded-xl shadow-[0_10px_40px_-10px_rgba(0,0,0,0.1)] border border-gray-100 overflow-hidden z-50 animate-fadeIn"
+										role="menu">
+										<div className="py-2">
+											{performanceCategories.map((cat) => (
+												<button
+													key={cat.label}
+													type="button"
+													onClick={() => handleNavigateWithCategory(cat.path)}
+													className="w-full px-4 py-2.5 text-left text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+													role="menuitem">
+													{cat.label}
+												</button>
+											))}
+										</div>
+									</div>
+								)}
+							</div>
 
 							{user ? (
 								// 로그인 상태
@@ -312,6 +374,17 @@ export default function Header() {
 								className="py-3 w-full text-left hover:bg-gray-100 rounded-md px-3">
 								공연
 							</button>
+							<div className="pl-6 flex flex-col gap-y-1">
+								{performanceCategories.slice(1).map((cat) => (
+									<button
+										key={cat.label}
+										type="button"
+										onClick={() => handleNavigate(cat.path)}
+										className="py-2 w-full text-left text-sm text-gray-500 hover:bg-gray-100 rounded-md px-3">
+										{cat.label}
+									</button>
+								))}
+							</div>
 							<button
 								type="button"
 								onClick={() => handleNavigate("/about")}

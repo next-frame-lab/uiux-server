@@ -3,7 +3,8 @@
 export const performanceKeys = {
 	all: ["performances"] as const,
 	lists: () => [...performanceKeys.all, "list"] as const,
-	list: (size: number) => [...performanceKeys.lists(), size] as const,
+	list: (size: number, genre?: string) =>
+		[...performanceKeys.lists(), size, genre ?? "all"] as const,
 	popular: () => [...performanceKeys.all, "popular"] as const,
 	details: () => [...performanceKeys.all, "detail"] as const,
 	detail: (id: string) => [...performanceKeys.details(), id] as const,
